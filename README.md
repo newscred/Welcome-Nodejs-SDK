@@ -72,13 +72,13 @@ const app = new WelcomeClient(param)
 
 The `tokenGetParam` should be of the same type throughout the app.
 ## Modules
-The initialized `app` object has several modules and each module has its own methods. The modules are described below.
+The initialized `app` object has several modules and each module has their own methods. All methods are asynchronous unless specifically mentioned to be synchronous. The module methods are described below.
 ### Auth
 The `auth` module provides the following methods
 
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `initiateOAuth` | `redirectFn: (url) => void` | `undefined` | Use this method to initialize Welcome authorization flow. This method takes a function that take a url string as a parameter and can redirect the user to the provided url (see the example below)
+| `initiateOAuth` <br /> (synchronous function) | `redirectFn: (url) => void` | `undefined` | Use this method to initialize Welcome authorization flow. This method takes a function that take a url string as a parameter and can redirect the user to the provided url (see the example below)
 | `handleOAuthCallback` | `query: object`, <br/> `tokenGetParam: any` | returned object from `tokenRefreshCallback` function call if provided else `undefined` | Use this method to handle the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter (see the example below)
 | `rotateTokens` | `tokenGetParam: any` | `undefined` |Updates the access token using the refresh token
 | `revokeAccessToken` | `tokenGetParam: any` | `undefined` | Sends a request to the authorization server to revoke the access token
@@ -114,7 +114,7 @@ server.listen(process.env.PORT)
 ### Uploader
 The `uploader` module provides the following methods
 
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
 | `upload` | `name: string`, <br/> `file: FiledBlob` | [UploadedFile](#uploadedfile) | This method takes a string value as the first parameter that is to be the name of the uploaded file and the file object that is to be uploaded. It returns an instance of [UploadedFile](#uploadedfile)
 
@@ -125,12 +125,11 @@ const uploadedFile = app.uploader.upload('Shiny sky.jpg', file)
 // uploadedFile.addAsVersion('assetId')
 // uploadedFile.addAsTaskAsset('taskId')
 // uploadedFile.addAsTaskAssetDraft('taskId', 'assetId')
-// uploadedFile.addAsCampaignAttachment('campaignId')
 ```
 
 ### Library
 The `library` module provides the following methods
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
 | `getAssets` | - | array of [Asset](#asset) | This method is used to list all the assets in the library
 | `getFolders` | - | array of [Folder](#folder) | This method is used to list all the folders in the library
@@ -149,7 +148,7 @@ The `library` module provides the following methods
 
 ### Label
 The `label` module provides the following methods
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
 | `getLabelGroups` | - | array of LabelGroup | 
 
@@ -159,20 +158,21 @@ TODO
 
 ### Campaign
 The `campaign` module provides the following methods
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
 | `getCampaignById` | `campaignId: string` | [Campaign](#campaign-1) | This method is used to get a campaign by its id. The first parameter of this method is the id of the campaign.
 | `getCampaignBrief` | `campaignId: string` | [CampaignBrief](#campaignbrief)| This method is used to get the brief of a specific campaign. The first parameter of this method is the id of the campaign.
 
 ### User
 The `user` module provides the following methods
-| method | parameter | returns | description
+| method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
 | `getUserById` | `userId: string` | [User](#user-1) |
 | `getUserByEmail` | `email: string` | [User](#user-1) |
 
 
 ## Objects
+All the objects have the properties similar to the related response model in [Welcome Open API documentation](https://developers.welcomesoftware.com/openapi.html). The properties are in 'camelCase' following the convention of JavaScript. In addition to these properties, some objects also have additional methods.
 ### ArticleAsset
 TODO
 ### Asset
@@ -180,9 +180,17 @@ TODO
 ### Attachment
 TODO
 ### Campaign
-TODO
+| method | parameter | return resolves | description
+| ------ | --------- | ----------- | ------------
+| `getBrief` | - | [CampaignBrief](#campaignbrief) \| `null` | Returns a promise that resolves to the campaign brief if it exists, else resolves to null.
+| `getOwner` | - | [User](#user-1) \| `null` | Returns a promise that resolves to the owner user object or null if the campaign has no owner
+| `getChildCampaigns` | - | Array<[Campaign](#campaign-1)> | Returns a promise that resolves to a list of child campaigns or an empty list if the campaign has no child campaign.
+| `getParentCampaign` | - | [Campaign](#campaign-1) \| `null` | Returns a promise that resolves to the parent campaign object or null if the campaign has no parent campaign
+
 ### CampaignBrief
-TODO
+| method | parameter | return resolves | description
+| ------ | --------- | ----------- | ------------
+| `getCampaign` | - | [Campaign](#campaign-1) | Returns a promise that resolves the campaign object for this brief 
 ### Comment
 TODO
 ### ExternalWork
@@ -206,6 +214,6 @@ TODO
 ### UploadedFile
 TODO
 ### User
-TODO
+`User` object does not have any additional method.
 ### VideoAsset
 TODO

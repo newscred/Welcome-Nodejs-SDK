@@ -1,5 +1,9 @@
 import { request, RequestOptions } from "https";
 import { Auth } from "../auth";
+import {
+  convertObjectKeysToCamelCase,
+  convertObjectKeysToSnakeCase,
+} from "./util";
 
 export class APICaller {
   #shouldRetry: boolean;
@@ -26,7 +30,9 @@ export class APICaller {
     } else {
       url = new URL(this.#host + "/" + this.#apiVersion + endpoint);
     }
-    const payloadStringified = JSON.stringify(payload);
+    const payloadStringified = JSON.stringify(
+      convertObjectKeysToSnakeCase(payload)
+    );
     const options: RequestOptions = {
       host: url.host,
       path: url.pathname,
@@ -56,8 +62,9 @@ export class APICaller {
         });
 
         res.on("end", async () => {
+          data = JSON.parse(data);
+          data = convertObjectKeysToCamelCase(data);
           if (statusCode && statusCode < 299) {
-            data = JSON.parse(data);
             resolve(data);
             return;
           }
