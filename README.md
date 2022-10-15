@@ -58,17 +58,19 @@ const app = new WelcomeClient(param)
 ```
 `param` is an object with the following properties
 
-| Property | type | default | description
-| ----- | -- | --------- | ---
-| `accessToken` | `string` \|<br/> `(() => string \| Promise<string>)` | - | Value of the access token to be used or a function that returns an access token
-| `refreshToken` | `string` \|<br/> `(() => string \| Promise<string>)` | - | Value of the refresh token to be used or a function that returns a refresh token
-| `clientId` | `string` | `process.env.WELCOME_CLIENT_ID` | The client Id of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_ID` environment variable 
-| `clientSecret` | `string` | `process.env.WELCOME_CLIENT_SECRET` | The client secret of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_SECRET` environment variable 
-| `redirectUri` | `string` | - | The redirect uri registered in Welcome with the associated app
-| `enableAutoRetry` | `boolean` | `false` | If `true` the app will try to update the accessToken using the provided refreshtoken if any api call encounters `401 Unauthorized` error and retry again. If second retry also fails, the app will raise an error.
-| `onAuthSuccess` | `(accessToken: string, refreshToken: string) => any` | - | This function will be called when authorization code flow completes successfully. You can omit this field if you handle oauth callback manually.
-| `onAuthFailure` | `(accessToken: string, refreshToken: string) => any` | - | This function will be called if authorization server redirects to redirect URL with any error. You can omit this field if you handle oauth callback manually.
-| `tokenRefreshCallback` | `(accessToken: string, refreshToken: string) => any` | - | This function will be called when the app refreshes the current tokens. You can use this function to store the updated access and refresh tokens in your database.
+| Property | type | description
+| -------- | ---- | ----------- 
+| `accessToken` | `string` \|<br/> `((tokenGetParam: any) => string \| Promise<string>)` | Value of the access token to be used or a function that returns an access token. The optional `tokenGetParam` parameter can be a `string`, `object` or a `function` that the function may need to fetch the access token
+| `refreshToken` | `string` \|<br/> `((tokenGetParam: any) => string \| Promise<string>)` | Value of the refresh token to be used or a function that returns a refresh token. The optional `tokenGetParam` parameter can be a `string`, `object` or a `function` that the function may need to fetch the refresh token
+| `clientId` | `string` | The client Id of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_ID` environment variable
+| `clientSecret` | `string` | The client secret of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_SECRET` environment variable 
+| `redirectUri` | `string` | The redirect uri registered in Welcome with the associated app
+| `enableAutoRetry` | `boolean` | If `true` the app will try to update the accessToken using the provided refreshtoken if any api call encounters `401 Unauthorized` error and retry again. If second retry also fails, the app will raise an error. <br />Default: `false`
+| `onAuthSuccess` | `(accessToken: string, refreshToken: string, tokenGetParam: any) => any` | This function will be called when authorization code flow completes successfully. You can omit this field if you handle oauth callback manually.
+| `onAuthFailure` | `(accessToken: string, refreshToken: string) => any` | This function will be called if authorization server redirects to redirect URL with any error. You can omit this field if you handle oauth callback manually
+| `tokenChangeCallback` | `(accessToken: string, refreshToken: string, tokenGetParam: any) => any` | This function will be called when the app updates the current tokens. You can use this function to store the updated access and refresh tokens in your database. The optional third parameter `tokenGetParam` can be a `string`, `object` or a `function` that the function may need to map the access and refresh token according to your app's requirement
+
+The `tokenGetParam` should be of the same type throughout the app.
 ## Modules
 The initialized `app` object has several modules and each module has its own methods. The modules are described below.
 ### Auth
@@ -77,10 +79,10 @@ The `auth` module provides the following methods
 | method | parameter | returns | description
 | ------ | --------- | ----------- | ------------
 | `initiateOAuth` | `redirectFn: (url) => void` | `undefined` | Use this method to initialize Welcome authorization flow. This method takes a function that take a url string as a parameter and can redirect the user to the provided url (see the example below)
-| `handleOAuthCallback` | `query: object` | returned object from `tokenRefreshCallback` function call if provided else `undefined` | Use this method to handle the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter (see the example below)
-| `rotateTokens` | - | `undefined` |Updates the access token using the refresh token
-| `revokeAccessToken` | - | `undefined` | Sends a request to the authorization server to revoke the access token
-| `revokeRefreshToken` | - | `undefined` | Sends a request to the authorization server to revoke the refresh token
+| `handleOAuthCallback` | `query: object`, <br/> `tokenGetParam: any` | returned object from `tokenRefreshCallback` function call if provided else `undefined` | Use this method to handle the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter (see the example below)
+| `rotateTokens` | `tokenGetParam: any` | `undefined` |Updates the access token using the refresh token
+| `revokeAccessToken` | `tokenGetParam: any` | `undefined` | Sends a request to the authorization server to revoke the access token
+| `revokeRefreshToken` | `tokenGetParam: any` | `undefined` | Sends a request to the authorization server to revoke the refresh token
 
 
 An example of integrating with an express app.
