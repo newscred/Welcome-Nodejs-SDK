@@ -1,4 +1,5 @@
 import { Auth } from "./modules/auth";
+import { APICaller } from "./modules/api_caller";
 
 interface WelcomeClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
@@ -15,8 +16,9 @@ interface WelcomeClientConstructorParam {
   tokenChangeCallback?: (
     accessToken: string,
     refreshToken: string,
-    tokenGetParam?: any,
+    tokenGetParam?: any
   ) => any;
+  enableAutoRetry?: boolean;
 }
 
 export class WelcomeClient {
@@ -33,5 +35,7 @@ export class WelcomeClient {
       onAuthSuccess: param.onAuthSuccess,
       tokenChangeCallback: param.tokenChangeCallback,
     });
+
+    const apiCaller = new APICaller(this.auth, param.enableAutoRetry || false);
   }
 }
