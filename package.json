@@ -1,0 +1,31 @@
+{
+  "name": "welcome-sdk",
+  "version": "1.0.0",
+  "description": "Welcome NodeJS sdk",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git"
+  },
+  "keywords": [
+    "welcome", "welcomesoftware", "optimizely"
+  ],
+  "author": "Nazmul Ahsan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AhsanShihab/Welcome-Nodejs-SDK/issues"
+  },
+  "homepage": "https://github.com/AhsanShihab/Welcome-Nodejs-SDK#readme",
+  "devDependencies": {
+    "@types/node": "^18.8.5",
+    "typescript": "^4.8.4"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
