@@ -168,8 +168,8 @@ The `campaign` module provides the following methods
 The `user` module provides the following methods
 | method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `getUserById` | `userId: string` | [User](#user-1) |
-| `getUserByEmail` | `email: string` | [User](#user-1) |
+| `getUserById` | `userId: string`, <br /> `tokenGetParam: any` | [User](#user-1) | This method returns the [User](#user-1) matching the id. This method takes `userId` as the first parameter. The second parameter is optional. 
+| `getUserByEmail` | `email: string`, <br /> `tokenGetParam: any` | [User](#user-1) | This method returns the [User](#user-1) matching the email address. This method takes `email` as the first parameter. The second parameter is optional.
 
 
 ## Objects
