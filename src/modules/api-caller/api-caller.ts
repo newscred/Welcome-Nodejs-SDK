@@ -35,7 +35,7 @@ export class APICaller {
     );
     const options: RequestOptions = {
       host: url.host,
-      path: url.pathname,
+      path: url.pathname + url.search,
       method: method,
       headers: {
         Authorization: `Bearer ${await this.#auth.getAccessToken(

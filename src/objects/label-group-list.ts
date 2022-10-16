@@ -37,11 +37,13 @@ export class LabelGroupList {
       this.#pagination.next,
       this.#tokenGetParam
     );
+
     const nextLabelGroupList = new LabelGroupList(
       nextBatchData,
       this.#apiCaller,
       this.#tokenGetParam
     );
+
     return nextLabelGroupList;
   }
 

@@ -1,6 +1,7 @@
 import { Auth } from "./modules/auth";
 import { APICaller } from "./modules/api-caller";
 import { Campaign } from "./modules/campaign";
+import { Label } from "./modules/label";
 
 interface WelcomeClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
@@ -24,6 +25,7 @@ interface WelcomeClientConstructorParam {
 
 export class WelcomeClient {
   auth: Auth;
+  label: Label;
   campaign: Campaign;
 
   constructor(param: WelcomeClientConstructorParam) {
@@ -39,6 +41,7 @@ export class WelcomeClient {
     });
 
     const apiCaller = new APICaller(this.auth, param.enableAutoRetry || false);
+    this.label = new Label(apiCaller)
     this.campaign = new Campaign(apiCaller)
   }
 }
