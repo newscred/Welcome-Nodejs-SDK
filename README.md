@@ -22,6 +22,7 @@ Table of contents
     * [Folder](#folder)
     * [ImageAsset](#imageasset)
     * [LabelGroup](#labelgroup)
+    * [LabelGroupList](#labelgrouplist)
     * [RawFileAsset](#rawfileasset)
     * [Task](#task-1)
     * [TaskAsset](#taskasset)
@@ -150,7 +151,7 @@ The `library` module provides the following methods
 The `label` module provides the following methods
 | method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `getLabelGroups` | - | array of LabelGroup | 
+| `getLabelGroups` | `filter: object`, <br /> `tokenGetParam: any` | [LabelGroupList](#labelgrouplist) | This method returns a [LabelGroupList](#labelgrouplist) object which has a `data` property that holds an array of [LabelGroup](#labelgroup) objects. This method takes two optional parameters. The first parameter `filter` is an `object` to filter the label groups. The `filter` object can have following properties (all are optional)<br /> `sourceOrgType`: `'current' \| 'related'` <br /> `offset`: `number` <br /> `pageSize`: `number`
 
 
 ### Task
@@ -160,8 +161,8 @@ TODO
 The `campaign` module provides the following methods
 | method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `getCampaignById` | `campaignId: string` | [Campaign](#campaign-1) | This method is used to get a campaign by its id. The first parameter of this method is the id of the campaign.
-| `getCampaignBrief` | `campaignId: string` | [CampaignBrief](#campaignbrief)| This method is used to get the brief of a specific campaign. The first parameter of this method is the id of the campaign.
+| `getCampaignById` | `campaignId: string` <br /> `tokenGetParam: any`  | [Campaign](#campaign-1) | This method is used to get a campaign by its id. The first parameter of this method is the id of the campaign. The second parameter is optional.
+| `getCampaignBrief` | `campaignId: string` <br /> `tokenGetParam: any` | [CampaignBrief](#campaignbrief)| This method is used to get the brief of a specific campaign. The first parameter of this method is the id of the campaign. The second parameter is optional.
 
 ### User
 The `user` module provides the following methods
@@ -172,7 +173,7 @@ The `user` module provides the following methods
 
 
 ## Objects
-All the objects have the properties similar to the related response model in [Welcome Open API documentation](https://developers.welcomesoftware.com/openapi.html). The properties are in 'camelCase' following the convention of JavaScript. In addition to these properties, some objects also have additional methods.
+All the objects have the properties similar to the related response model in [Welcome Open API documentation](https://developers.welcomesoftware.com/openapi.html) except if mentioned otherwise. The properties are in 'camelCase' following the convention of JavaScript. In addition to these properties, some objects also have additional methods.
 ### ArticleAsset
 TODO
 ### Asset
@@ -200,7 +201,17 @@ TODO
 ### ImageAsset
 TODO
 ### LabelGroup
-TODO
+`LabelGroup` object does not have any additional method
+
+### LabelGroupList
+
+This object has a `data` field which is an array of [LabelGroup](#labelgroup) objects. This object has following methods
+
+| method | parameter | return resolves | description
+| ------ | --------- | ----------- | ------------
+| `getNextBatch` | - | [LabelGroupList](#labelgrouplist) \| `null` | This method will return a [LabelGroupList](#labelgrouplist) object which has the next batch of [LabelGroup](#labelgroup) objects in its `data` array. If there is no more data to be fetched, this will return `null`
+| `getPreviousBatch` | - | [LabelGroupList](#labelgrouplist) \| `null` | This method will return a [LabelGroupList](#labelgrouplist) object which has the previous batch of [LabelGroup](#labelgroup) objects in its `data` array. If there is no more data to be fetched, this will return `null`
+
 ### RawFileAsset
 TODO
 ### Task
