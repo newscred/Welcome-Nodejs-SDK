@@ -3,7 +3,7 @@ import { Auth } from "../auth";
 import {
   convertObjectKeysToCamelCase,
   convertObjectKeysToSnakeCase,
-} from "./util";
+} from "../../util";
 
 export class APICaller {
   #shouldRetry: boolean;
