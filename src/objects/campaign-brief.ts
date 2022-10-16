@@ -15,20 +15,10 @@ interface CampaignBriefData {
   };
 }
 
+export interface CampaignBrief extends CampaignBriefData {}
 export class CampaignBrief {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-
-  type!: string;
-  title!: string;
-  template!: {
-    id: string;
-    name: string;
-  } | null;
-  fields!: Array<{ name: string; value: string }>;
-  links!: {
-    campaign: string;
-  };
 
   constructor(
     apiCaller: APICaller,

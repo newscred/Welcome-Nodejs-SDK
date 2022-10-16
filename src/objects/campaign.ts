@@ -6,13 +6,13 @@ interface CampaignData {
   id: string;
   title: string;
   description: string | null;
-  start_date: string | null;
-  end_date: string | null;
-  is_hidden: boolean;
-  reference_id: string;
+  startDate: string | null;
+  endDate: string | null;
+  isHidden: boolean;
+  referenceId: string;
   budget: {
-    currency_code: string;
-    budgeted_amount: string;
+    currencyCode: string;
+    budgetedAmount: string;
   } | null;
   labels: Array<{
     group: {
@@ -28,43 +28,15 @@ interface CampaignData {
     self: string;
     brief: string;
     owner: string;
-    parent_campaign: string;
-    child_campaigns: [string];
+    parentCampaign: string;
+    childCampaigns: [string];
   };
 }
 
+export interface Campaign extends CampaignData{}
 export class Campaign {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-
-  id!: string;
-  title!: string;
-  description!: string | null;
-  startDate!: string | null;
-  endDate!: string | null;
-  isHidden!: boolean;
-  referenceId!: string;
-  budget!: {
-    currencyCode: string;
-    budgetedAmount: string;
-  } | null;
-  labels!: Array<{
-    group: {
-      id: string;
-      name: string;
-    };
-    values: Array<{
-      id: string;
-      name: string;
-    }>;
-  }>;
-  links!: {
-    self: string;
-    brief: string | null;
-    owner: string | null;
-    parentCampaign: string | null;
-    childCampaigns: [string];
-  };
 
   constructor(apiCaller: APICaller, data: CampaignData, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
