@@ -1,5 +1,6 @@
 import { APICaller } from "../modules/api-caller";
 import { TaskStep, TaskStepData } from "./task-step";
+import { TaskBrief, TaskBriefData } from "./brief";
 
 export interface TaskData {
   id: string;
@@ -146,7 +147,20 @@ export class Task {
     this.#loadData(response as TaskData);
   }
 
-  async getBrief() {}
+  async getBrief() {
+    if (!this.#links.brief) {
+      return null;
+    }
+    const response = await this.#apiCaller.get(
+      this.#links.brief,
+      this.#tokenGetParam
+    );
+    return new TaskBrief(
+      this.#apiCaller,
+      response as TaskBriefData,
+      this.#tokenGetParam
+    );
+  }
 
   async getCustomFields() {}
 
