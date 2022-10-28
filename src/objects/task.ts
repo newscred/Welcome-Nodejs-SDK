@@ -1,6 +1,8 @@
 import { APICaller } from "../modules/api-caller";
+import { buildQueryString } from "../util";
 import { TaskStep, TaskStepData } from "./task-step";
 import { TaskBrief, TaskBriefData } from "./brief";
+import { CustomFieldList, CustomFieldListData } from "./custom-field-list";
 
 export interface TaskData {
   id: string;
@@ -162,7 +164,22 @@ export class Task {
     );
   }
 
-  async getCustomFields() {}
+  async getCustomFields(option: PaginationOption) {
+    if (!this.#links.customFields) {
+      return null;
+    }
+    let url = this.#links.customFields;
+    let query = buildQueryString(option);
+    const response = await this.#apiCaller.get(
+      url + query,
+      this.#tokenGetParam
+    );
+    return new CustomFieldList(
+      this.#apiCaller,
+      response as CustomFieldListData,
+      this.#tokenGetParam
+    );
+  }
 
   async getAssets() {}
 
