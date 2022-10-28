@@ -1,6 +1,6 @@
 import { APICaller } from "../api-caller";
 import { Campaign as CampaignObject } from "../../objects/campaign";
-import { CampaignBrief as CampaignBriefObject } from "../../objects/campaign-brief";
+import { CampaignBrief as CampaignBriefObject } from "../../objects/brief";
 
 export class Campaign {
   #apiCaller: APICaller;
