@@ -132,7 +132,19 @@ export class Task {
     };
   }
 
-  async update() {}
+  async update(payload: {
+    labels: {
+      group: string;
+      values: string[];
+    }[];
+  }) {
+    const response = await this.#apiCaller.patch(
+      this.#links.self,
+      payload,
+      this.#tokenGetParam
+    );
+    this.#loadData(response as TaskData);
+  }
 
   async getBrief() {}
 
