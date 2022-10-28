@@ -78,9 +78,6 @@ export class TaskSubStep {
   get isExternal() {
     return this.#isExternal;
   }
-  get links() {
-    return this.#links;
-  }
 
   toJSON() {
     return {
