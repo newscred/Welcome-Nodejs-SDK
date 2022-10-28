@@ -3,7 +3,7 @@ import { APICaller } from "../modules/api-caller";
 import { Task, TaskData } from "./task";
 import { User, UserData } from "./user";
 
-interface TaskSubStepData {
+export interface TaskSubStepData {
   id: string;
   title: string;
   assigneeId: string | null;
