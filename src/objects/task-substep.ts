@@ -22,12 +22,6 @@ export interface TaskSubStepData {
 export class TaskSubStep {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-  #modifiedField!:
-    | "assigneeId"
-    | "isCompleted"
-    | "isInProgress"
-    | "isSkipped"
-    | null;
   #id!: string;
   #title!: string;
   #assigneeId!: string | null;
@@ -61,7 +55,6 @@ export class TaskSubStep {
     this.#isSkipped = data.isSkipped;
     this.#isExternal = data.isExternal;
     this.#links = data.links;
-    this.#modifiedField = null;
   }
 
   get id() {
@@ -89,49 +82,6 @@ export class TaskSubStep {
     return this.#links;
   }
 
-  set assigneeId(value) {
-    this.#assigneeId = value;
-    this.#modifiedField = "assigneeId";
-  }
-
-  set isCompleted(value) {
-    if (value !== true) {
-      throw new Error("'isCompleted' can only be set to true");
-    }
-    this.#isCompleted = true;
-    this.#isInProgress = false;
-    this.#isSkipped = false;
-    this.#modifiedField = "isCompleted";
-  }
-
-  set isInProgress(value) {
-    if (value !== true) {
-      throw new Error("'isInProgress' can only be set to true");
-    }
-    this.#isCompleted = false;
-    this.#isInProgress = true;
-    this.#isSkipped = false;
-    this.#modifiedField = "isInProgress";
-  }
-
-  set isSkipped(value) {
-    if (value !== true) {
-      throw new Error("'isSkipped' can only be set to true");
-    }
-    this.#isCompleted = false;
-    this.#isInProgress = false;
-    this.#isSkipped = true;
-    this.#modifiedField = "isSkipped";
-  }
-
-  isModified() {
-    return Boolean(this.#modifiedField);
-  }
-
-  getModifiedField() {
-    return this.#modifiedField;
-  }
-
   toJSON() {
     return {
       id: this.#id,
@@ -145,16 +95,14 @@ export class TaskSubStep {
     };
   }
 
-  async update() {
-    if (!this.isModified()) {
-      return;
-    }
-    const updatePayload = {
-      [this.getModifiedField()!]: this[this.getModifiedField()!],
-    };
+  async update(payload: {
+    assigneeId?: string | null;
+    isCompleted?: true;
+    isInProgress?: true;
+  }) {
     const response = await this.#apiCaller.patch(
-      this.links.self,
-      updatePayload,
+      this.#links.self,
+      payload,
       this.#tokenGetParam
     );
     this.#loadData(response as TaskSubStepData);
