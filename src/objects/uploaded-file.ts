@@ -1,16 +1,28 @@
 import { APICaller } from "../modules/api-caller";
 
+interface UploadedFileData {
+  key: string;
+  title?: string;
+}
 export class UploadedFile {
   #apiCaller: APICaller;
-  #key: string;
   #tokenGetParam: any;
+  #key: string;
   title: string;
 
-  constructor(apiCaller: any, key: string, title?: string, tokenGetParam?: any) {
+  constructor(
+    data: UploadedFileData,
+    apiCaller: APICaller,
+    tokenGetParam?: any
+  ) {
     this.#apiCaller = apiCaller;
-    this.#key = key;
-    this.title = title || "(no title)";
+    this.#key = data.key;
+    this.title = data.title || "(no title)";
     this.#tokenGetParam = tokenGetParam;
+  }
+
+  get key() {
+    return this.#key;
   }
 
   async createAsset() {
@@ -61,7 +73,7 @@ export class UploadedFile {
       },
       this.#tokenGetParam
     );
-    // TODO: return TaskAsset object
+    // TODO: return TaskAssetDraft object
     return asset;
   }
 }
