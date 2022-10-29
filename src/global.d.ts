@@ -1,4 +1,4 @@
-import {UploadedFile} from "./objects/uploaded-file"
+import { UploadedFile } from "./objects/uploaded-file";
 
 declare global {
   interface PaginationOption {
@@ -15,8 +15,21 @@ declare global {
 
   interface CommentCreatePayload {
     value: string;
-    attachments?: UploadedFile[]
+    attachments?: UploadedFile[];
+  }
+
+  interface LabelPayload {}
+
+  interface LabelResponse {
+    group: {
+      id: string;
+      name: string;
+    };
+    values: {
+      id: string;
+      name: string;
+    }[];
   }
 }
 
-export {}
+export {};
