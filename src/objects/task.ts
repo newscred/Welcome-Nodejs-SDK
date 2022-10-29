@@ -3,6 +3,9 @@ import { buildQueryString } from "../util";
 import { TaskStep, TaskStepData } from "./task-step";
 import { TaskBrief, TaskBriefData } from "./brief";
 import { CustomFieldList, CustomFieldListData } from "./custom-field-list";
+import { TaskAsset, TaskAssetData } from "./task-asset";
+import { UploadedFile } from "./uploaded-file";
+import { AttachmentList, AttachmentListData } from "./attachment-list";
 
 export interface TaskData {
   id: string;
@@ -181,9 +184,44 @@ export class Task {
     );
   }
 
-  async getAssets() {}
+  async getAssets() {
+    const response = await this.#apiCaller.get(
+      this.#links.assets,
+      this.#tokenGetParam
+    );
+    return new TaskAsset(
+      response as TaskAssetData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
+  }
 
-  async addAsset() {}
+  async addAsset(uploadedFile: UploadedFile) {
+    const response = await this.#apiCaller.post(
+      this.#links.assets,
+      {
+        key: uploadedFile.key,
+        title: uploadedFile.title,
+      },
+      this.#tokenGetParam
+    );
 
-  async getAttachments() {}
+    return new TaskAsset(
+      response as TaskAssetData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
+  }
+
+  async getAttachments() {
+    const response = await this.#apiCaller.get(
+      this.#links.attachments,
+      this.#tokenGetParam
+    );
+    return new AttachmentList(
+      response as AttachmentListData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
+  }
 }
