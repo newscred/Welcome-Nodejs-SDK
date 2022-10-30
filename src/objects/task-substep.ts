@@ -1,4 +1,5 @@
 import { APICaller } from "../modules/api-caller";
+import { ExternalWork, ExternalWorkData } from "./external-work";
 // Warning! CIRCULAR DEPENDECY
 import { Task, TaskData } from "./task";
 import { User, UserData } from "./user";
@@ -114,7 +115,16 @@ export class TaskSubStep {
   }
 
   async getExternalWork() {
-    // TODO
+    if (!this.#links.externalWork) return null;
+    const response = await this.#apiCaller.get(
+      this.#links.externalWork,
+      this.#tokenGetParam
+    );
+    return new ExternalWork(
+      response as ExternalWorkData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
   }
 
   async getAssignee() {
