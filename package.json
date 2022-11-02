@@ -13,7 +13,9 @@
     "url": "git+https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git"
   },
   "keywords": [
-    "welcome", "welcomesoftware", "optimizely"
+    "welcome",
+    "welcomesoftware",
+    "optimizely"
   ],
   "author": "Nazmul Ahsan",
   "license": "ISC",
@@ -27,5 +29,8 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "dependencies": {
+    "form-data": "^4.0.0"
+  }
 }

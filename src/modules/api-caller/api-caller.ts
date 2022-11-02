@@ -69,15 +69,18 @@ export class APICaller {
             return;
           }
           if (statusCode === 302) {
-            const redirectTo = res.headers.location
-            const dataFromRedirected = await this.#sendRequest(redirectTo!, tokenGetParam)
-            resolve(dataFromRedirected)
-            return 
+            const redirectTo = res.headers.location;
+            const dataFromRedirected = await this.#sendRequest(
+              redirectTo!,
+              tokenGetParam
+            );
+            resolve(dataFromRedirected);
+            return;
           }
           if (statusCode == 401 && this.#shouldRetry && !isRetry) {
             await this.#auth.rotateTokens(tokenGetParam);
             try {
-              const res = this.#sendRequest(
+              const res = await this.#sendRequest(
                 endpoint,
                 tokenGetParam,
                 method,

@@ -2,7 +2,8 @@ import { Auth } from "./modules/auth";
 import { APICaller } from "./modules/api-caller";
 import { Campaign } from "./modules/campaign";
 import { Label } from "./modules/label";
-import { User } from "./modules/user"
+import { User } from "./modules/user";
+import { Uploader } from "./modules/uploader";
 
 interface WelcomeClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
@@ -29,6 +30,7 @@ export class WelcomeClient {
   label: Label;
   campaign: Campaign;
   user: User;
+  uploader: Uploader;
 
   constructor(param: WelcomeClientConstructorParam) {
     this.auth = new Auth({
@@ -43,8 +45,9 @@ export class WelcomeClient {
     });
 
     const apiCaller = new APICaller(this.auth, param.enableAutoRetry || false);
-    this.label = new Label(apiCaller)
-    this.campaign = new Campaign(apiCaller)
-    this.user = new User(apiCaller)
+    this.label = new Label(apiCaller);
+    this.campaign = new Campaign(apiCaller);
+    this.user = new User(apiCaller);
+    this.uploader = new Uploader(apiCaller);
   }
 }

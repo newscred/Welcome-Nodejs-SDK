@@ -68,7 +68,7 @@ const app = new WelcomeClient(param)
 | `redirectUri` | `string` | The redirect uri registered in Welcome with the associated app
 | `enableAutoRetry` | `boolean` | If `true` the app will try to update the accessToken using the provided refreshtoken if any api call encounters `401 Unauthorized` error and retry again. If second retry also fails, the app will raise an error. <br />Default: `false`
 | `onAuthSuccess` | `(accessToken: string, refreshToken: string, tokenGetParam: any) => any` | This function will be called when authorization code flow completes successfully. You can omit this field if you handle oauth callback manually.
-| `onAuthFailure` | `(accessToken: string, refreshToken: string) => any` | This function will be called if authorization server redirects to redirect URL with any error. You can omit this field if you handle oauth callback manually
+| `onAuthFailure` | `(error: string) => any` | This function will be called if authorization server redirects to redirect URL with any error. You can omit this field if you handle oauth callback manually
 | `tokenChangeCallback` | `(accessToken: string, refreshToken: string, tokenGetParam: any) => any` | This function will be called when the app updates the current tokens. You can use this function to store the updated access and refresh tokens in your database. The optional third parameter `tokenGetParam` can be a `string`, `object` or a `function` that the function may need to map the access and refresh token according to your app's requirement
 
 The `tokenGetParam` should be of the same type throughout the app.
@@ -79,7 +79,7 @@ The `auth` module provides the following methods
 
 | method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `initiateOAuth` <br /> (synchronous function) | `redirectFn: (url) => void` | `undefined` | Use this method to initialize Welcome authorization flow. This method takes a function that take a url string as a parameter and can redirect the user to the provided url (see the example below)
+| `initiateOAuth` <br /> (synchronous function) | `redirectFn: (url) => void` | `undefined` | Use this method to initialize Welcome authorization flow. This method takes a function that takes a url string as a parameter and can redirect the user to the provided url (see the example below)
 | `handleOAuthCallback` | `query: object`, <br/> `tokenGetParam: any` | returned object from `tokenRefreshCallback` function call if provided else `undefined` | Use this method to handle the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter (see the example below)
 | `rotateTokens` | `tokenGetParam: any` | `undefined` |Updates the access token using the refresh token
 | `revokeAccessToken` | `tokenGetParam: any` | `undefined` | Sends a request to the authorization server to revoke the access token
@@ -117,15 +117,28 @@ The `uploader` module provides the following methods
 
 | method | parameter | return resolves | description
 | ------ | --------- | ----------- | ------------
-| `upload` | `name: string`, <br/> `file: FiledBlob` | [UploadedFile](#uploadedfile) | This method takes a string value as the first parameter that is to be the name of the uploaded file and the file object that is to be uploaded. It returns an instance of [UploadedFile](#uploadedfile)
+| `upload` | `readStream: ReadableStream`, <br/> `title: string`, <br /> `tokenGetParam: any` | [UploadedFile](#uploadedfile) | This method is used to upload a file to Welcome. It takes a read stream of the file that is to be uploaded as its first parameter. The second parameter is the title of the file which is optional.
 
 Example
 ```javascript
-const uploadedFile = app.uploader.upload('Shiny sky.jpg', file)
-// uploadedFile.create_asset()
-// uploadedFile.addAsVersion('assetId')
-// uploadedFile.addAsTaskAsset('taskId')
-// uploadedFile.addAsTaskAssetDraft('taskId', 'assetId')
+const readStream = fs.createReadStream("myfile.mp4");
+const uploadedFile = await app.uploader.upload(readStream)
+uploadedFile.title = "My File"
+// do something with the uploaded file
+// uploadedFile.createAsset()
+```
+
+Example with express and multer middleware
+```javascript
+const app = new WelcomeClient(param)
+const server = express();
+const upload = multer();
+server.post("/upload", upload.single("file"), async (req, res, next) => {
+    const uploadedFile = await app.uploader.upload(req.file.buffer, req.file.originalname);
+    // do something with the uploaded file
+    // const asset = await uploadedFile.createAsset();
+    return res.json({ success: true });
+});
 ```
 
 ### Library
@@ -223,7 +236,14 @@ TODO
 ### TaskSubStep
 TODO
 ### UploadedFile
-TODO
+| method | parameter | return resolves | description
+| ------ | --------- | ----------- | ------------
+| `createAsset` | - | TODO | 
+| `addAsAssetVersion` | `assetId: string` | TODO
+| `addAsTaskAsset` | `taskId: string` | TODO
+| `addAsTaskAssetDraft` | `taskId: string`, <br/> `assetId: string` | TODO
+
+
 ### User
 `User` object does not have any additional method.
 ### VideoAsset
