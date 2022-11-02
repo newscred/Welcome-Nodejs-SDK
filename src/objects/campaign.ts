@@ -73,12 +73,12 @@ export class Campaign {
       this.links.childCampaigns.map(async (campUrl) => {
         const childCampaignData: any = await this.#apiCaller.get(
           campUrl,
-          this.#apiCaller
+          this.#tokenGetParam,
         );
         const childCampaign = new Campaign(
           this.#apiCaller,
           childCampaignData,
-          this.#apiCaller
+          this.#tokenGetParam
         );
         return childCampaign;
       })
@@ -89,9 +89,10 @@ export class Campaign {
   async getParentCampaign() {
     if (this.links.parentCampaign === null) return null;
     const parentCampaignData = await (this.#apiCaller.get(
-      this.links.parentCampaign
+      this.links.parentCampaign,
+      this.#tokenGetParam
     ) as Promise<CampaignData>);
-    const parentCampaign = new Campaign(this.#apiCaller, parentCampaignData);
+    const parentCampaign = new Campaign(this.#apiCaller, parentCampaignData, this.#tokenGetParam);
     return parentCampaign;
   }
 }
