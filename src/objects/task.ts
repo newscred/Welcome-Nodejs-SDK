@@ -74,7 +74,7 @@ export class Task {
     };
   };
 
-  constructor(apiCaller: APICaller, data: TaskData, tokenGetParam?: any) {
+  constructor(data: TaskData, apiCaller: APICaller, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
     this.#loadData(data);
@@ -161,8 +161,8 @@ export class Task {
       this.#tokenGetParam
     );
     return new TaskBrief(
-      this.#apiCaller,
       response as TaskBriefData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
   }
@@ -178,8 +178,8 @@ export class Task {
       this.#tokenGetParam
     );
     return new CustomFieldList(
-      this.#apiCaller,
       response as CustomFieldListData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
   }

@@ -5,6 +5,7 @@ export interface LibraryAssetData extends AssetBaseData {
   folderId: string;
   fileLocation: string;
   ownerOrganizationId: string;
+  type: "article" | "image" | "video" | "raw_file" | "structured_content";
   links: {
     self: string;
   };
@@ -16,6 +17,7 @@ export class LibraryAsset extends AssetBase {
   #folderId: string;
   #fileLocation: string;
   #ownerOrganizationId: string;
+  #type: "article" | "image" | "video" | "raw_file" | "structured_content";
   #links: {
     self: string;
   };
@@ -31,6 +33,7 @@ export class LibraryAsset extends AssetBase {
     this.#fileLocation = data.fileLocation;
     this.#folderId = data.folderId;
     this.#ownerOrganizationId = data.ownerOrganizationId;
+    this.#type = data.type;
     this.#links = data.links;
   }
   get folderId() {
@@ -41,6 +44,9 @@ export class LibraryAsset extends AssetBase {
   }
   get ownerOrganizationId() {
     return this.#ownerOrganizationId;
+  }
+  get type() {
+    return this.#type;
   }
 
   toJSON() {

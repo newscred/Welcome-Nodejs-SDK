@@ -36,8 +36,8 @@ export class CustomField {
   #links!: CustomFieldData["links"];
 
   constructor(
-    apiCaller: APICaller,
     data: CustomFieldData,
+    apiCaller: APICaller,
     tokenGetParam?: any
   ) {
     this.#apiCaller = apiCaller;

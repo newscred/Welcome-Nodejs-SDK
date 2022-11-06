@@ -9,13 +9,13 @@ export interface CustomFieldListData extends PaginatedResponse {
 export class CustomFieldList extends ListData {
   data: Array<CustomField>;
   constructor(
-    apiCaller: APICaller,
     data: CustomFieldListData,
+    apiCaller: APICaller,
     tokenGetParam?: any
   ) {
     super(data, apiCaller, tokenGetParam);
     this.data = data.data.map(
-      (labelGroup) => new CustomField(apiCaller, labelGroup, tokenGetParam)
+      (labelGroup) => new CustomField(labelGroup, apiCaller, tokenGetParam)
     );
   }
 }

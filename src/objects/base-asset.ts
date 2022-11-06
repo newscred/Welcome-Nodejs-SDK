@@ -1,7 +1,6 @@
 export interface AssetBaseData {
   id: string;
   title: string;
-  type: "article" | "image" | "video" | "raw_file" | "structured_content";
   mimeType: string;
   createdAt: string;
   modifiedAt: string;
@@ -15,7 +14,6 @@ export interface AssetBaseData {
 export class AssetBase {
   #id: string;
   #title: string;
-  #type: "article" | "image" | "video" | "raw_file" | "structured_content";
   #mimeType: string;
   #createdAt: string;
   #modifiedAt: string;
@@ -28,7 +26,6 @@ export class AssetBase {
   constructor(data: AssetBaseData) {
     this.#id = data.id;
     this.#title = data.title;
-    this.#type = data.type;
     this.#mimeType = data.mimeType;
     this.#createdAt = data.createdAt;
     this.#modifiedAt = data.modifiedAt;
@@ -42,9 +39,7 @@ export class AssetBase {
   get title() {
     return this.#title;
   }
-  get type() {
-    return this.#type;
-  }
+
   get mimeType() {
     return this.#mimeType;
   }
@@ -65,7 +60,6 @@ export class AssetBase {
     return {
       id: this.#id,
       title: this.#title,
-      type: this.#type,
       mimeType: this.#mimeType,
       createdAt: this.#createdAt,
       modifiedAt: this.#modifiedAt,

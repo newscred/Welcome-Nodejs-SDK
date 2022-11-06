@@ -90,7 +90,7 @@ export class TaskBrief extends BriefBase {
   #tokenGetParam: any;
   #links: TaskBriefData["links"];
 
-  constructor(apiCaller: APICaller, data: TaskBriefData, tokenGetParam?: any) {
+  constructor(data: TaskBriefData, apiCaller: APICaller, tokenGetParam?: any) {
     super(data);
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
@@ -103,8 +103,8 @@ export class TaskBrief extends BriefBase {
       this.#tokenGetParam
     );
     const task = new Task(
-      this.#apiCaller,
       taskData as TaskData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
     return task;

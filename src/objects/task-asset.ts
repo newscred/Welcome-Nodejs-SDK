@@ -3,6 +3,7 @@ import { AssetBase, AssetBaseData } from "./base-asset";
 import { UploadedFile } from "./uploaded-file";
 
 export interface TaskAssetData extends AssetBaseData {
+  type: "article" | "image" | "video" | "raw_file" | "structured_content";
   links: {
     self: string;
     task: string;
@@ -18,18 +19,24 @@ export interface TaskAssetData extends AssetBaseData {
 export class TaskAsset extends AssetBase {
   #apiCaller: APICaller;
   #tokenGetParam: any;
+  #type: "article" | "image" | "video" | "raw_file" | "structured_content";
   #links: TaskAssetData["links"];
 
   constructor(data: TaskAssetData, apiCaller: APICaller, tokenGetParam?: any) {
     super(data);
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
+    this.#type = data.type;
     this.#links = data.links;
+  }
+  get type() {
+    return this.#type;
   }
 
   toJSON() {
     return {
       ...super.toJSON(),
+      type: this.#type,
       links: this.#links,
     };
   }

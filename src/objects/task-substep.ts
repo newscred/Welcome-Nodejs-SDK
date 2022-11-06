@@ -38,8 +38,8 @@ export class TaskSubStep {
   };
 
   constructor(
-    apiCaller: APICaller,
     data: TaskSubStepData,
+    apiCaller: APICaller,
     tokenGetParam?: any
   ) {
     this.#apiCaller = apiCaller;
@@ -111,7 +111,7 @@ export class TaskSubStep {
       this.#links.task,
       this.#tokenGetParam
     );
-    return new Task(this.#apiCaller, response as TaskData, this.#tokenGetParam);
+    return new Task(response as TaskData, this.#apiCaller, this.#tokenGetParam);
   }
 
   async getExternalWork() {

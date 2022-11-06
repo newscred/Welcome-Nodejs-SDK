@@ -34,7 +34,7 @@ export class TaskStep {
     this.#dueAt = data.dueAt ? new Date(data.dueAt) : null;
     this.#subSteps = data.subSteps.map(
       (substep) =>
-        new TaskSubStep(this.#apiCaller, substep, this.#tokenGetParam)
+        new TaskSubStep(substep, this.#apiCaller, this.#tokenGetParam)
     );
   }
 
