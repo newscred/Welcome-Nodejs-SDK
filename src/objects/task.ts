@@ -3,7 +3,7 @@ import { buildQueryString } from "../util";
 import { TaskStep, TaskStepData } from "./task-step";
 import { TaskBrief, TaskBriefData } from "./brief";
 import { CustomFieldList, CustomFieldListData } from "./custom-field-list";
-import { TaskAsset, TaskAssetData } from "./task-asset";
+import { TaskAsset, TaskAssetData } from "./task-generic-asset";
 import { TaskAssetList, TaskAssetListData } from "./task-asset-list";
 import { UploadedFile } from "./uploaded-file";
 import { AttachmentList, AttachmentListData } from "./attachment-list";

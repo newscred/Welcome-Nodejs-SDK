@@ -1,5 +1,5 @@
 import { APICaller } from "../modules/api-caller";
-import { TaskAsset, TaskAssetData } from "./task-asset";
+import { TaskAsset, TaskAssetData } from "./task-generic-asset";
 import { ListData } from "./base-list-data";
 
 export interface TaskAssetListData extends PaginatedResponse {

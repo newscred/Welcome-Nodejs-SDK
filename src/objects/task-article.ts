@@ -1,47 +1,48 @@
-export interface AssetBaseData {
+export interface TaskArticleData {
   id: string;
   title: string;
-  mimeType: string;
   createdAt: string;
   modifiedAt: string;
-  content: {
-    type: "url" | "api_url" | "html_body";
-    value: string;
-  };
+  htmlBody: string;
+  url: string | null;
   labels: LabelResponse[];
+  links: {
+    self: string;
+    task: string;
+    drafts: string | null;
+    webUrls: {
+      self: string;
+      task: string;
+      drafts: null;
+    };
+  };
 }
 
-export class AssetBase {
+export class TaskArticle {
   #id: string;
   #title: string;
-  #mimeType: string;
   #createdAt: string;
   #modifiedAt: string;
-  #content: {
-    type: "url" | "api_url" | "html_body";
-    value: string;
-  };
+  #htmlBody: string;
+  #url: string | null;
   #labels: LabelResponse[];
+  #links: TaskArticleData["links"];
 
-  constructor(data: AssetBaseData) {
+  constructor(data: TaskArticleData) {
     this.#id = data.id;
     this.#title = data.title;
-    this.#mimeType = data.mimeType;
     this.#createdAt = data.createdAt;
     this.#modifiedAt = data.modifiedAt;
-    this.#content = data.content;
+    this.#htmlBody = data.htmlBody;
+    this.#url = data.url;
     this.#labels = data.labels;
+    this.#links = data.links;
   }
-
   get id() {
     return this.#id;
   }
   get title() {
     return this.#title;
-  }
-
-  get mimeType() {
-    return this.#mimeType;
   }
   get createdAt() {
     return this.#createdAt;
@@ -49,8 +50,11 @@ export class AssetBase {
   get modifiedAt() {
     return this.#modifiedAt;
   }
-  get content() {
-    return this.#content;
+  get htmlBody() {
+    return this.#htmlBody;
+  }
+  get url() {
+    return this.#url;
   }
   get labels() {
     return this.#labels;
@@ -60,11 +64,12 @@ export class AssetBase {
     return {
       id: this.#id,
       title: this.#title,
-      mimeType: this.#mimeType,
       createdAt: this.#createdAt,
       modifiedAt: this.#modifiedAt,
-      content: this.#content,
+      htmlBody: this.#htmlBody,
+      url: this.#url,
       labels: this.#labels,
+      links: this.#links,
     };
   }
 }
