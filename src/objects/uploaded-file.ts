@@ -25,6 +25,13 @@ export class UploadedFile {
     return this.#key;
   }
 
+  toJSON() {
+    return {
+      key: this.#key,
+      title: this.title,
+    }
+  }
+
   async createAsset() {
     const asset = await this.#apiCaller.post(
       "/assets",

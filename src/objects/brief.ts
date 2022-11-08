@@ -26,7 +26,6 @@ class BriefBase {
     this.#template = data.template;
     this.#fields = data.fields;
   }
-
   get type() {
     return this.#type;
   }
@@ -38,6 +37,15 @@ class BriefBase {
   }
   get fields() {
     return this.#fields;
+  }
+
+  toJSON() {
+    return {
+      type: this.#type,
+      title: this.#title,
+      template: this.#template,
+      fields: this.#fields,
+    };
   }
 }
 
@@ -62,6 +70,13 @@ export class CampaignBrief extends BriefBase {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
     this.#links = data.links;
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      links: this.#links,
+    };
   }
 
   async getCampaign() {
@@ -95,6 +110,13 @@ export class TaskBrief extends BriefBase {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
     this.#links = data.links;
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      links: this.#links,
+    };
   }
 
   async getTask() {
