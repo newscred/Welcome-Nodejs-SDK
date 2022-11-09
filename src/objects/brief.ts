@@ -62,8 +62,8 @@ export class CampaignBrief extends BriefBase {
   #links: CampaignBriefData["links"];
 
   constructor(
-    apiCaller: APICaller,
     data: CampaignBriefData,
+    apiCaller: APICaller,
     tokenGetParam?: any
   ) {
     super(data);
@@ -85,8 +85,8 @@ export class CampaignBrief extends BriefBase {
       this.#tokenGetParam
     );
     const campaign = new Campaign(
-      this.#apiCaller,
       campaignData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
     return campaign;

@@ -2,7 +2,7 @@ import { APICaller } from "../modules/api-caller";
 import { CampaignBrief } from "./brief";
 import { User } from "./user";
 
-interface CampaignData {
+export interface CampaignData {
   id: string;
   title: string;
   description: string | null;
@@ -38,7 +38,7 @@ export class Campaign {
   #apiCaller: APICaller;
   #tokenGetParam: any;
 
-  constructor(apiCaller: APICaller, data: CampaignData, tokenGetParam?: any) {
+  constructor(data: CampaignData, apiCaller: APICaller, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
     Object.assign(this, data);
@@ -51,8 +51,8 @@ export class Campaign {
       this.#tokenGetParam
     );
     const campaignBrief = new CampaignBrief(
-      this.#apiCaller,
       campaignBriefData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
     return campaignBrief;
@@ -76,8 +76,8 @@ export class Campaign {
           this.#tokenGetParam,
         );
         const childCampaign = new Campaign(
-          this.#apiCaller,
           childCampaignData,
+          this.#apiCaller,
           this.#tokenGetParam
         );
         return childCampaign;
@@ -92,7 +92,7 @@ export class Campaign {
       this.links.parentCampaign,
       this.#tokenGetParam
     ) as Promise<CampaignData>);
-    const parentCampaign = new Campaign(this.#apiCaller, parentCampaignData, this.#tokenGetParam);
+    const parentCampaign = new Campaign(parentCampaignData, this.#apiCaller, this.#tokenGetParam);
     return parentCampaign;
   }
 }

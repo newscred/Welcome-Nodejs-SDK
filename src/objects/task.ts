@@ -7,6 +7,7 @@ import { TaskAsset, TaskAssetData } from "./task-generic-asset";
 import { TaskAssetList, TaskAssetListData } from "./task-asset-list";
 import { UploadedFile } from "./uploaded-file";
 import { AttachmentList, AttachmentListData } from "./attachment-list";
+import { Campaign, CampaignData } from "./campaign";
 
 export interface TaskData {
   id: string;
@@ -163,6 +164,18 @@ export class Task {
     );
     return new TaskBrief(
       response as TaskBriefData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
+  }
+
+  async getCampaign() {
+    const response = await this.#apiCaller.get(
+      this.#links.campaign,
+      this.#tokenGetParam
+    );
+    return new Campaign(
+      response as CampaignData,
       this.#apiCaller,
       this.#tokenGetParam
     );
