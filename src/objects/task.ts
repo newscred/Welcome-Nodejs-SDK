@@ -185,8 +185,8 @@ export class Task {
     if (!this.#links.customFields) {
       return null;
     }
-    let url = this.#links.customFields;
-    let query = buildQueryString(option);
+    const url = this.#links.customFields;
+    const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
       url + query,
       this.#tokenGetParam
@@ -198,9 +198,10 @@ export class Task {
     );
   }
 
-  async getAssets() {
+  async getAssets(option: PaginationOption) {
+    const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
-      this.#links.assets,
+      this.#links.assets+query,
       this.#tokenGetParam
     );
     return new TaskAssetList(
@@ -227,9 +228,10 @@ export class Task {
     );
   }
 
-  async getAttachments() {
+  async getAttachments(option: PaginationOption) {
+    const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
-      this.#links.attachments,
+      this.#links.attachments+query,
       this.#tokenGetParam
     );
     return new AttachmentList(

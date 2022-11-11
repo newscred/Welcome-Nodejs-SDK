@@ -56,7 +56,7 @@ export function buildQueryString(obj: any) {
   let query = "";
   for (let k of Object.keys(optionSnakeCased)) {
     query += query ? "&" : "?";
-    query += `?${k}=${optionSnakeCased[k]}`;
+    query += `${k}=${optionSnakeCased[k]}`;
   }
   return query;
 }
