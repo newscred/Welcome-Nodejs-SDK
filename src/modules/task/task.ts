@@ -250,9 +250,21 @@ export class Task {
     comment: CommentCreatePayload,
     tokenGetParam?: any
   ) {
+    const commentPayload = {
+      value: comment.value,
+      attachments: [] as { key: string; name: string }[],
+    };
+    if (comment.attachments) {
+      comment.attachments.forEach((file) => {
+        commentPayload.attachments.push({
+          key: file.key,
+          name: file.title,
+        });
+      });
+    }
     const response = await this.#apiCaller.post(
       `/tasks/${taskId}/steps/${stepId}/sub-steps/${subStepId}/comments`,
-      comment,
+      commentPayload,
       tokenGetParam
     );
     return response;
