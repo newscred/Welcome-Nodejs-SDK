@@ -62,7 +62,8 @@ export class APICaller {
         });
 
         res.on("end", async () => {
-          data = JSON.parse(data);
+          if (data)
+            data = JSON.parse(data);
           data = convertObjectKeysToCamelCase(data);
           if (statusCode && statusCode < 299) {
             resolve(data);
