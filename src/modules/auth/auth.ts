@@ -137,18 +137,19 @@ export class Auth {
   }
 
   async handleOAuthCallback(query: {[key: string]: string}, tokenGetParam?: any) {
-    if (query.error) {
+    const { code } = query;
+    if (!code) {
+      const errorMsg = query.error || "Missing 'code' in the query param";
       if (!this.#onAuthFailure) {
-        throw new Error(query.error);
+        throw new Error(errorMsg);
       }
-      return this.#onAuthFailure(query.error);
+      return this.#onAuthFailure(errorMsg);
     } else {
       if (!this.#onAuthSuccess) {
         throw new Error(
           "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
         );
       }
-      const { code } = query;
       const payload: TokenRequestPayload = {
         client_id: this.#clientId!,
         client_secret: this.#clientSecret!,
@@ -205,7 +206,7 @@ export class Auth {
   async revokeRefreshToken(tokenGetParam?: any) {
     if (!this.#clientId || !this.#clientSecret) {
       throw new Error(
-        "Cannot revoke access token because 'clientId' or 'clientSecret' is missing"
+        "Cannot revoke refresh token because 'clientId' or 'clientSecret' is missing"
       );
     }
     const payload: TokenRevokPayload = {
