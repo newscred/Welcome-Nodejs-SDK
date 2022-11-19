@@ -150,6 +150,7 @@ export class Task {
     tokenGetParam?: any
   ) {
     const query = buildQueryString(option);
+    // TODO: return custom field choices object
     return this.#apiCaller.get(
       `/tasks/${taskId}/custom-fields/${customFieldId}/choices${query}`,
       tokenGetParam
@@ -240,6 +241,7 @@ export class Task {
       `/tasks/${taskId}/steps/${stepId}/sub-steps/${subStepId}/comments${query}`,
       tokenGetParam
     );
+    // TODO: return list object
     return response;
   }
 
@@ -281,6 +283,7 @@ export class Task {
       `/tasks/${taskId}/steps/${stepId}/sub-steps/${subStepId}/comments/${commentId}`,
       tokenGetParam
     );
+    // TODO: return comment object
     return response;
   }
 
@@ -297,6 +300,7 @@ export class Task {
       update,
       tokenGetParam
     );
+    // TODO: return comment object
     return response;
   }
 

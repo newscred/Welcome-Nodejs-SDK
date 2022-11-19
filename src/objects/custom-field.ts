@@ -86,6 +86,7 @@ export class CustomField {
     let url = this.#links.choices;
     let query = buildQueryString(option);
     const response = await this.#apiCaller.get(url + query, this.#tokenGetParam);
+    // TODO: return list class object instance
     return response;
   }
 }
