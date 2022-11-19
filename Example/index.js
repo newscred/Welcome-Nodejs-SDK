@@ -8,8 +8,9 @@ const uploadTestRoute = require("./routes/test-upload");
 const userTestRoute = require("./routes/test-user");
 
 const app = express();
-const PORT = 5000;
+const PORT = 30000;
 
+app.use(express.json());
 app.use(morgan("dev"));
 
 // mocks user authentication
@@ -18,12 +19,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(authTestRoute);
-app.use(campaignTestRoute);
-app.use(labelsTestRoute);
-app.use(uploadTestRoute);
-app.use(userTestRoute);
-
-app.get("/", (req, res) => res.sendFile(__dirname+'/views/index.html'));
+app.use('/tests/oauth', authTestRoute);
+app.use('/tests/campaign', campaignTestRoute);
+app.use('/tests/label', labelsTestRoute);
+app.use('/tests/uploader', uploadTestRoute);
+app.use('/tests/user', userTestRoute);
+app.use(express.static(__dirname+'/static', { extensions: ['html']}))
 
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));

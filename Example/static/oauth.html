@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome SDK - OAuth</title>
+</head>
+<body>
+    <h1>Node JS SDK test app</h1>
+    <p>
+        <a href="/">Home</a> |
+        <a href="/campaign">Campaign</a> |
+        <a href="/label">Label</a> |
+        <a href="/uploader">Uploader</a> |
+        <a href="/user">User</a>
+    </p>
+    <h2>OAuth</h2>
+    <div style="display: flex;">
+        <div style="padding-right: 10px; margin-right: 20px; border-right: 1px solid black;">
+            <button onclick="initiateOAuth()">initiateOAuth</button>
+            <br />
+            <button onclick="get('/tests/oauth/access-token')">getAccessToken</button>
+            <br />
+            <button onclick="get('/tests/oauth/refresh-token')">getRefreshToken</button>
+            <br />
+            <button onclick="get('/tests/oauth/rotate-token')">rotateTokens</button>
+            <br />
+            <button onclick="get('/tests/oauth/revoke-access')">revokeAccessToken</button>
+            <br />
+            <button onclick="get('/tests/oauth/revoke-refresh')">revokeRefreshToken</button>
+        </div>
+        <div>
+            <p>Response</p>
+            <hr />
+            <pre id="response" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+</body>
+<script src="./oauth.js"></script>
+</html>

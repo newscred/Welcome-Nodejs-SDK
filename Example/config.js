@@ -16,7 +16,7 @@ const welcomeClient = new WelcomeClient({
     console.log(JSON.stringify(dummyDB))
     return null
   },
-  redirectUri: "https://910c-59-153-103-30.in.ngrok.io/oauth/callback",
+  redirectUri: "<ngrok-url>/tests/oauth/callback",
   tokenChangeCallback: (accessToken, refreshToken, { userId }) => {
     dummyDB[userId].accessToken = accessToken;
     dummyDB[userId].refreshToken = refreshToken;
@@ -25,5 +25,36 @@ const welcomeClient = new WelcomeClient({
   },
   enableAutoRetry: true,
 });
+
+// Any real database can be used, for example, Redis
+// const Redis = require('ioredis');
+
+// const redis = new Redis({
+//     host: process.env.REDIS_HOST,
+//     port: 12608,
+//     password: process.env.REDIS_PASSWORD
+// });
+
+// const welcomeClient = new WelcomeClient({
+//   accessToken: ({ userId }) => redis.get(`access:${userId}`),
+//   refreshToken: ({ userId }) => redis.get(`refresh:${userId}`),
+//   onAuthFailure: (err) => {
+//     console.log("authorization failed")
+//     console.log(err)
+//     return err
+//   },
+//   onAuthSuccess: (accessToken, refreshToken, { userId }) => {
+//     redis.set(`access:${userId}`, accessToken)
+//     redis.set(`refresh:${userId}`, refreshToken)
+//     return null
+//   },
+//   redirectUri: "<your-app-url>/tests/oauth/callback",
+//   tokenChangeCallback: (accessToken, refreshToken, { userId }) => {
+//     redis.set(`access:${userId}`, accessToken)
+//     redis.set(`refresh:${userId}`, refreshToken)
+//     console.log("token updated");
+//   },
+//   enableAutoRetry: true,
+// });
 
 module.exports = { welcomeClient, dummyDB };

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome SDK - Uploader</title>
+  </head>
+  <body>
+    <h1>Node JS SDK test app</h1>
+    <p>
+      <a href="/">Home</a> |
+      <a href="/campaign">Campaign</a> |
+      <a href="/label">Label</a> |
+      <a href="/uploader">Uploader</a> |
+      <a href="/user">User</a>
+  </p>
+    <h2>Uploader</h2>
+    <form action="/tests/uploader/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" id="file" />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

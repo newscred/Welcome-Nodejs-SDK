@@ -6,9 +6,6 @@ const { welcomeClient } = require("../config");
 const upload = multer();
 const router = Router();
 
-router.get("/test-upload-file", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "views", "upload-test.html"));
-});
 
 router.post("/upload", upload.single("file"), async (req, res) => {
   const userId = req.user.id;
@@ -18,7 +15,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
       req.file.originalname,
       { userId }
     );
-    return res.json({ key: uploadedFile.key, title: upload.title });
+    return res.json({ uploadedFile });
   } catch (err) {
     console.log(err);
     return res.status(err.code || 500).json({ error: err.message });
