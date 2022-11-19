@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome SDK - Task</title>
+</head>
+
+<body>
+    <h1>Node JS SDK test app</h1>
+    <p>
+        <a href="/">Home</a> |
+        <a href="/campaign">Campaign</a> |
+        <a href="/label">Label</a> |
+        <a href="/task">Task</a> |
+        <a href="/uploader">Uploader</a> |
+        <a href="/user">User</a>
+    </p>
+    <h2>Task</h2>
+    <h3>Task module methods</h3>
+    <div style="display: flex;">
+        <div style="padding-right: 10px; margin-right: 20px; border-right: 1px solid black;">
+            <ul>
+                <li>
+                    <strong>getTask</strong>
+                    <form onsubmit="getTask(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateTask</strong>
+                    <form onsubmit="updateTask(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br>
+                        <textarea id="taskUpdatePayload" name="taskUpdatePayload" placeholder="update payload" required
+                            rows="4" cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskBrief</strong>
+                    <form onsubmit="getTaskBrief(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskCustomFields</strong>
+                    <form onsubmit="getTaskCustomFields(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskCustomField</strong>
+                    <form onsubmit="getTaskCustomField(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="customFieldId" name="customFieldId" placeholder="customFieldId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateTaskCustomField</strong>
+                    <form onsubmit="updateTaskCustomField(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="customFieldId" name="customFieldId" placeholder="customFieldId" required />
+                        <br>
+                        <textarea id="customFieldIdUpdate" name="customFieldIdUpdate" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskCustomFieldChoices</strong>
+                    <form onsubmit="getTaskCustomFieldChoices(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="customFieldId" name="customFieldId" placeholder="customFieldId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskSubstep</strong>
+                    <form onsubmit="getTaskSubstep(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateTaskSubstep</strong>
+                    <form onsubmit="updateTaskSubstep(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskSubstepExternalWork</strong>
+                    <form onsubmit="getTaskSubstepExternalWork(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateTaskSubStepExternalWork</strong>
+                    <form onsubmit="updateTaskSubStepExternalWork(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskSubstepComments</strong>
+                    <form onsubmit="getTaskSubstepComments(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addTaskSubstepComment</strong>
+                    <form onsubmit="addTaskSubstepComment(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <br>
+                        <textarea id="comment" name="comment" placeholder="comment" required rows="4"
+                        cols="54"></textarea>
+                        <br />
+                        <input type="file" name="file" id="file" multiple/>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskSubstepComment</strong>
+                    <form onsubmit="getTaskSubstepComment(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <input id="commentId" name="commentId" placeholder="commentId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateTaskSubstepComment</strong>
+                    <form onsubmit="updateTaskSubstepComment(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <input id="commentId" name="commentId" placeholder="commentId" required />
+                        <br>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>deleteTaskSubstepComment</strong>
+                    <form onsubmit="deleteTaskSubstepComment(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="stepId" name="stepId" placeholder="stepId" required />
+                        <input id="subStepId" name="subStepId" placeholder="subStepId" required />
+                        <input id="commentId" name="commentId" placeholder="commentId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskAssets</strong>
+                    <form onsubmit="getTaskAssets(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addTaskAsset</strong>
+                    <form onsubmit="addTaskAsset(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input type="file" name="file" id="file" required/>
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addTaskAssetDraft</strong>
+                    <form onsubmit="addTaskAssetDraft(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="assetId" name="assetId" placeholder="assetId" required />
+                        <br>
+                        <input type="file" name="file" id="file" required/>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskAssetComments</strong>
+                    <form onsubmit="getTaskAssetComments(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="assetId" name="assetId" placeholder="assetId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addTaskAssetComment</strong>
+                    <form onsubmit="addTaskAssetComment(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="assetId" name="assetId" placeholder="assetId" required />
+                        <br>
+                        <textarea id="comment" name="comment" placeholder="comment" required rows="4"
+                        cols="54"></textarea>
+                        <br />
+                        <input type="file" name="file" id="file" multiple/>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskAttachments</strong>
+                    <form onsubmit="getTaskAttachments(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskArticle</strong>
+                    <form onsubmit="getTaskArticle(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="articleId" name="articleId" placeholder="articleId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskImage</strong>
+                    <form onsubmit="getTaskImage(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="imageId" name="imageId" placeholder="imageId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskVideo</strong>
+                    <form onsubmit="getTaskVideo(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="videoId" name="videoId" placeholder="videoId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getTaskRawFile</strong>
+                    <form onsubmit="getTaskRawFile(event)">
+                        <input id="taskId" name="taskId" placeholder="taskId" required />
+                        <input id="rawFileId" name="rawFileId" placeholder="rawFileId" required />
+                        <br>
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p>Response</p>
+            <hr />
+            <pre id="response" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+</body>
+<script src="./task.js"></script>
+<script>
+
+</script>
+
+</html>
