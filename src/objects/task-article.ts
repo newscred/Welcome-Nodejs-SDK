@@ -21,8 +21,8 @@ export interface TaskArticleData {
 export class TaskArticle {
   #id: string;
   #title: string;
-  #createdAt: string;
-  #modifiedAt: string;
+  #createdAt: Date;
+  #modifiedAt: Date;
   #htmlBody: string;
   #url: string | null;
   #labels: LabelResponse[];
@@ -31,8 +31,8 @@ export class TaskArticle {
   constructor(data: TaskArticleData) {
     this.#id = data.id;
     this.#title = data.title;
-    this.#createdAt = data.createdAt;
-    this.#modifiedAt = data.modifiedAt;
+    this.#createdAt = new Date(data.createdAt);
+    this.#modifiedAt = new Date(data.modifiedAt);
     this.#htmlBody = data.htmlBody;
     this.#url = data.url;
     this.#labels = data.labels;
@@ -64,8 +64,8 @@ export class TaskArticle {
     return {
       id: this.#id,
       title: this.#title,
-      createdAt: this.#createdAt,
-      modifiedAt: this.#modifiedAt,
+      createdAt: this.#createdAt.toISOString(),
+      modifiedAt: this.#modifiedAt.toISOString(),
       htmlBody: this.#htmlBody,
       url: this.#url,
       labels: this.#labels,

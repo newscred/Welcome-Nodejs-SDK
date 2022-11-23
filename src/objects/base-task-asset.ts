@@ -21,8 +21,8 @@ export class TaskAssetBase {
   #id: string;
   #title: string;
   #mimeType: string;
-  #createdAt: string;
-  #modifiedAt: string;
+  #createdAt: Date;
+  #modifiedAt: Date;
   #labels: LabelResponse[];
   #links: TaskAssetBaseData["links"];
 
@@ -30,8 +30,8 @@ export class TaskAssetBase {
     this.#id = data.id;
     this.#title = data.title;
     this.#mimeType = data.mimeType;
-    this.#createdAt = data.createdAt;
-    this.#modifiedAt = data.modifiedAt;
+    this.#createdAt = new Date(data.createdAt);
+    this.#modifiedAt = new Date(data.modifiedAt);
     this.#labels = data.labels;
     this.#links = data.links;
   }
@@ -60,8 +60,8 @@ export class TaskAssetBase {
       id: this.#id,
       title: this.#title,
       mimeType: this.#mimeType,
-      createdAt: this.#createdAt,
-      modifiedAt: this.#modifiedAt,
+      createdAt: this.#createdAt.toISOString(),
+      modifiedAt: this.#modifiedAt.toISOString(),
       labels: this.#labels,
       links: this.#links,
     };
