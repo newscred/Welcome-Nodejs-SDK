@@ -41,6 +41,8 @@ export class Campaign {
   constructor(data: CampaignData, apiCaller: APICaller, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
+
+    // TODO: refactor this
     Object.assign(this, data);
   }
 

@@ -181,7 +181,7 @@ export class Task {
     );
   }
 
-  async getCustomFields(option: PaginationOption) {
+  async getCustomFields(option: PaginationOption = {}) {
     if (!this.#links.customFields) {
       return null;
     }
@@ -198,7 +198,7 @@ export class Task {
     );
   }
 
-  async getAssets(option: PaginationOption) {
+  async getAssets(option: PaginationOption = {}) {
     const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
       this.#links.assets+query,
@@ -228,7 +228,7 @@ export class Task {
     );
   }
 
-  async getAttachments(option: PaginationOption) {
+  async getAttachments(option: PaginationOption = {}) {
     const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
       this.#links.attachments+query,

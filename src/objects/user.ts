@@ -3,7 +3,7 @@ export interface UserData {
   firstName: string,
   lastName: string,
   fullName: string,
-  email: string,
+  email: string | null,
 }
 
 export class User {
@@ -11,9 +11,10 @@ export class User {
   firstName!: string
   lastName!: string
   fullName!: string
-  email!: string
+  email!: string | null
 
   constructor(data: UserData) {
+    // TODO
     Object.assign(this, data);
   }
 }

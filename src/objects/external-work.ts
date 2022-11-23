@@ -31,7 +31,7 @@ export class ExternalWork {
   ) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
-    this.loadData(data);
+    this.#loadData(data);
   }
 
   get identifier() {
@@ -50,7 +50,7 @@ export class ExternalWork {
     return this.#externalSystem;
   }
 
-  loadData(data: ExternalWorkData) {
+  #loadData(data: ExternalWorkData) {
     this.#identifier = data.identifier;
     this.#title = data.title;
     this.#status = data.status;
@@ -80,6 +80,6 @@ export class ExternalWork {
       payload,
       this.#tokenGetParam
     );
-    this.loadData(response as ExternalWorkData);
+    this.#loadData(response as ExternalWorkData);
   }
 }
