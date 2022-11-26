@@ -1,5 +1,5 @@
 import { APICaller } from "../modules/api-caller";
-import { CampaignBrief } from "./brief";
+import { CampaignBrief } from "./campaign-brief";
 import { User } from "./user";
 
 export interface CampaignData {

@@ -1,7 +1,7 @@
 import { APICaller } from "../modules/api-caller";
 import { buildQueryString } from "../util";
 import { TaskStep, TaskStepData } from "./task-step";
-import { TaskBrief, TaskBriefData } from "./brief";
+import { TaskBrief, TaskBriefData } from "./task-brief";
 import { CustomFieldList, CustomFieldListData } from "./custom-field-list";
 import { TaskAsset, TaskAssetData } from "./task-generic-asset";
 import { TaskAssetList, TaskAssetListData } from "./task-asset-list";
@@ -76,9 +76,7 @@ export class Task {
     };
   }
 
-  async update(payload: {
-    labels: LabelPayload[];
-  }) {
+  async update(payload: { labels: LabelPayload[] }) {
     const response = await this.#apiCaller.patch(
       this.#links.self,
       payload,

@@ -2,7 +2,7 @@ import { APICaller } from "../api-caller";
 import { buildQueryString } from "../../util";
 import { UploadedFile } from "../../objects/uploaded-file";
 import { Task as TaskObject, TaskData } from "../../objects/task";
-import { TaskBrief, TaskBriefData } from "../../objects/brief";
+import { TaskBrief, TaskBriefData } from "../../objects/task-brief";
 import {
   CustomFieldList,
   CustomFieldListData,
