@@ -4,7 +4,7 @@ import { ExternalWork, ExternalWorkData } from "./external-work";
 import { Task, TaskData } from "./task";
 import { User, UserData } from "./user";
 
-export interface TaskSubStepData {
+interface Common {
   id: string;
   title: string;
   assigneeId: string | null;
@@ -12,6 +12,9 @@ export interface TaskSubStepData {
   isInProgress: boolean;
   isSkipped: boolean;
   isExternal: boolean;
+}
+
+export interface TaskSubStepData extends Common {
   links: {
     self: string;
     task: string;
@@ -20,22 +23,11 @@ export interface TaskSubStepData {
   };
 }
 
+export interface TaskSubStep extends Common {}
 export class TaskSubStep {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-  #id!: string;
-  #title!: string;
-  #assigneeId!: string | null;
-  #isCompleted!: boolean;
-  #isInProgress!: boolean;
-  #isSkipped!: boolean;
-  #isExternal!: boolean;
-  #links!: {
-    self: string;
-    task: string;
-    externalWork: string | null;
-    assignee?: string | null;
-  };
+  #links!: TaskSubStepData["links"];
 
   constructor(
     data: TaskSubStepData,
@@ -48,49 +40,13 @@ export class TaskSubStep {
   }
 
   #loadData(data: TaskSubStepData) {
-    this.#id = data.id;
-    this.#title = data.title;
-    this.#assigneeId = data.assigneeId;
-    this.#isCompleted = data.isCompleted;
-    this.#isInProgress = data.isInProgress;
-    this.#isSkipped = data.isSkipped;
-    this.#isExternal = data.isExternal;
-    this.#links = data.links;
+    const { links, ...other } = data;
+    this.#links = links;
+    Object.assign(this, other);
   }
 
-  get id() {
-    return this.#id;
-  }
-  get title() {
-    return this.#title;
-  }
-  get assigneeId() {
-    return this.#assigneeId;
-  }
-  get isCompleted() {
-    return this.#isCompleted;
-  }
-  get isInProgress() {
-    return this.#isInProgress;
-  }
-  get isSkipped() {
-    return this.#isSkipped;
-  }
-  get isExternal() {
-    return this.#isExternal;
-  }
-
-  toJSON() {
-    return {
-      id: this.#id,
-      title: this.#title,
-      assigneeId: this.#assigneeId,
-      isCompleted: this.#isCompleted,
-      isInProgress: this.#isInProgress,
-      isSkipped: this.#isSkipped,
-      isExternal: this.#isExternal,
-      links: this.#links,
-    };
+  getRelatedLinks() {
+    return this.#links;
   }
 
   async update(payload: {
@@ -128,7 +84,7 @@ export class TaskSubStep {
   }
 
   async getAssignee() {
-    if (!this.#assigneeId) {
+    if (!this.assigneeId) {
       return;
     }
     const response = await this.#apiCaller.get(

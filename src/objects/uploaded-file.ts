@@ -25,11 +25,15 @@ export class UploadedFile {
     return this.#key;
   }
 
+  set key(value) {
+    throw Error("Key value cannot be reassigned");
+  }
+
   toJSON() {
     return {
       key: this.#key,
       title: this.title,
-    }
+    };
   }
 
   async createAsset() {

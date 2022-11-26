@@ -1,7 +1,7 @@
 import { APICaller } from "../modules/api-caller";
 import { buildQueryString } from "../util";
 
-export interface CustomFieldData {
+interface Common {
   id: string;
   name: string;
   type:
@@ -19,20 +19,19 @@ export interface CustomFieldData {
     id: string;
     name: string;
   }[];
+}
+
+export interface CustomFieldData extends Common {
   links: {
     self: string;
     choices: string | null;
   };
 }
 
+export interface CustomField extends Common {}
 export class CustomField {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-
-  #id!: CustomFieldData["id"];
-  #name!: CustomFieldData["name"];
-  #type!: CustomFieldData["type"];
-  #values!: CustomFieldData["values"];
   #links!: CustomFieldData["links"];
 
   constructor(
@@ -42,51 +41,30 @@ export class CustomField {
   ) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
-
     this.#loadData(data);
   }
 
   #loadData(data: CustomFieldData) {
-    this.#id = data.id;
-    this.#name = data.name;
-    this.#type = data.type;
-    this.#values = data.values;
-    this.#links = data.links;
+    const { links, ...other } = data;
+    this.#links = links;
+    Object.assign(this, other);
   }
 
-  get id() {
-    return this.#id;
-  }
-  get name() {
-    return this.#name;
-  }
-  get type() {
-    return this.#type;
-  }
-  get values() {
-    return this.#values;
+  getRelatedLinks() {
+    return this.#links;
   }
 
-  toJSON() {
-    return {
-      id: this.#id,
-      name: this.#name,
-      type: this.#type,
-      values: this.#values,
-      links: this.#links,
-    };
-  }
-
-  async getChoices(
-    option: PaginationOption = {}
-  ) {
+  async getChoices(option: PaginationOption = {}) {
     if (!this.#links.choices) {
       return null;
     }
     let url = this.#links.choices;
     let query = buildQueryString(option);
-    const response = await this.#apiCaller.get(url + query, this.#tokenGetParam);
-    // TODO: return list class object instance
+    const response = await this.#apiCaller.get(
+      url + query,
+      this.#tokenGetParam
+    );
+    // TODO: List object response
     return response;
   }
 }

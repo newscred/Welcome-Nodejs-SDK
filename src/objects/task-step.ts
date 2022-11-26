@@ -1,24 +1,25 @@
 import { APICaller } from "../modules/api-caller";
 import { TaskSubStep, TaskSubStepData } from "./task-substep";
 
-export interface TaskStepData {
+interface Common {
   id: string;
   title: string;
   isCompleted: boolean;
   description: string | null;
+}
+
+export interface TaskStepData extends Common {
   dueAt: string | null;
   subSteps: TaskSubStepData[];
 }
 
+export interface TaskStep extends Common {
+  dueAt: Date | null;
+  subSteps: TaskSubStep[];
+}
 export class TaskStep {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-  #id!: string;
-  #title!: string;
-  #isCompleted!: boolean;
-  #description!: string | null;
-  #dueAt!: Date | null;
-  #subSteps!: TaskSubStep[];
 
   constructor(apiCaller: APICaller, data: TaskStepData, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
@@ -27,49 +28,19 @@ export class TaskStep {
   }
 
   #loadData(data: TaskStepData) {
-    this.#id = data.id;
-    this.#title = data.title;
-    this.#isCompleted = data.isCompleted;
-    this.#description = data.description;
-    this.#dueAt = data.dueAt ? new Date(data.dueAt) : null;
-    this.#subSteps = data.subSteps.map(
+    const { dueAt, subSteps, ...other } = data;
+    this.dueAt = data.dueAt ? new Date(data.dueAt) : null;
+    this.subSteps = subSteps.map(
       (substep) =>
         new TaskSubStep(substep, this.#apiCaller, this.#tokenGetParam)
     );
-  }
-
-  get id() {
-    return this.#id;
-  }
-
-  get title() {
-    return this.#title;
-  }
-
-  get isCompleted() {
-    return this.#isCompleted;
-  }
-
-  get description() {
-    return this.#description;
-  }
-
-  get dueAt() {
-    return this.#dueAt;
-  }
-
-  get subSteps() {
-    return this.#subSteps;
+    Object.assign(this, other);
   }
 
   toJSON() {
     return {
-      id: this.#id,
-      title: this.#title,
-      isCompleted: this.#isCompleted,
-      description: this.#description,
-      dueAt: this.#dueAt ? this.#dueAt.toISOString() : null,
-      subSteps: this.#subSteps.map(subStep => subStep.toJSON())
-    }
+      ...this,
+      dueAt: this.dueAt ? this.dueAt.toISOString() : null,
+    };
   }
 }

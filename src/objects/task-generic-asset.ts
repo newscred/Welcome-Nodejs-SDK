@@ -13,31 +13,28 @@ export interface TaskAssetData extends TaskAssetBaseData {
 export class TaskAsset extends TaskAssetBase {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-  #type: "article" | "image" | "video" | "raw_file" | "structured_content";
-  #content: TaskAssetData["content"];
   #links: TaskAssetBaseData["links"];
+  type: TaskAssetData["type"];
+  content: TaskAssetData["content"];
 
   constructor(data: TaskAssetData, apiCaller: APICaller, tokenGetParam?: any) {
     super(data);
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
-    this.#type = data.type;
-    this.#content = data.content;
     this.#links = data.links;
-  }
-  get type() {
-    return this.#type;
-  }
-  get content() {
-    return this.#content;
+    this.type = data.type;
+    this.content = data.content;
   }
 
   toJSON() {
     return {
       ...super.toJSON(),
-      type: this.#type,
-      content: this.#content,
+      ...this,
     };
+  }
+
+  getRelatedLinks() {
+    return this.#links;
   }
 
   async addDraft(uploadedFile: UploadedFile) {

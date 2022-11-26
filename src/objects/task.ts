@@ -9,24 +9,18 @@ import { UploadedFile } from "./uploaded-file";
 import { AttachmentList, AttachmentListData } from "./attachment-list";
 import { Campaign, CampaignData } from "./campaign";
 
-export interface TaskData {
+interface Common {
   id: string;
   title: string;
-  startAt: string | null;
-  dueAt: string | null;
   isCompleted: boolean;
   isArchived: boolean;
   referenceId: string;
-  labels: {
-    group: {
-      id: string;
-      name: string;
-    };
-    values: {
-      id: string;
-      name: string;
-    }[];
-  }[];
+  labels: LabelResponse[];
+}
+
+export interface TaskData {
+  startAt: string | null;
+  dueAt: string | null;
   steps: TaskStepData[];
   links: {
     self: string;
@@ -42,39 +36,15 @@ export interface TaskData {
   };
 }
 
+export interface Task extends Common {
+  startAt: Date | null;
+  dueAt: Date | null;
+  steps: TaskStep[];
+}
 export class Task {
   #apiCaller: APICaller;
   #tokenGetParam: any;
-  #id!: string;
-  #title!: string;
-  #startAt!: Date | null;
-  #dueAt!: Date | null;
-  #isCompleted!: boolean;
-  #isArchived!: boolean;
-  #referenceId!: string;
-  #labels!: {
-    group: {
-      id: string;
-      name: string;
-    };
-    values: {
-      id: string;
-      name: string;
-    }[];
-  }[];
-  #steps!: TaskStep[];
-  #links!: {
-    self: string;
-    assets: string;
-    attachments: string;
-    brief: string | null;
-    campaign: string;
-    customFields: string | null;
-    webUrls: {
-      self: string;
-      brief: string;
-    };
-  };
+  #links!: TaskData["links"];
 
   constructor(data: TaskData, apiCaller: APICaller, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
@@ -83,68 +53,31 @@ export class Task {
   }
 
   #loadData(data: TaskData) {
-    this.#id = data.id;
-    this.#title = data.title;
-    this.#startAt = data.startAt ? new Date(data.startAt) : null;
-    this.#dueAt = data.dueAt ? new Date(data.dueAt) : null;
-    this.#isCompleted = data.isCompleted;
-    this.#isArchived = data.isArchived;
-    this.#referenceId = data.referenceId;
-    this.#labels = data.labels;
-    this.#steps = data.steps.map(
+    const { startAt, dueAt, links, steps, ...other } = data;
+    this.startAt = startAt ? new Date(startAt) : null;
+    this.dueAt = dueAt ? new Date(dueAt) : null;
+    this.#links = data.links;
+    this.steps = steps.map(
       (step) => new TaskStep(this.#apiCaller, step, this.#tokenGetParam)
     );
-    this.#links = data.links;
+    Object.assign(this, other);
   }
 
-  get id() {
-    return this.#id;
-  }
-  get title() {
-    return this.#title;
-  }
-  get startAt() {
-    return this.#startAt;
-  }
-  get dueAt() {
-    return this.#dueAt;
-  }
-  get isCompleted() {
-    return this.#isCompleted;
-  }
-  get isArchived() {
-    return this.#isArchived;
-  }
-  get referenceId() {
-    return this.#referenceId;
-  }
-  get labels() {
-    return this.#labels;
-  }
-  get steps() {
-    return this.#steps;
+  getRelatedLinks() {
+    return this.#links;
   }
 
   toJSON() {
     return {
-      id: this.#id,
-      title: this.#title,
-      startAt: this.#startAt ? this.#startAt.toISOString() : null,
-      dueAt: this.#dueAt ? this.#dueAt.toISOString() : null,
-      isCompleted: this.#isCompleted,
-      isArchived: this.#isArchived,
-      referenceId: this.#referenceId,
-      labels: this.#labels,
-      steps: this.#steps.map((step) => step.toJSON()),
-      links: this.#links,
+      ...this,
+      startAt: this.startAt ? this.startAt.toISOString() : null,
+      dueAt: this.dueAt ? this.dueAt.toISOString() : null,
+      steps: this.steps.map((step) => step.toJSON()),
     };
   }
 
   async update(payload: {
-    labels: {
-      group: string;
-      values: string[];
-    }[];
+    labels: LabelPayload[];
   }) {
     const response = await this.#apiCaller.patch(
       this.#links.self,
@@ -201,7 +134,7 @@ export class Task {
   async getAssets(option: PaginationOption = {}) {
     const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
-      this.#links.assets+query,
+      this.#links.assets + query,
       this.#tokenGetParam
     );
     return new TaskAssetList(
@@ -231,7 +164,7 @@ export class Task {
   async getAttachments(option: PaginationOption = {}) {
     const query = buildQueryString(option);
     const response = await this.#apiCaller.get(
-      this.#links.attachments+query,
+      this.#links.attachments + query,
       this.#tokenGetParam
     );
     return new AttachmentList(

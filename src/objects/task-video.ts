@@ -6,27 +6,19 @@ export interface TaskVideoData extends TaskAssetBaseData {
 }
 
 export class TaskVideo extends TaskAssetBase {
-  #fileSize: number;
-  #url: string;
+  fileSize: number;
+  url: string;
 
   constructor(data: TaskVideoData) {
     super(data);
-    this.#fileSize = data.fileSize;
-    this.#url = data.url;
-  }
-
-  get fileSize() {
-    return this.#fileSize;
-  }
-  get url() {
-    return this.#url;
+    this.fileSize = data.fileSize;
+    this.url = data.url;
   }
 
   toJSON() {
     return {
       ...super.toJSON(),
-      fileSize: this.#fileSize,
-      url: this.#url,
+      ...this,
     };
   }
 }

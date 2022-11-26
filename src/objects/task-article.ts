@@ -1,11 +1,14 @@
-export interface TaskArticleData {
+interface Common {
   id: string;
   title: string;
-  createdAt: string;
-  modifiedAt: string;
   htmlBody: string;
   url: string | null;
   labels: LabelResponse[];
+}
+
+export interface TaskArticleData extends Common {
+  createdAt: string;
+  modifiedAt: string;
   links: {
     self: string;
     task: string;
@@ -18,58 +21,31 @@ export interface TaskArticleData {
   };
 }
 
+export interface TaskArticle extends Common {
+  createdAt: Date;
+  modifiedAt: Date;
+}
+
 export class TaskArticle {
-  #id: string;
-  #title: string;
-  #createdAt: Date;
-  #modifiedAt: Date;
-  #htmlBody: string;
-  #url: string | null;
-  #labels: LabelResponse[];
   #links: TaskArticleData["links"];
 
   constructor(data: TaskArticleData) {
-    this.#id = data.id;
-    this.#title = data.title;
-    this.#createdAt = new Date(data.createdAt);
-    this.#modifiedAt = new Date(data.modifiedAt);
-    this.#htmlBody = data.htmlBody;
-    this.#url = data.url;
-    this.#labels = data.labels;
-    this.#links = data.links;
+    const { createdAt, modifiedAt, links, ...other } = data;
+    this.createdAt = new Date(createdAt);
+    this.modifiedAt = new Date(modifiedAt);
+    this.#links = links;
+    Object.assign(this, other);
   }
-  get id() {
-    return this.#id;
-  }
-  get title() {
-    return this.#title;
-  }
-  get createdAt() {
-    return this.#createdAt;
-  }
-  get modifiedAt() {
-    return this.#modifiedAt;
-  }
-  get htmlBody() {
-    return this.#htmlBody;
-  }
-  get url() {
-    return this.#url;
-  }
-  get labels() {
-    return this.#labels;
+
+  getRelatedLinks() {
+    return this.#links;
   }
 
   toJSON() {
     return {
-      id: this.#id,
-      title: this.#title,
-      createdAt: this.#createdAt.toISOString(),
-      modifiedAt: this.#modifiedAt.toISOString(),
-      htmlBody: this.#htmlBody,
-      url: this.#url,
-      labels: this.#labels,
-      links: this.#links,
+      ...this,
+      createdAt: this.createdAt.toISOString(),
+      modifiedAt: this.modifiedAt.toISOString(),
     };
   }
 }

@@ -1,10 +1,13 @@
-export interface TaskAssetBaseData {
+interface Common {
   id: string;
   title: string;
   mimeType: string;
+  labels: LabelResponse[];
+}
+
+export interface TaskAssetBaseData extends Common {
   createdAt: string;
   modifiedAt: string;
-  labels: LabelResponse[];
   links: {
     self: string;
     task: string;
@@ -17,53 +20,30 @@ export interface TaskAssetBaseData {
   };
 }
 
+export interface TaskAssetBase extends Common {
+  createdAt: Date;
+  modifiedAt: Date;
+}
 export class TaskAssetBase {
-  #id: string;
-  #title: string;
-  #mimeType: string;
-  #createdAt: Date;
-  #modifiedAt: Date;
-  #labels: LabelResponse[];
   #links: TaskAssetBaseData["links"];
 
   constructor(data: TaskAssetBaseData) {
-    this.#id = data.id;
-    this.#title = data.title;
-    this.#mimeType = data.mimeType;
-    this.#createdAt = new Date(data.createdAt);
-    this.#modifiedAt = new Date(data.modifiedAt);
-    this.#labels = data.labels;
-    this.#links = data.links;
+    const { createdAt, modifiedAt, links, ...other } = data;
+    this.createdAt = new Date(createdAt);
+    this.modifiedAt = new Date(modifiedAt);
+    this.#links = links;
+    Object.assign(this, other);
   }
 
-  get id() {
-    return this.#id;
-  }
-  get title() {
-    return this.#title;
-  }
-  get mimeType() {
-    return this.#mimeType;
-  }
-  get createdAt() {
-    return this.#createdAt;
-  }
-  get modifiedAt() {
-    return this.#modifiedAt;
-  }
-  get labels() {
-    return this.#labels;
+  getRelatedLinks() {
+    return this.#links;
   }
 
   toJSON() {
     return {
-      id: this.#id,
-      title: this.#title,
-      mimeType: this.#mimeType,
-      createdAt: this.#createdAt.toISOString(),
-      modifiedAt: this.#modifiedAt.toISOString(),
-      labels: this.#labels,
-      links: this.#links,
+      ...this,
+      createdAt: this.createdAt.toISOString(),
+      modifiedAt: this.modifiedAt.toISOString(),
     };
   }
 }

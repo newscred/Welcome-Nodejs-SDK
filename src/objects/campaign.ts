@@ -14,16 +14,7 @@ export interface CampaignData {
     currencyCode: string;
     budgetedAmount: string;
   } | null;
-  labels: Array<{
-    group: {
-      id: string;
-      name: string;
-    };
-    values: Array<{
-      id: string;
-      name: string;
-    }>;
-  }>;
+  labels: LabelResponse[];
   links: {
     self: string;
     brief: string;
@@ -33,7 +24,7 @@ export interface CampaignData {
   };
 }
 
-export interface Campaign extends CampaignData{}
+export interface Campaign extends CampaignData {}
 export class Campaign {
   #apiCaller: APICaller;
   #tokenGetParam: any;
@@ -41,8 +32,6 @@ export class Campaign {
   constructor(data: CampaignData, apiCaller: APICaller, tokenGetParam?: any) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
-
-    // TODO: refactor this
     Object.assign(this, data);
   }
 
@@ -75,7 +64,7 @@ export class Campaign {
       this.links.childCampaigns.map(async (campUrl) => {
         const childCampaignData: any = await this.#apiCaller.get(
           campUrl,
-          this.#tokenGetParam,
+          this.#tokenGetParam
         );
         const childCampaign = new Campaign(
           childCampaignData,
@@ -94,7 +83,11 @@ export class Campaign {
       this.links.parentCampaign,
       this.#tokenGetParam
     ) as Promise<CampaignData>);
-    const parentCampaign = new Campaign(parentCampaignData, this.#apiCaller, this.#tokenGetParam);
+    const parentCampaign = new Campaign(
+      parentCampaignData,
+      this.#apiCaller,
+      this.#tokenGetParam
+    );
     return parentCampaign;
   }
 }
