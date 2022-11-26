@@ -25,10 +25,7 @@ import { TaskVideo, TaskVideoData } from "../../objects/task-video";
 import { TaskRawFile, TaskRawFileData } from "../../objects/task-raw-file";
 
 interface TaskUpdatePayload {
-  labels: {
-    group: string;
-    values: string[];
-  }[];
+  labels: LabelPayload[];
 }
 
 interface TaskCustomFieldUpdatePayload {

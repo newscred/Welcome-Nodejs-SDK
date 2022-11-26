@@ -15,7 +15,7 @@ export class CustomFieldList extends ListData {
   ) {
     super(data, apiCaller, tokenGetParam);
     this.data = data.data.map(
-      (labelGroup) => new CustomField(labelGroup, apiCaller, tokenGetParam)
+      (customField) => new CustomField(customField, apiCaller, tokenGetParam)
     );
   }
 }

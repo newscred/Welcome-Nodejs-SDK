@@ -18,7 +18,10 @@ declare global {
     attachments?: UploadedFile[];
   }
 
-  interface LabelPayload {}
+  interface LabelPayload {
+    group: string;
+    values: string[];
+  }
 
   interface LabelResponse {
     group: {
