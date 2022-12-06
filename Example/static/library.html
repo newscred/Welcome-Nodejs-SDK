@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome SDK - Library</title>
+</head>
+<body>
+    <h1>Node JS SDK test app</h1>
+    <p>
+        <a href="/">Home</a> |
+        <a href="/campaign">Campaign</a> |
+        <a href="/label">Label</a> |
+        <a href="/library">Library</a> |
+        <a href="/task">Task</a> |
+        <a href="/uploader">Uploader</a> |
+        <a href="/user">User</a>
+    </p>
+    <h2>Library</h2>
+    <h3>Library module methods</h3>
+    <div style="display: flex;">
+        <div style="padding-right: 10px; margin-right: 20px; border-right: 1px solid black;">
+            <ul>
+                <li>
+                    <strong>getFolders</strong>
+                    <form onsubmit="getFolders(event)">
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getFolderById</strong>
+                    <form onsubmit="getFolderById(event)">
+                        <input id="folderId" name="folderId" placeholder="folderId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getAssets</strong>
+                    <form onsubmit="getAssets(event)">
+                        <label> Asset Type:</label>
+                        <input type="checkbox" id="article" name="article" value="article">
+                        <label for="article"> Article</label>
+                        <input type="checkbox" id="image" name="image" value="image">
+                        <label for="image"> Image</label>
+                        <input type="checkbox" id="video" name="video" value="video">
+                        <label for="video"> Video</label>
+                        <input type="checkbox" id="raw_file" name="raw_file" value="raw_file">
+                        <label for="raw_file"> Raw File</label>
+                        <br />
+                        <label for="createdAt_From"> Created At:</label>
+                        <input type="date" id="createdAt_From" name="createdAt_From"> - <input type="date" id="createdAt_To" name="createdAt_To">
+                        <br />
+                        <label for="modifiedAt_From"> Modified At:</label>
+                        <input type="date" id="modifiedAt_From" name="modifiedAt_From"> - <input type="date" id="modifiedAt_To" name="modifiedAt_To">
+                        <br />
+                        <label for="folderId">folderId: </label>
+                        <input type="text" id="folderId" name="folderId" placeholder="folderId">
+                        <br />
+                        <label for="searchText">Search: </label>
+                        <input type="text" id="searchText" name="searchText" placeholder="searchText">
+                        <br />
+                        <input type="checkbox" id="includeSubfolderAssets" name="includeSubfolderAssets" checked>
+                        <label for="includeSubfolderAssets">Include Subfolder Assets </label>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addAsset</strong>
+                    <form onsubmit="addAsset(event)">
+                        <input type="file" name="file" id="file" required/>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>addAssetVersion</strong>
+                    <form onsubmit="addAssetVersion(event)">
+                        <input id="assetId" name="assetId" placeholder="assetId" required />
+                        <input type="file" name="file" id="file" required/>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getArticle</strong>
+                    <form onsubmit="getArticle(event)">
+                        <input id="articleId" name="articleId" placeholder="articleId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getImage</strong>
+                    <form onsubmit="getImage(event)">
+                        <input id="imageId" name="imageId" placeholder="imageId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateImage</strong>
+                    <form onsubmit="updateImage(event)">
+                        <input id="imageId" name="imageId" placeholder="imageId" required />
+                        <br/>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>deleteImage</strong>
+                    <form onsubmit="deleteImage(event)">
+                        <input id="imageId" name="imageId" placeholder="imageId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getVideo</strong>
+                    <form onsubmit="getVideo(event)">
+                        <input id="videoId" name="videoId" placeholder="videoId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateVideo</strong>
+                    <form onsubmit="updateVideo(event)">
+                        <input id="videoId" name="videoId" placeholder="videoId" required />
+                        <br/>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>deleteVideo</strong>
+                    <form onsubmit="deleteVideo(event)">
+                        <input id="videoId" name="videoId" placeholder="videoId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getRawFile</strong>
+                    <form onsubmit="getRawFile(event)">
+                        <input id="rawFileId" name="rawFileId" placeholder="rawFileId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>updateRawFile</strong>
+                    <form onsubmit="updateRawFile(event)">
+                        <input id="rawFileId" name="rawFileId" placeholder="rawFileId" required />
+                        <br/>
+                        <textarea id="update" name="update" placeholder="update payload" required rows="4"
+                            cols="54"></textarea>
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>deleteRawFile</strong>
+                    <form onsubmit="deleteRawFile(event)">
+                        <input id="rawFileId" name="rawFileId" placeholder="rawFileId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+        <div>
+            <p>Response</p>
+            <hr />
+            <pre id="response" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+</body>
+<script src="./library.js"></script>
+</html>
