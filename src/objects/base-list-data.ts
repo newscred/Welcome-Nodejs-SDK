@@ -1,6 +1,5 @@
 import { APICaller } from "../modules/api-caller";
-
-
+import { PaginatedResponse } from "./common/types";
 
 export class ListData {
   #apiCaller: APICaller;
@@ -10,7 +9,11 @@ export class ListData {
     previous: string | null;
   };
 
-  constructor(data: PaginatedResponse, apiCaller: APICaller, tokenGetParam?: any) {
+  constructor(
+    data: PaginatedResponse,
+    apiCaller: APICaller,
+    tokenGetParam?: any
+  ) {
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
     this.#pagination = data.pagination;

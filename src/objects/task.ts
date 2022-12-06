@@ -8,6 +8,7 @@ import { TaskAssetList, TaskAssetListData } from "./task-asset-list";
 import { UploadedFile } from "./uploaded-file";
 import { AttachmentList, AttachmentListData } from "./attachment-list";
 import { Campaign, CampaignData } from "./campaign";
+import { LabelResponse, LabelPayload, PaginationOption } from "./common/types";
 
 interface Common {
   id: string;

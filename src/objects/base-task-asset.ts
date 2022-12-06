@@ -1,3 +1,5 @@
+import { LabelResponse } from "./common/types";
+
 interface Common {
   id: string;
   title: string;

@@ -1,5 +1,6 @@
 import { APICaller } from "../modules/api-caller";
 import { buildQueryString } from "../util";
+import { PaginationOption } from "./common/types";
 
 interface Common {
   id: string;
@@ -64,7 +65,7 @@ export class CustomField {
       url + query,
       this.#tokenGetParam
     );
-    // TODO: List object response
+    // TODO: List object
     return response;
   }
 }

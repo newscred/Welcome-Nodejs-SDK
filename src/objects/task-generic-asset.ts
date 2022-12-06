@@ -2,6 +2,12 @@ import { APICaller } from "../modules/api-caller";
 import { TaskAssetBase, TaskAssetBaseData } from "./base-task-asset";
 import { UploadedFile } from "./uploaded-file";
 
+
+interface CommentCreatePayload {
+  value: string;
+  attachments?: UploadedFile[];
+}
+
 export interface TaskAssetData extends TaskAssetBaseData {
   type: "article" | "image" | "video" | "raw_file" | "structured_content";
   content: {
