@@ -1,6 +1,7 @@
 import { APICaller } from "../modules/api-caller";
 import { CampaignBrief } from "./campaign-brief";
 import { User } from "./user";
+import { LabelResponse } from "./common/types";
 
 export interface CampaignData {
   id: string;

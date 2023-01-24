@@ -2,6 +2,7 @@ import { Auth } from "./modules/auth";
 import { APICaller } from "./modules/api-caller";
 import { Campaign } from "./modules/campaign";
 import { Label } from "./modules/label";
+import { Library } from "./modules/library";
 import { User } from "./modules/user";
 import { Uploader } from "./modules/uploader";
 import { Task } from "./modules/task";
@@ -33,6 +34,7 @@ export class WelcomeClient {
   user: User;
   uploader: Uploader;
   task: Task;
+  library: Library;
 
   constructor(param: WelcomeClientConstructorParam) {
     this.auth = new Auth({
@@ -52,5 +54,6 @@ export class WelcomeClient {
     this.user = new User(apiCaller);
     this.uploader = new Uploader(apiCaller);
     this.task = new Task(apiCaller)
+    this.library = new Library(apiCaller);
   }
 }

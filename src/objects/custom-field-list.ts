@@ -1,6 +1,7 @@
 import { APICaller } from "../modules/api-caller";
 import { ListData } from "./base-list-data";
 import { CustomField, CustomFieldData } from "./custom-field";
+import { PaginatedResponse } from "./common/types";
 
 export interface CustomFieldListData extends PaginatedResponse {
   data: Array<CustomFieldData>;

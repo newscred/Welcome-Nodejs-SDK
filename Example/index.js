@@ -7,6 +7,7 @@ const labelsTestRoute = require("./routes/test-labels");
 const uploadTestRoute = require("./routes/test-upload");
 const userTestRoute = require("./routes/test-user");
 const taskTestRoute = require("./routes/test-task");
+const libraryTestRoute = require("./routes/test-library");
 
 const app = express();
 const PORT = 30000;
@@ -26,6 +27,7 @@ app.use('/tests/label', labelsTestRoute);
 app.use('/tests/task', taskTestRoute);
 app.use('/tests/uploader', uploadTestRoute);
 app.use('/tests/user', userTestRoute);
+app.use('/tests/library', libraryTestRoute);
 app.use(express.static(__dirname+'/static', { extensions: ['html']}))
 
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));

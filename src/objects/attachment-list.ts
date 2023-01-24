@@ -1,6 +1,7 @@
 import { APICaller } from "../modules/api-caller";
 import { Attachment, AttachmentData } from "./attachment";
 import { ListData } from "./base-list-data";
+import { PaginatedResponse } from "./common/types";
 
 export interface AttachmentListData extends PaginatedResponse {
   data: Array<AttachmentData>;

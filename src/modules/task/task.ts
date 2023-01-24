@@ -23,6 +23,11 @@ import { TaskArticle, TaskArticleData } from "../../objects/task-article";
 import { TaskImage, TaskImageData } from "../../objects/task-image";
 import { TaskVideo, TaskVideoData } from "../../objects/task-video";
 import { TaskRawFile, TaskRawFileData } from "../../objects/task-raw-file";
+import {
+  LabelPayload,
+  PaginationOption,
+  CommentCreatePayload,
+} from "../../objects/common/types";
 
 interface TaskUpdatePayload {
   labels: LabelPayload[];
@@ -48,6 +53,8 @@ interface TaskSubStepExternalWorkUpdatePayload {
 interface TaskSubStepCommentUpdatePayload {
   value: string;
 }
+
+
 
 export class Task {
   #apiCaller: APICaller;

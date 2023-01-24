@@ -54,9 +54,19 @@ export function convertObjectKeysToSnakeCase(obj: any) {
 export function buildQueryString(obj: any) {
   const optionSnakeCased = convertObjectKeysToSnakeCase(obj);
   let query = "";
-  for (let k of Object.keys(optionSnakeCased)) {
+  const addQueryParam = (key: string, value: string) => {
     query += query ? "&" : "?";
-    query += `${k}=${optionSnakeCased[k]}`;
+    query += `${key}=${value}`;
+  }
+  for (let k of Object.keys(optionSnakeCased)) {
+    if(Array.isArray(optionSnakeCased[k])) {
+      const values = optionSnakeCased[k];
+      values.forEach((value: string) => {
+        addQueryParam(k, value)
+      });
+    } else {
+      addQueryParam(k, optionSnakeCased[k])
+    }
   }
   return query;
 }
