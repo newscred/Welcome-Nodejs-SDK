@@ -1,19 +1,25 @@
-interface UserData {
-  id: string,
-  firstName: string,
-  lastName: string,
-  fullName: string,
-  email: string,
+export interface UserData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string | null;
+  links: {
+    self: string;
+  };
 }
 
+export interface User extends UserData {}
 export class User {
-  id!: string
-  firstName!: string
-  lastName!: string
-  fullName!: string
-  email!: string
+  #links: UserData['links'];
 
   constructor(data: UserData) {
-    Object.assign(this, data);
+    const { links, ...other } = data;
+    this.#links = links;
+    Object.assign(this, other);
+  }
+
+  getRelatedLinks() {
+    return this.#links;
   }
 }

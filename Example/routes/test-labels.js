@@ -1,9 +1,9 @@
 const { Router } = require("express");
-const { welcomeClient, dummyDB } = require("../config");
+const { welcomeClient } = require("../config");
 
 const router = Router();
 
-router.get("/test-label", async (req, res) => {
+router.get("/getLabelGroups", async (req, res) => {
   const userId = req.user.id;
   try {
     let labelGroupBatch1 = await welcomeClient.label.getLabelGroups(

@@ -14,7 +14,7 @@ export class Uploader {
     title?: string,
     tokenGetParam?: any
   ) {
-    const res: any = await this.#apiCaller.get("/upload-url");
+    const res: any = await this.#apiCaller.get("/upload-url", tokenGetParam);
     const key = res.uploadMetaFields.key;
 
     const form = new FormData();

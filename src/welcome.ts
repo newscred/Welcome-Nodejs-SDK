@@ -4,6 +4,7 @@ import { Campaign } from "./modules/campaign";
 import { Label } from "./modules/label";
 import { User } from "./modules/user";
 import { Uploader } from "./modules/uploader";
+import { Task } from "./modules/task";
 
 interface WelcomeClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
@@ -31,6 +32,7 @@ export class WelcomeClient {
   campaign: Campaign;
   user: User;
   uploader: Uploader;
+  task: Task;
 
   constructor(param: WelcomeClientConstructorParam) {
     this.auth = new Auth({
@@ -49,5 +51,6 @@ export class WelcomeClient {
     this.campaign = new Campaign(apiCaller);
     this.user = new User(apiCaller);
     this.uploader = new Uploader(apiCaller);
+    this.task = new Task(apiCaller)
   }
 }

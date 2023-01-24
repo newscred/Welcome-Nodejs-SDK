@@ -1,43 +1,43 @@
 import { APICaller } from "../modules/api-caller";
-// Warning! CIRCULAR DEPENDECY
-import { Campaign } from "./campaign";
+import { BriefBase, BriefBaseData } from "./brief";
+import { Campaign, CampaignData } from "./campaign";
 
-interface CampaignBriefData {
-  type: string;
-  title: string;
-  template: {
-    id: string;
-    name: string;
-  } | null;
-  fields: Array<{ name: string; value: string }>;
+export interface CampaignBriefData extends BriefBaseData {
   links: {
+    self: string;
     campaign: string;
   };
 }
 
-export interface CampaignBrief extends CampaignBriefData {}
-export class CampaignBrief {
+export class CampaignBrief extends BriefBase {
   #apiCaller: APICaller;
   #tokenGetParam: any;
+  #links: CampaignBriefData["links"];
 
   constructor(
-    apiCaller: APICaller,
     data: CampaignBriefData,
+    apiCaller: APICaller,
     tokenGetParam?: any
   ) {
+    const { links, ...baseData } = data;
+    super(baseData);
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
-    Object.assign(this, data);
+    this.#links = links;
+  }
+
+  getRelatedLinks() {
+    return this.#links;
   }
 
   async getCampaign() {
-    const campaignData: any = await this.#apiCaller.get(
-      this.links.campaign,
+    const campaignData = (await this.#apiCaller.get(
+      this.#links.campaign,
       this.#tokenGetParam
-    );
+    )) as CampaignData;
     const campaign = new Campaign(
-      this.#apiCaller,
       campaignData,
+      this.#apiCaller,
       this.#tokenGetParam
     );
     return campaign;

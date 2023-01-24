@@ -15,8 +15,8 @@ export class Campaign {
       tokenGetParam
     );
     const campaign = new CampaignObject(
-      this.#apiCaller,
       campaignData,
+      this.#apiCaller,
       tokenGetParam
     );
     return campaign;
@@ -28,8 +28,8 @@ export class Campaign {
       tokenGetParam
     );
     const campaignBrief = new CampaignBriefObject(
-      this.#apiCaller,
       campaignBriefData,
+      this.#apiCaller,
       tokenGetParam
     );
     return campaignBrief;

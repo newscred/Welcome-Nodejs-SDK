@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome SDK - Campaign</title>
+</head>
+<body>
+    <h1>Node JS SDK test app</h1>
+    <p>
+        <a href="/">Home</a> |
+        <a href="/campaign">Campaign</a> |
+        <a href="/label">Label</a> |
+        <a href="/task">Task</a> |
+        <a href="/uploader">Uploader</a> |
+        <a href="/user">User</a>
+    </p>
+    <h2>Campaign</h2>
+    <h3>Campaign module methods</h3>
+    <div style="display: flex;">
+        <div style="padding-right: 10px; margin-right: 20px; border-right: 1px solid black;">
+            <ul>
+                <li>
+                    <strong>getCampaignById</strong>
+                    <form onsubmit="getCampaignById(event)">
+                        <input id="campaignId" name="campaignId" placeholder="campaignId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+                <li>
+                    <strong>getCampaignBrief</strong>
+                    <form onsubmit="getCampaignBrief(event)">
+                        <input id="campaignId" name="campaignId" placeholder="campaignId" required />
+                        <br />
+                        <button type="submit">test</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p>Response</p>
+            <hr />
+            <pre id="response" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+</body>
+<script src="./campaign.js"></script>
+</html>
