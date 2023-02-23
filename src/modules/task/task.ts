@@ -54,8 +54,6 @@ interface TaskSubStepCommentUpdatePayload {
   value: string;
 }
 
-
-
 export class Task {
   #apiCaller: APICaller;
 
@@ -85,15 +83,11 @@ export class Task {
   }
 
   async getTaskBrief(taskId: string, tokenGetParam?: any) {
-    const response = await this.#apiCaller.get(
+    const response = (await this.#apiCaller.get(
       `/tasks/${taskId}/brief`,
       tokenGetParam
-    );
-    return new TaskBrief(
-      response as TaskBriefData,
-      this.#apiCaller,
-      tokenGetParam
-    );
+    )) as TaskBriefData;
+    return new TaskBrief(response);
   }
 
   async getTaskCustomFields(

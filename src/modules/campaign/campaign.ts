@@ -1,6 +1,12 @@
 import { APICaller } from "../api-caller";
-import { Campaign as CampaignObject } from "../../objects/campaign";
-import { CampaignBrief as CampaignBriefObject } from "../../objects/campaign-brief";
+import {
+  Campaign as CampaignObject,
+  CampaignData,
+} from "../../objects/campaign";
+import {
+  CampaignBrief as CampaignBriefObject,
+  CampaignBriefData,
+} from "../../objects/campaign-brief";
 
 export class Campaign {
   #apiCaller: APICaller;
@@ -10,10 +16,10 @@ export class Campaign {
   }
 
   async getCampaignById(campaignId: string, tokenGetParam?: any) {
-    const campaignData: any = await this.#apiCaller.get(
+    const campaignData = (await this.#apiCaller.get(
       `/campaigns/${campaignId}`,
       tokenGetParam
-    );
+    )) as CampaignData;
     const campaign = new CampaignObject(
       campaignData,
       this.#apiCaller,
@@ -23,15 +29,11 @@ export class Campaign {
   }
 
   async getCampaignBrief(campaignId: string, tokenGetParam?: any) {
-    const campaignBriefData: any = await this.#apiCaller.get(
+    const campaignBriefData = (await this.#apiCaller.get(
       `/campaigns/${campaignId}/brief`,
       tokenGetParam
-    );
-    const campaignBrief = new CampaignBriefObject(
-      campaignBriefData,
-      this.#apiCaller,
-      tokenGetParam
-    );
+    )) as CampaignBriefData;
+    const campaignBrief = new CampaignBriefObject(campaignBriefData);
     return campaignBrief;
   }
 }

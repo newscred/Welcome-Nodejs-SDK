@@ -90,15 +90,11 @@ export class Task {
     if (!this.#links.brief) {
       return null;
     }
-    const response = await this.#apiCaller.get(
+    const response = (await this.#apiCaller.get(
       this.#links.brief,
       this.#tokenGetParam
-    );
-    return new TaskBrief(
-      response as TaskBriefData,
-      this.#apiCaller,
-      this.#tokenGetParam
-    );
+    )) as TaskBriefData;
+    return new TaskBrief(response);
   }
 
   async getCampaign() {
