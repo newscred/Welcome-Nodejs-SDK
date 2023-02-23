@@ -1,7 +1,5 @@
 import { APICaller } from "../modules/api-caller";
 import { ExternalWork, ExternalWorkData } from "./external-work";
-// Warning! CIRCULAR DEPENDECY
-import { Task, TaskData } from "./task";
 import { User, UserData } from "./user";
 
 interface Common {
@@ -60,14 +58,6 @@ export class TaskSubStep {
       this.#tokenGetParam
     );
     this.#loadData(response as TaskSubStepData);
-  }
-
-  async getTask() {
-    const response = await this.#apiCaller.get(
-      this.#links.task,
-      this.#tokenGetParam
-    );
-    return new Task(response as TaskData, this.#apiCaller, this.#tokenGetParam);
   }
 
   async getExternalWork() {
