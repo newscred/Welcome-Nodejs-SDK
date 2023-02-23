@@ -42,11 +42,7 @@ export class Campaign {
       this.links.brief,
       this.#tokenGetParam
     );
-    const campaignBrief = new CampaignBrief(
-      campaignBriefData,
-      this.#apiCaller,
-      this.#tokenGetParam
-    );
+    const campaignBrief = new CampaignBrief(campaignBriefData);
     return campaignBrief;
   }
 
