@@ -958,16 +958,6 @@ Gets the parent campaign of the campaign.
 | template | { id: string; name: string } \| null |
 | fields   | { name; string; value: string }[]    |
 
-**_methods:_**
-
-#### `getCampaign`
-
-**_parameteres:_** _(None)_
-
-**_returns:_** Promise<[Campaign](#campaign-1) >
-
-Gets the campaign the brief is for.
-
 ### CustomField
 
 **_properties:_**
@@ -1480,16 +1470,6 @@ Adds a new comment to the task asset. The `comment` parameter is an object with 
 | template | { id: string; name: string } \| null |
 | fields   | { name; string; value: string }[]    |
 
-**_methods:_**
-
-#### `getTask`
-
-**_parameteres:_** _(None)_
-
-**_returns:_** Promise<[Campaign](#campaign-1) >
-
-Gets the task the brief is for.
-
 ### TaskImage
 
 **_properties:_**
@@ -1559,14 +1539,6 @@ Gets the task the brief is for.
 Sends a patch request to Welcome, and if successful, performs a in-place update of the substep. The `payload` parameter is an object that can have one of the following properties:
 
 `assigneeId: string | null; isCompleted: true; isInProgress: true;`
-
-#### `getTask`
-
-**_parameters:_** (None)
-
-**_returns:_** Promise<[Task](#task-1)>
-
-Gets the task for the substep
 
 #### `getExternalWork`
 
