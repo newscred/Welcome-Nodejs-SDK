@@ -30,12 +30,13 @@ app.get("/oauth", (req, res) => {
 - query: object
 - tokenGetParam: any (optional)
 
-**_returns:_** Promise<ReturnType<`tokenRefreshCallback`> | void>
+**_returns:_** Promise<ReturnType< `onAuthSuccess` | `onAuthFailure` > | void> (___onAuthSuccess___ and ___onAuthFailure___ are passed during the initialization of the ___WelcomeClient___ instance)
 
-Handles the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter. Here is an example with an express app,
+Handles the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter and gets access token and refresh token by exchanging the code. If authorization server redirects the user without the code parameter in the query param, the function will either call the `onAuthFailure` function, or throw an error if the function is not provided. If it successfully receives the tokens, then it will call the `onAuthSuccess` function. Here is an example with an express app,
 
 ```js
 app.get("/oauth/callback", async (req, res) => {
+  // you may want to use a try-catch block here
   await welcomeClient.auth.handleOAuthCallback(req.query);
   return res.send("success");
 });
@@ -66,7 +67,7 @@ app.get("token-refresh", async (req, res) => {
 
 **_returns:_** Promise\<void\>
 
-Sends a request to the authorization server to revoke the access token. Here is an example with an express app,
+Sends a request to the authorization server to revoke the access token. **This only makes the token invalid in Welcome, but does not remove it from your application database or memory**. Here is an example with an express app,
 
 ```js
 app.get("revoke-access-token", async (req, res) => {
@@ -83,7 +84,7 @@ app.get("revoke-access-token", async (req, res) => {
 
 **_returns:_** Promise\<void\>
 
-Sends a request to the authorization server to revoke the refresh token. Here is an example with an express app,
+Sends a request to the authorization server to revoke the refresh token. **This only makes the token invalid in Welcome, but does not remove it from your application database or memory**. Here is an example with an express app,
 
 ```js
 app.get("revoke-refresh-token", async (req, res) => {
