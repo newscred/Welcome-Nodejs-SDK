@@ -153,5 +153,6 @@ Learn more about using the SDK in the full [API Reference](./docs)
 
 - [Modules](docs/modules/README.md)
 - [Objects](docs/objects/README.md)
+- [Errors](docs/errors/README.md)
 
-See the [Example](./Example/) folder for a full sample app.
+See the [Example](./Example/) folder for a full demo.
