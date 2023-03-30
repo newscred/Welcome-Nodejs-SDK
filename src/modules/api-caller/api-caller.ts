@@ -4,6 +4,14 @@ import {
   convertObjectKeysToCamelCase,
   convertObjectKeysToSnakeCase,
 } from "../../util";
+import {
+  ErrorResponseBody,
+  BadRequest,
+  Unauthorized,
+  Forbidden,
+  NotFound,
+  UnprocessableEntity,
+} from "../../errors";
 
 export class APICaller {
   #shouldRetry: boolean;
@@ -15,6 +23,25 @@ export class APICaller {
   constructor(auth: Auth, enableAutoRetry: boolean) {
     this.#auth = auth;
     this.#shouldRetry = enableAutoRetry;
+  }
+
+  #formError(body: ErrorResponseBody, code?: number) {
+    if (code === 400) {
+      return new BadRequest(body);
+    }
+    if (code === 401) {
+      return new Unauthorized(body);
+    }
+    if (code === 403) {
+      return new Forbidden(body);
+    }
+    if (code === 404) {
+      return new NotFound(body);
+    }
+    if (code === 422) {
+      return new UnprocessableEntity(body);
+    }
+    return new Error(body.message);
   }
 
   async #sendRequest(
@@ -62,11 +89,14 @@ export class APICaller {
         });
 
         res.on("end", async () => {
-          if (data)
-            data = JSON.parse(data);
-          data = convertObjectKeysToCamelCase(data);
+          let responseBody = {};
+          if (data) {
+            responseBody = JSON.parse(data);
+          }
+
+          responseBody = convertObjectKeysToCamelCase(responseBody);
           if (statusCode && statusCode < 299) {
-            resolve(data);
+            resolve(responseBody);
             return;
           }
           if (statusCode === 302) {
@@ -95,7 +125,9 @@ export class APICaller {
               return;
             }
           }
-          reject(data);
+          reject(
+            this.#formError(responseBody as ErrorResponseBody, statusCode)
+          );
           return;
         });
       }).on("error", (err) => {
