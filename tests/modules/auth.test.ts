@@ -1,7 +1,7 @@
 import { Auth } from "../../src/modules/auth";
 import * as nock from "nock";
 
-describe("APICaller module", () => {
+describe("Auth module", () => {
   describe("tokens", () => {
     it("should return access and refresh tokens if the tokens are provided as string", async () => {
       const auth = new Auth({

@@ -158,6 +158,7 @@ export class APICaller {
   }
 
   async delete(endpoint: string, tokenGetParam?: any) {
-    return this.#sendRequest(endpoint, tokenGetParam, "DELETE");
+    await this.#sendRequest(endpoint, tokenGetParam, "DELETE");
+    return null;
   }
 }
