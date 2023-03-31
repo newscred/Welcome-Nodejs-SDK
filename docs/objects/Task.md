@@ -16,6 +16,23 @@
 
 **_methods:_**
 
+## `getRelatedLinks`
+
+**_parameteres:_** _(None)_
+
+**_returns:_** {
+self: string;
+assets: string;
+attachments: string;
+brief: string | null;
+campaign: string;
+customFields: string | null;
+webUrls: {
+  self: string;
+  brief: string;
+};
+}
+
 ## `update`
 
 **_parameters:_**
