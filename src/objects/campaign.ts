@@ -21,9 +21,9 @@ export interface CampaignData extends Common {
   endDate: string | null;
   links: {
     self: string;
-    brief: string;
-    owner: string;
-    parentCampaign: string;
+    brief: string | null;
+    owner: string | null;
+    parentCampaign: string | null;
     childCampaigns: [string];
   };
 }
