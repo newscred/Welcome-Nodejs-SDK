@@ -19,7 +19,7 @@ interface Common {
   labels: LabelResponse[];
 }
 
-export interface TaskData {
+export interface TaskData extends Common {
   startAt: string | null;
   dueAt: string | null;
   steps: TaskStepData[];
