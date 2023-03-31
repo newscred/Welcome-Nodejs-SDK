@@ -16,6 +16,19 @@
 
 **_methods:_**
 
+## `getRelatedLinks`
+
+**_parameteres:_** _(None)_
+
+**_returns:_** {
+self: string;
+brief: string | null;
+owner: string | null;
+parentCampaign: string | null;
+childCampaigns: [string];
+}
+
+
 ## `getBrief`
 
 **_parameteres:_** _(None)_
