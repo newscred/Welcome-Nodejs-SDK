@@ -29,8 +29,7 @@ router.get('/getCampaignBrief/:campaignId', async (req, res) => {
     const brief = await welcomeClient.campaign.getCampaignBrief(campaignId, {
       userId,
     });
-    const campaign = await brief.getCampaign();
-    return res.json({ brief, campaign });
+    return res.json({ brief });
   } catch (err) {
     console.log(err);
     return res.status(err.code || 500).json({ error: err.message });

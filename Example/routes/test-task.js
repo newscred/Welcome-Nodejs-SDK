@@ -59,8 +59,8 @@ router.get("/getTaskBrief/:taskId", async (req, res) => {
     const taskBrief = await welcomeClient.task.getTaskBrief(taskId, {
       userId,
     });
-    const task = await taskBrief.getTask();
-    return res.status(200).json({ taskBrief, task });
+
+    return res.status(200).json({ taskBrief });
   } catch (err) {
     console.log(err);
     res.status(err.code || 500).json({ error: err });
@@ -171,13 +171,13 @@ router.get("/getTaskSubstep/:taskId/:stepId/:substepId", async (req, res) => {
       substepId,
       { userId }
     );
-    const task = await substep.getTask();
+  
     const externalWork = await substep.getExternalWork();
     const assignee = await substep.getAssignee();
 
     // await substep.update({ assigneeId: null });
 
-    return res.status(200).json({ substep, task, externalWork, assignee });
+    return res.status(200).json({ substep, externalWork, assignee });
   } catch (err) {
     console.log(err);
     res.status(err.code || 500).json({ error: err });
