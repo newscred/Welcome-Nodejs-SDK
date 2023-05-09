@@ -35,7 +35,11 @@ export class LibraryArticle implements ILibraryArticle {
   };
 
   constructor(data: LibraryArticleData) {
-    Object.assign(this, data);
+    const {createdAt, modifiedAt, expiresAt, ...other} = data;
+    Object.assign(this, other);
+    this.createdAt = new Date(createdAt);
+    this.modifiedAt = new Date(modifiedAt)
+    this.expiresAt = expiresAt ? new Date(expiresAt) : null;
   }
 
   toJSON() {
