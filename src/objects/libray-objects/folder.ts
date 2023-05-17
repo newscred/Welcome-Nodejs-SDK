@@ -18,11 +18,21 @@ export class Folder implements IFolder {
   getChildFolders!: () => Promise<IFolderList>;
 
   constructor(data: FolderData, apiCaller: APICaller, tokenGetParam?: any) {
-    const { links, ...other } = data;
-    Object.assign(this, other);
+    const { links, createdAt, modifiedAt, ...other } = data;
     this.#links = links;
     this.#apiCaller = apiCaller;
     this.#tokenGetParam = tokenGetParam;
+    this.createdAt = new Date(createdAt);
+    this.modifiedAt = new Date(modifiedAt);
+    Object.assign(this, other);
+  }
+
+  toJSON() {
+    return {
+      ...this,
+      createdAt: this.createdAt.toISOString(),
+      modifiedAt: this.modifiedAt.toISOString(),
+    }
   }
 
   getRelatedLinks() {

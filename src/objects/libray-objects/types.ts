@@ -171,6 +171,7 @@ export interface LibraryAssetData {
   links: {
     self: string;
   };
+  thumbnailUrl: string;
 }
 
 export interface ILibraryAsset

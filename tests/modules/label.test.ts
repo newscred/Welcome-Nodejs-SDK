@@ -174,99 +174,101 @@ describe("Label module", () => {
     nock.cleanAll();
   });
 
-  it("should get the label groups without needing any filters", async () => {
-    const scope = nock(WELCOME_API_BASE_URL, {
-      reqheaders: {
-        authorization: "Bearer some-access-token",
-      },
-    })
-      .get("/label-groups")
-      .reply(200, {
-        data: labelGroups,
-        pagination: {
-          next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
-          previous: null,
+  describe("getLabelGroups", () => {
+    it("should get the label groups without needing any filters", async () => {
+      const scope = nock(WELCOME_API_BASE_URL, {
+        reqheaders: {
+          authorization: "Bearer some-access-token",
         },
+      })
+        .get("/label-groups")
+        .reply(200, {
+          data: labelGroups,
+          pagination: {
+            next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
+            previous: null,
+          },
+        });
+
+      const labelGroupList = await labelModule.getLabelGroups(
+        undefined,
+        tokenGetParam
+      );
+
+      const expectedData = labelGroups.map((label) => {
+        const { source_org_type, ...rest } = label;
+        return { ...rest, sourceOrgType: source_org_type };
       });
 
-    const labelGroup = await labelModule.getLabelGroups(
-      undefined,
-      tokenGetParam
-    );
-
-    const expectedData = labelGroups.map((label) => {
-      const { source_org_type, ...rest } = label;
-      return { ...rest, sourceOrgType: source_org_type };
+      expect(scope.isDone()).toBe(true);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(labelGroupList).toBeInstanceOf(LabelGroupList);
+      expect(labelGroupList).toEqual({ data: expectedData });
     });
 
-    expect(scope.isDone()).toBe(true);
-    expect(accessTokenMock).toBeCalledWith(tokenGetParam);
-    expect(labelGroup).toBeInstanceOf(LabelGroupList);
-    expect(labelGroup).toEqual({ data: expectedData });
-  });
-
-  it("should get all the label groups filtered by sourceOrgType", async () => {
-    const scope = nock(WELCOME_API_BASE_URL, {
-      reqheaders: {
-        authorization: "Bearer some-access-token",
-      },
-    })
-      .get("/label-groups")
-      .query({ source_org_type: "current" })
-      .reply(200, {
-        data: labelGroups,
-        pagination: {
-          next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
-          previous: null,
+    it("should get all the label groups filtered by sourceOrgType", async () => {
+      const scope = nock(WELCOME_API_BASE_URL, {
+        reqheaders: {
+          authorization: "Bearer some-access-token",
         },
+      })
+        .get("/label-groups")
+        .query({ source_org_type: "current" })
+        .reply(200, {
+          data: labelGroups,
+          pagination: {
+            next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
+            previous: null,
+          },
+        });
+
+      const labelGroupList = await labelModule.getLabelGroups(
+        { sourceOrgType: "current" },
+        tokenGetParam
+      );
+
+      const expectedData = labelGroups.map((label) => {
+        const { source_org_type, ...rest } = label;
+        return { ...rest, sourceOrgType: source_org_type };
       });
 
-    const labelGroup = await labelModule.getLabelGroups(
-      { sourceOrgType: "current" },
-      tokenGetParam
-    );
-
-    const expectedData = labelGroups.map((label) => {
-      const { source_org_type, ...rest } = label;
-      return { ...rest, sourceOrgType: source_org_type };
+      expect(scope.isDone()).toBe(true);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(labelGroupList).toBeInstanceOf(LabelGroupList);
+      expect(labelGroupList).toEqual({ data: expectedData });
     });
 
-    expect(scope.isDone()).toBe(true);
-    expect(accessTokenMock).toBeCalledWith(tokenGetParam);
-    expect(labelGroup).toBeInstanceOf(LabelGroupList);
-    expect(labelGroup).toEqual({ data: expectedData });
-  });
-
-  it("should get all the label groups with correct pagination passed", async () => {
-    const scope = nock(WELCOME_API_BASE_URL, {
-      reqheaders: {
-        authorization: "Bearer some-access-token",
-      },
-    })
-      .get("/label-groups")
-      .query({ offset: 3, page_size: 3 })
-      .reply(200, {
-        data: labelGroups.slice(3, 6),
-        pagination: {
-          next: "https://api.welcomesoftware.com/v3/label-groups?offset=6&page_size=3",
-          previous:
-            "https://api.welcomesoftware.com/v3/label-groups?offset=0&page_size=3",
+    it("should get all the label groups with correct pagination passed", async () => {
+      const scope = nock(WELCOME_API_BASE_URL, {
+        reqheaders: {
+          authorization: "Bearer some-access-token",
         },
+      })
+        .get("/label-groups")
+        .query({ offset: 3, page_size: 3 })
+        .reply(200, {
+          data: labelGroups.slice(3, 6),
+          pagination: {
+            next: "https://api.welcomesoftware.com/v3/label-groups?offset=6&page_size=3",
+            previous:
+              "https://api.welcomesoftware.com/v3/label-groups?offset=0&page_size=3",
+          },
+        });
+
+      const labelGroupList = await labelModule.getLabelGroups(
+        { offset: 3, pageSize: 3 },
+        tokenGetParam
+      );
+
+      const expectedData = labelGroups.slice(3, 6).map((label) => {
+        const { source_org_type, ...rest } = label;
+        return { ...rest, sourceOrgType: source_org_type };
       });
 
-    const labelGroup = await labelModule.getLabelGroups(
-      { offset: 3, pageSize: 3 },
-      tokenGetParam
-    );
-
-    const expectedData = labelGroups.slice(3, 6).map((label) => {
-      const { source_org_type, ...rest } = label;
-      return { ...rest, sourceOrgType: source_org_type };
+      expect(scope.isDone()).toBe(true);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(labelGroupList).toBeInstanceOf(LabelGroupList);
+      expect(labelGroupList).toEqual({ data: expectedData });
     });
-
-    expect(scope.isDone()).toBe(true);
-    expect(accessTokenMock).toBeCalledWith(tokenGetParam);
-    expect(labelGroup).toBeInstanceOf(LabelGroupList);
-    expect(labelGroup).toEqual({ data: expectedData });
   });
 });

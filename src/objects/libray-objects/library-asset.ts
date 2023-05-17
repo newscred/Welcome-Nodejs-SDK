@@ -14,6 +14,7 @@ export class LibraryAsset implements ILibraryAsset {
   type!: "article" | "image" | "video" | "raw_file" | "structured_content";
   mimeType!: string;
   content!: { type: "url" | "api_url" | "html_body"; value: string };
+  thumbnailUrl!: string;
 
   constructor(data: LibraryAssetData) {
     const { createdAt, modifiedAt, links, ...other } = data;
