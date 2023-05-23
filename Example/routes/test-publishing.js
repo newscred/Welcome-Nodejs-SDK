@@ -31,11 +31,11 @@ router.get("/getPublishingMetadata/:eventId", async (req, res) => {
   }
 });
 
-router.post("/AddPublishingMetadata/:eventId", async (req, res) => {
+router.post("/addPublishingMetadata/:eventId", async (req, res) => {
   const userId = req.user.id;
   try {
     const eventId = req.params.eventId;
-    const data = await welcomeClient.publishing.AddPublishingMetadata(
+    const data = await welcomeClient.publishing.addPublishingMetadata(
       eventId,
       req.body,
       { userId }

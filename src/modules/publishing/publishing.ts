@@ -41,7 +41,7 @@ export class Publishing {
     };
   }
 
-  async AddPublishingMetadata(
+  async addPublishingMetadata(
     eventId: string,
     payload: IAddPublishingMetadataPayload,
     tokenGetParam?: any

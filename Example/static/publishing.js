@@ -19,7 +19,7 @@ const getPublishingEventById = (event) => {
   processFetchPromise(fp);
 };
 
-const AddPublishingMetadata = (event) => {
+const addPublishingMetadata = (event) => {
   event.preventDefault();
   const eventId = event.target.eventId.value;
   const payload = event.target.payload.value;
@@ -31,7 +31,7 @@ const AddPublishingMetadata = (event) => {
     );
     return;
   }
-  const fp = fetch(`/tests/publishing/AddPublishingMetadata/${eventId}`, {
+  const fp = fetch(`/tests/publishing/addPublishingMetadata/${eventId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

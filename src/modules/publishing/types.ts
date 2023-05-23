@@ -9,7 +9,7 @@ export interface IAddPublishingMetadataPayload {
     locale?: string;
     publicUrl?: string;
     publishingDestinationUpdatedAt?: string;
-  };
+  }[];
 }
 
 export interface IAddPostMetadataResponse {
