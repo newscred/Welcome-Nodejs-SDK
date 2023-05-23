@@ -55,7 +55,7 @@ export class Publishing {
 
     return {
       data: data.data.map((pmd) => new PublishingMetadataForAsset(pmd)),
-      error: data.errors,
+      errors: data.errors,
     };
   }
 
