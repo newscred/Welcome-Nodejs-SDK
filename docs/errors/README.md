@@ -20,8 +20,7 @@ You can import these classes from "welcome-sdk/errors".
 Example,
 
 ```js
-import { WelcomeClient } from "welcome-sdk/errors";
-import { BadRequest, Unauthorized, Forbidden, NotFound, UnprocessableEntity } from "welcome-sdk/errors";
+import { BadRequest, Unauthorized, Forbidden, NotFound, UnprocessableEntity } from "welcome-sdk/lib/errors";
 
 const updateWelcomeTask = async (taskId, payload) => {
   try {
