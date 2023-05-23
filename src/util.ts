@@ -57,16 +57,22 @@ export function buildQueryString(obj: any) {
   const addQueryParam = (key: string, value: string) => {
     query += query ? "&" : "?";
     query += `${key}=${value}`;
-  }
+  };
   for (let k of Object.keys(optionSnakeCased)) {
-    if(Array.isArray(optionSnakeCased[k])) {
+    if (Array.isArray(optionSnakeCased[k])) {
       const values = optionSnakeCased[k];
       values.forEach((value: string) => {
-        addQueryParam(k, value)
+        addQueryParam(k, value);
       });
     } else {
-      addQueryParam(k, optionSnakeCased[k])
+      addQueryParam(k, optionSnakeCased[k]);
     }
   }
   return query;
+}
+
+export function warnAboutUsingExperimentalAPI() {
+  console.warn(
+    "\x1b[33mWarning: This is an experimental API and may change. Experimental APIs will generally require testing and development on your own applications before relying on them in your stable production environments \x1b[0m"
+  );
 }

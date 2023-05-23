@@ -22,6 +22,8 @@ List of objects:
 * [LibraryImage](./LibraryImage.md)
 * [LibraryRawFile](./LibraryRawFile.md)
 * [LibraryVideo](./LibraryVideo.md)
+* [PublishingEvent](./PublishingEvent.md)
+* [PublishingMetadataForAsset](./PublishingMetadataForAsset.md)
 * [Task](./Task.md)
 * [TaskArticle](./TaskArticle.md)
 * [TaskAsset](./TaskAsset.md)

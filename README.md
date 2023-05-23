@@ -155,4 +155,11 @@ Learn more about using the SDK in the full [API Reference](./docs)
 - [Objects](docs/objects/README.md)
 - [Errors](docs/errors/README.md)
 
+## About <img src="docs/experimental-badge.svg" alt="experimental-badge" /> badge
+
+In the detailed documents, you may see some of the methods have an <img src="docs/experimental-badge.svg" alt="experimental-badge" /> badge. These methods are based on experimental APIs. Experimental APIs provide early access to APIs that are currently under development. The documentation may highlight new features, new data properties and data models, new filters, and other features specific to the new API. Our intention in providing you with early access to the documentation for these APIs in the experimental stage is that you may plan for implementing them in the near future and provide us with necessary feedback to meet your needs. These APIs are most often NOT operational and the documentation is subject to change frequently from the time the documentation is available to the time the APIs are fully released. Experimental APIs will generally require testing and development on your own applications before relying on them in your stable production environments
+
+
+## Example App
+
 See the [Example](./Example/) folder for a full demo.
