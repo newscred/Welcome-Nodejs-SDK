@@ -6,6 +6,7 @@ import { Library } from "./modules/library";
 import { User } from "./modules/user";
 import { Uploader } from "./modules/uploader";
 import { Task } from "./modules/task";
+import { Publishing } from "./modules/publishing";
 
 interface WelcomeClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
@@ -35,6 +36,7 @@ export class WelcomeClient {
   uploader: Uploader;
   task: Task;
   library: Library;
+  publishing: Publishing;
 
   constructor(param: WelcomeClientConstructorParam) {
     this.auth = new Auth({
@@ -53,7 +55,8 @@ export class WelcomeClient {
     this.campaign = new Campaign(apiCaller);
     this.user = new User(apiCaller);
     this.uploader = new Uploader(apiCaller);
-    this.task = new Task(apiCaller)
+    this.task = new Task(apiCaller);
     this.library = new Library(apiCaller);
+    this.publishing = new Publishing(apiCaller);
   }
 }
