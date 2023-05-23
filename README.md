@@ -2,23 +2,18 @@
 
 ## Getting started
 
-This package is not available in `npm` yet. To test this project, you have to build it locally.
+This package is not registered in `npm` registry yet but you can install this package using this github repo url.
 
-To build this locally,
+To install with `npm`,
 
 ```bash
-# clone the repo
-git clone https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git
+npm install git+https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git
+```
 
-# build the package
-cd Welcome-Nodejs-SDK
-npm install
-npm run build
+or to install with `yarn` (version 2+)
 
-# add the package to your project
-mv lib <your-project-directory>/node_modules/welcome-sdk
-cd <your-project-directory>
-npm install form-data@4.0.0
+```bash
+yarn add welcome-sdk@https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git
 ```
 
 Then import the `WelcomeClient` class from the 'welcome-sdk' package.
