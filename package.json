@@ -1,5 +1,5 @@
 {
-  "name": "welcome-sdk",
+  "name": "@welcomesoftware/welcome-sdk",
   "version": "1.0.0",
   "description": "Welcome NodeJS sdk",
   "main": "lib/index.js",
@@ -23,6 +23,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AhsanShihab/Welcome-Nodejs-SDK/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "homepage": "https://github.com/AhsanShihab/Welcome-Nodejs-SDK#readme",
   "devDependencies": {
