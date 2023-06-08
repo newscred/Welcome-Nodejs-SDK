@@ -1,5 +1,5 @@
 {
-  "name": "@welcomesoftware/welcome-sdk",
+  "name": "@welcomesoftware/cmp-sdk",
   "version": "1.0.0",
   "description": "Welcome NodeJS sdk",
   "main": "lib/index.js",
