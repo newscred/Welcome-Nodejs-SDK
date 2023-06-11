@@ -15,16 +15,16 @@ The SDK provides the following Error classes,
 - `NotFound` (_404_)
 - `UnprocessableEntity` (_422_)
 
-You can import these classes from "welcome-sdk/errors".
+You can import these classes from "@welcomesoftware/cmp-sdk/lib/errors".
 
 Example,
 
 ```js
-import { BadRequest, Unauthorized, Forbidden, NotFound, UnprocessableEntity } from "welcome-sdk/lib/errors";
+import { BadRequest, Unauthorized, Forbidden, NotFound, UnprocessableEntity } from "@welcomesoftware/cmp-sdk/lib/errors";
 
 const updateWelcomeTask = async (taskId, payload) => {
   try {
-    const updatedTask = await welcomeClient.task.updateTask(taskId, payload);
+    const updatedTask = await cmpClient.task.updateTask(taskId, payload);
     return { response: updatedTask, code: 200, message: "successfully updated the task" };
   } catch (err) {
     if (err instanceof BadRequest) {

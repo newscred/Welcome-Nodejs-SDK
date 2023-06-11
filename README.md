@@ -1,31 +1,26 @@
-# Welcome Nodejs SDK
+# CMP SDK
+
+CMP-SDK is a nodejs client package to work with [Optimizely CMP](https://www.optimizely.com/products/orchestrate/content-marketing/) (formerly known as _Welcome_) provided Public [REST API Endpoints](https://developers.welcomesoftware.com).
 
 ## Getting started
 
-This package is not registered in `npm` registry yet but you can install this package using this github repo url.
-
-To install with `npm`,
+The package is available on npm registry. You can install the package with the `npm install` command,
 
 ```bash
-npm install git+https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git
+npm install @welcomesoftware/cmp-sdk
 ```
 
-or to install with `yarn` (version 2+)
 
-```bash
-yarn add welcome-sdk@https://github.com/AhsanShihab/Welcome-Nodejs-SDK.git
-```
-
-Then import the `WelcomeClient` class from the 'welcome-sdk' package.
+In your project, import the `CmpClient` class from the '@welcomesoftware/cmp-sdk' package.
 
 ```javascript
-import { WelcomeClient } from "welcome-sdk";
+import { CmpClient } from "@welcomesoftware/cmp-sdk";
 ```
 
 ## Initializing the App
 
 ```javascript
-const welcomeClient = new WelcomeClient(param);
+const cmpClient = new CmpClient(param);
 ```
 
 `param` is an object with the following properties
@@ -46,19 +41,19 @@ const welcomeClient = new WelcomeClient(param);
   \
    _type_: `string`
   \
-  The client Id of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_ID` environment variable
+  The client Id of the app registered in Optimizely CMP. If you omit this field, the app will try to extract the value from `CMP_CLIENT_ID` environment variable
 
 - `clientSecret`
   \
   _type_: `string`
   \
-  The client secret of the app registered in Welcome. If you omit this field, the app will try to extract the value from `WELCOME_CLIENT_SECRET` environment variable
+  The client secret of the app registered in Optimizely CMP. If you omit this field, the app will try to extract the value from `CMP_CLIENT_SECRET` environment variable
 
 - `redirectUri`
   \
   _type_: `string`
   \
-  The redirect URI registered in Welcome with the associated app
+  The redirect URI registered in Optimizely CMP with the associated app
 
 - `enableAutoRetry`
   \
@@ -92,7 +87,7 @@ Here is a full example of using the sdk in an express application,
 
 ```javascript
 import express from "express";
-import { WelcomeClient } from "welcome-sdk";
+import { CmpClient } from "@welcomesoftware/cmp-sdk";
 
 const app = express();
 const dummyDB = {
@@ -100,7 +95,7 @@ const dummyDB = {
   refreshToken: "",
 };
 
-const welcomeClient = new WelcomeClient({
+const cmpClient = new CmpClient({
   accessToken: () => dummyDB.accessToken,
   refreshToken: () => dummyDB.refreshToken,
   onAuthFailure: (err) => {
@@ -116,29 +111,29 @@ const welcomeClient = new WelcomeClient({
     dummyDB.refreshToken = refreshToken;
     console.log("token updated");
   },
-  redirectUri: "https://www.example.com/welcome/oauth/callback", // assuming, the server is hosted on www.example.com
+  redirectUri: "https://www.example.com/optimizely-cmp/oauth/callback", // assuming, your server is hosted on www.example.com
   enableAutoRetry: true,
 });
 
 
-// handling Welcome app authorization with the SDK
-app.get("/welcome/oauth", (req, res) => {
-  welcomeClient.auth.initiateOAuth((url) => res.redirect(url));
+// handling Optimizely CMP app authorization with the SDK
+app.get("/optimizely-cmp/oauth", (req, res) => {
+  cmpClient.auth.initiateOAuth((url) => res.redirect(url));
 });
 
-app.get("/welcome/oauth/callback", async (req, res) => {
+app.get("/optimizely-cmp/oauth/callback", async (req, res) => {
   try {
-    await welcomeClient.auth.handleOAuthCallback(req.query);
+    await cmpClient.auth.handleOAuthCallback(req.query);
     return res.send("success");
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
 });
 
-// accessing welcome resources with the SDK
-app.get("/welcome/assets", async (req, res) => {
-  const welcomeAssets = await welcomeClient.library.getAssets();
-  return res.json({ welcomeAssets });
+// accessing resources on Optimizely CMP with the SDK
+app.get("/optimizely-cmp/assets", async (req, res) => {
+  const cmpAssets = await cmpClient.library.getAssets();
+  return res.json({ cmpAssets });
 });
 
 app.listen(process.env.PORT);
