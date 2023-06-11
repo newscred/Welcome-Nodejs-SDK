@@ -1,12 +1,12 @@
 const { Router } = require("express");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const router = Router();
 
 router.get("/getLabelGroups", async (req, res) => {
   const userId = req.user.id;
   try {
-    let labelGroupBatch1 = await welcomeClient.label.getLabelGroups(
+    let labelGroupBatch1 = await cmpClient.label.getLabelGroups(
       {
         pageSize: 3,
       },

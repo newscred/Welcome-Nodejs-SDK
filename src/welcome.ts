@@ -8,7 +8,7 @@ import { Uploader } from "./modules/uploader";
 import { Task } from "./modules/task";
 import { Publishing } from "./modules/publishing";
 
-interface WelcomeClientConstructorParam {
+interface CmpClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
   refreshToken: string | ((tokenGetParam?: any) => string | Promise<string>);
   clientId?: string;
@@ -28,7 +28,7 @@ interface WelcomeClientConstructorParam {
   enableAutoRetry?: boolean;
 }
 
-export class WelcomeClient {
+export class CmpClient {
   auth: Auth;
   label: Label;
   campaign: Campaign;
@@ -38,7 +38,7 @@ export class WelcomeClient {
   library: Library;
   publishing: Publishing;
 
-  constructor(param: WelcomeClientConstructorParam) {
+  constructor(param: CmpClientConstructorParam) {
     this.auth = new Auth({
       accessToken: param.accessToken,
       refreshToken: param.refreshToken,

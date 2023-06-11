@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const multer = require("multer");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const router = Router();
 const upload = multer();
@@ -8,7 +8,7 @@ const upload = multer();
 router.get("/getFolders", async (req, res) => {
   const userId = req.user.id;
   try {
-    let folderBatch1 = await welcomeClient.library.getFolders(
+    let folderBatch1 = await cmpClient.library.getFolders(
       {
         pageSize: 3,
       },
@@ -27,7 +27,7 @@ router.get("/getFolderById/:folderId", async (req, res) => {
   const userId = req.user.id;
   try {
     const folderId = req.params.folderId;
-    const folder = await welcomeClient.library.getFolderById(folderId, {
+    const folder = await cmpClient.library.getFolderById(folderId, {
       userId,
     });
     const parentFolder = await folder.getParentFolder();
@@ -42,7 +42,7 @@ router.get("/getFolderById/:folderId", async (req, res) => {
 router.get("/getAssets", async (req, res) => {
   const userId = req.user.id;
   try {
-    const batch1 = await welcomeClient.library.getAssets(
+    const batch1 = await cmpClient.library.getAssets(
       { pageSize: 3 },
       { userId }
     );
@@ -57,12 +57,12 @@ router.get("/getAssets", async (req, res) => {
 router.post("/addAsset", upload.single("file"), async (req, res) => {
   const userId = req.user.id;
   try {
-    const uploadedFile = await welcomeClient.uploader.upload(
+    const uploadedFile = await cmpClient.uploader.upload(
       req.file.buffer,
       req.file.originalname,
       { userId }
     );
-    const asset = await welcomeClient.library.addAsset(uploadedFile, {
+    const asset = await cmpClient.library.addAsset(uploadedFile, {
       userId,
     });
     return res.json({ asset, relatedLinks: asset.getRelatedLinks() });
@@ -79,12 +79,12 @@ router.post(
     const userId = req.user.id;
     try {
       const assetId = req.params.assetId;
-      const uploadedFile = await welcomeClient.uploader.upload(
+      const uploadedFile = await cmpClient.uploader.upload(
         req.file.buffer,
         req.file.originalname,
         { userId }
       );
-      const assetVersion = await welcomeClient.library.addAssetVersion(
+      const assetVersion = await cmpClient.library.addAssetVersion(
         assetId,
         uploadedFile,
         { userId }
@@ -104,7 +104,7 @@ router.get("/getArticle/:articleId", async (req, res) => {
   const userId = req.user.id;
   try {
     const articleId = req.params.articleId;
-    const article = await welcomeClient.library.getArticle(articleId, {
+    const article = await cmpClient.library.getArticle(articleId, {
       userId,
     });
     return res.json({ article });
@@ -118,7 +118,7 @@ router.get("/getImage/:imageId", async (req, res) => {
   const userId = req.user.id;
   try {
     const imageId = req.params.imageId;
-    const image = await welcomeClient.library.getImage(imageId, { userId });
+    const image = await cmpClient.library.getImage(imageId, { userId });
     return res.json({ image });
   } catch (err) {
     console.log(err);
@@ -131,7 +131,7 @@ router.patch("/updateImage/:imageId", async (req, res) => {
   try {
     const imageId = req.params.imageId;
     const updatePayload = req.body;
-    const updatedImage = await welcomeClient.library.updateImage(
+    const updatedImage = await cmpClient.library.updateImage(
       imageId,
       updatePayload,
       { userId }
@@ -147,7 +147,7 @@ router.delete("/deleteImage/:imageId", async (req, res) => {
   const userId = req.user.id;
   try {
     const imageId = req.params.imageId;
-    await welcomeClient.library.deleteImage(imageId, { userId });
+    await cmpClient.library.deleteImage(imageId, { userId });
     return res.json({ success: true });
   } catch (err) {
     console.log(err);
@@ -159,7 +159,7 @@ router.get("/getVideo/:videoId", async (req, res) => {
   const userId = req.user.id;
   try {
     const videoId = req.params.videoId;
-    const video = await welcomeClient.library.getVideo(videoId, { userId });
+    const video = await cmpClient.library.getVideo(videoId, { userId });
     return res.json({ video });
   } catch (err) {
     console.log(err);
@@ -172,7 +172,7 @@ router.patch("/updateVideo/:videoId", async (req, res) => {
   try {
     const videoId = req.params.videoId;
     const updatePayload = req.body;
-    const updatedVideo = await welcomeClient.library.updateVideo(videoId, updatePayload, {
+    const updatedVideo = await cmpClient.library.updateVideo(videoId, updatePayload, {
       userId,
     });
     return res.json({ updatedVideo });
@@ -186,7 +186,7 @@ router.delete("/deleteVideo/:videoId", async (req, res) => {
   const userId = req.user.id;
   try {
     const videoId = req.params.videoId;
-    await welcomeClient.library.deleteVideo(videoId, { userId });
+    await cmpClient.library.deleteVideo(videoId, { userId });
     return res.json({ success: true });
   } catch (err) {
     console.log(err);
@@ -198,7 +198,7 @@ router.get("/getRawFile/:rawFileId", async (req, res) => {
   const userId = req.user.id;
   try {
     const rawFileId = req.params.rawFileId;
-    const rawFile = await welcomeClient.library.getRawFile(rawFileId, {
+    const rawFile = await cmpClient.library.getRawFile(rawFileId, {
       userId,
     });
     return res.json({ rawFile });
@@ -213,7 +213,7 @@ router.patch("/updateRawFile/:rawFileId", async (req, res) => {
   try {
     const rawFileId = req.params.rawFileId;
     const updatePayload = req.body;
-    const updatedRawFile = await welcomeClient.library.updateRawFile(
+    const updatedRawFile = await cmpClient.library.updateRawFile(
       rawFileId,
       updatePayload,
       { userId }
@@ -229,7 +229,7 @@ router.delete("/deleteRawFile/:rawFileId", async (req, res) => {
   const userId = req.user.id;
   try {
     const rawFileId = req.params.rawFileId;
-    await welcomeClient.library.deleteRawFile(rawFileId, { userId });
+    await cmpClient.library.deleteRawFile(rawFileId, { userId });
     return res.json({ success: true });
   } catch (err) {
     console.log(err);

@@ -27,11 +27,11 @@ uploadedFile.title = "My File";
 Example with express and [multer](https://github.com/expressjs/multer) middleware
 
 ```javascript
-const welcomeClient = new WelcomeClient(param);
+const cmpClient = new CmpClient(param);
 const app = express();
 const upload = multer();
 app.post("/upload", upload.single("file"), async (req, res) => {
-  const uploadedFile = await welcomeClient.uploader.upload(
+  const uploadedFile = await cmpClient.uploader.upload(
     req.file.buffer,
     req.file.originalname
   );

@@ -1,8 +1,8 @@
-const { WelcomeClient } = require("welcome-sdk");
+const { CmpClient } = require("@welcomesoftware/cmp-sdk");
 
 const dummyDB = {};
 
-const welcomeClient = new WelcomeClient({
+const cmpClient = new CmpClient({
   accessToken: ({ userId }) => dummyDB[userId].accessToken,
   refreshToken: ({ userId }) => dummyDB[userId].refreshToken,
   onAuthFailure: (err) => {
@@ -35,7 +35,7 @@ const welcomeClient = new WelcomeClient({
 //     password: process.env.REDIS_PASSWORD
 // });
 
-// const welcomeClient = new WelcomeClient({
+// const cmpClient = new CmpClient({
 //   accessToken: ({ userId }) => redis.get(`access:${userId}`),
 //   refreshToken: ({ userId }) => redis.get(`refresh:${userId}`),
 //   onAuthFailure: (err) => {
@@ -57,4 +57,4 @@ const welcomeClient = new WelcomeClient({
 //   enableAutoRetry: true,
 // });
 
-module.exports = { welcomeClient, dummyDB };
+module.exports = { cmpClient, dummyDB };

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const router = Router();
 
@@ -8,7 +8,7 @@ router.get("/getPublishingEventById/:eventId", async (req, res) => {
   try {
     const eventId = req.params.eventId;
     const publishingEvent =
-      await welcomeClient.publishing.getPublishingEventById(eventId, {
+      await cmpClient.publishing.getPublishingEventById(eventId, {
         userId,
       });
     return res.json({ publishingEvent });
@@ -23,7 +23,7 @@ router.get("/getPublishingMetadata/:eventId", async (req, res) => {
   try {
     const eventId = req.params.eventId;
     const publishingMetadata =
-      await welcomeClient.publishing.getPublishingMetadata(eventId, { userId });
+      await cmpClient.publishing.getPublishingMetadata(eventId, { userId });
     return res.json({ publishingMetadata });
   } catch (err) {
     console.log(err);
@@ -35,7 +35,7 @@ router.post("/addPublishingMetadata/:eventId", async (req, res) => {
   const userId = req.user.id;
   try {
     const eventId = req.params.eventId;
-    const data = await welcomeClient.publishing.addPublishingMetadata(
+    const data = await cmpClient.publishing.addPublishingMetadata(
       eventId,
       req.body,
       { userId }
@@ -54,7 +54,7 @@ router.get(
     try {
       const { eventId, assetId, metadataId } = req.params;
       const publishingMetadataForAsset =
-        await welcomeClient.publishing.getPublishingMetadataForAsset(
+        await cmpClient.publishing.getPublishingMetadataForAsset(
           eventId,
           assetId,
           metadataId,

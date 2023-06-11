@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const multer = require("multer");
 var path = require("path");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const upload = multer();
 const router = Router();
@@ -10,7 +10,7 @@ const router = Router();
 router.post("/upload", upload.single("file"), async (req, res) => {
   const userId = req.user.id;
   try {
-    const uploadedFile = await welcomeClient.uploader.upload(
+    const uploadedFile = await cmpClient.uploader.upload(
       req.file.buffer,
       req.file.originalname,
       { userId }

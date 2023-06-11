@@ -19,7 +19,7 @@ app.get("/oauth", (req, res) => {
   function redirect(url) {
     res.redirect(url);
   }
-  welcomeClient.auth.initiateOAuth(redirect);
+  cmpClient.auth.initiateOAuth(redirect);
 });
 ```
 
@@ -30,14 +30,14 @@ app.get("/oauth", (req, res) => {
 - query: object
 - tokenGetParam: any (optional)
 
-**_returns:_** Promise<ReturnType< `onAuthSuccess` | `onAuthFailure` > | void> (___onAuthSuccess___ and ___onAuthFailure___ are passed during the initialization of the ___WelcomeClient___ instance)
+**_returns:_** Promise<ReturnType< `onAuthSuccess` | `onAuthFailure` > | void> (___onAuthSuccess___ and ___onAuthFailure___ are passed during the initialization of the ___CmpClient___ instance)
 
 Handles the redirection callback from Welcome authorization server. This method takes the query object sent by the authorization server as the parameter and gets access token and refresh token by exchanging the code. If authorization server redirects the user without the code parameter in the query param, the function will either call the `onAuthFailure` function, or throw an error if the function is not provided. If it successfully receives the tokens, then it will call the `onAuthSuccess` function. Here is an example with an express app,
 
 ```js
 app.get("/oauth/callback", async (req, res) => {
   // you may want to use a try-catch block here
-  await welcomeClient.auth.handleOAuthCallback(req.query);
+  await cmpClient.auth.handleOAuthCallback(req.query);
   return res.send("success");
 });
 ```
@@ -54,7 +54,7 @@ Updates the access token using the refresh token. Here is an example with an exp
 
 ```js
 app.get("token-refresh", async (req, res) => {
-  await welcomeClient.auth.rotateTokens();
+  await cmpClient.auth.rotateTokens();
   return res.send("tokens updated");
 });
 ```
@@ -71,7 +71,7 @@ Sends a request to the authorization server to revoke the access token. **This o
 
 ```js
 app.get("revoke-access-token", async (req, res) => {
-  await welcomeClient.auth.revokeAccessToken();
+  await cmpClient.auth.revokeAccessToken();
   return res.send("access token revoked");
 });
 ```
@@ -88,7 +88,7 @@ Sends a request to the authorization server to revoke the refresh token. **This 
 
 ```js
 app.get("revoke-refresh-token", async (req, res) => {
-  await welcomeClient.auth.revokeRefreshToken();
+  await cmpClient.auth.revokeRefreshToken();
   return res.send("refresh token revoked");
 });
 ```

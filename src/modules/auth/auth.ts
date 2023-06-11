@@ -61,8 +61,8 @@ export class Auth {
   constructor(param: AuthConstructorParam) {
     this.#accessToken = param.accessToken;
     this.#refreshToken = param.refreshToken;
-    this.#clientId = param.clientId || process.env.WELCOME_CLIENT_ID;
-    this.#clientSecret = param.clientSecret || process.env.WELCOME_CLIENT_SECRET;
+    this.#clientId = param.clientId || process.env.CMP_CLIENT_ID || process.env.WELCOME_CLIENT_ID;
+    this.#clientSecret = param.clientSecret || process.env.CMP_CLIENT_SECRET || process.env.WELCOME_CLIENT_SECRET;
     this.#redirectUri = param.redirectUri;
     this.#onAuthFailure = param.onAuthFailure;
     this.#onAuthSuccess = param.onAuthSuccess;
