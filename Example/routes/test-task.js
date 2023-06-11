@@ -2,7 +2,7 @@ const { Router } = require("express");
 const fs = require('fs');
 const path = require('path')
 const multer = require("multer");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const upload = multer();
 const router = Router();
@@ -11,11 +11,11 @@ router.get("/getTask/:taskId", async (req, res) => {
   const userId = req.user.id;
   try {
     const taskId = req.params.taskId;
-    const task = await welcomeClient.task.getTask(taskId, {
+    const task = await cmpClient.task.getTask(taskId, {
       userId,
     });
     // const readStream = fs.createReadStream(path.join(__dirname, "./myfile.png"));
-    // await task.addAsset(await welcomeClient.uploader.upload(readStream, undefined, { userId }));
+    // await task.addAsset(await cmpClient.uploader.upload(readStream, undefined, { userId }));
 
     // const payload = { labels: [{ group: '9b3cbeedf0d4c1f8a18ae445ae041fd2', values: ['742b7c083fbb21ecacd8d245afdc813c']}] };
     // await task.update(payload);
@@ -42,7 +42,7 @@ router.patch("/updateTask/:taskId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const payload = req.body;
-    const updatedTask = await welcomeClient.task.updateTask(taskId, payload, {
+    const updatedTask = await cmpClient.task.updateTask(taskId, payload, {
       userId,
     });
     return res.status(200).json({ updatedTask });
@@ -56,7 +56,7 @@ router.get("/getTaskBrief/:taskId", async (req, res) => {
   const userId = req.user.id;
   try {
     const taskId = req.params.taskId;
-    const taskBrief = await welcomeClient.task.getTaskBrief(taskId, {
+    const taskBrief = await cmpClient.task.getTaskBrief(taskId, {
       userId,
     });
 
@@ -71,7 +71,7 @@ router.get("/getTaskCustomFields/:taskId", async (req, res) => {
   const userId = req.user.id;
   try {
     const taskId = req.params.taskId;
-    const taskCustomFieldsBatch1 = await welcomeClient.task.getTaskCustomFields(
+    const taskCustomFieldsBatch1 = await cmpClient.task.getTaskCustomFields(
       taskId,
       {
         pageSize: 2,
@@ -100,7 +100,7 @@ router.get("/getTaskCustomField/:taskId/:customFieldId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const customFieldId = req.params.customFieldId;
-    const taskCustomField = await welcomeClient.task.getTaskCustomField(
+    const taskCustomField = await cmpClient.task.getTaskCustomField(
       taskId,
       customFieldId,
       { userId }
@@ -124,7 +124,7 @@ router.patch(
       const taskId = req.params.taskId;
       const customFieldId = req.params.customFieldId;
       const payload = req.body;
-      const updatedCustomField = await welcomeClient.task.updateTaskCustomField(
+      const updatedCustomField = await cmpClient.task.updateTaskCustomField(
         taskId,
         customFieldId,
         payload,
@@ -145,7 +145,7 @@ router.get(
     try {
       const taskId = req.params.taskId;
       const customFieldId = req.params.customFieldId;
-      const choices = await welcomeClient.task.getTaskCustomFieldChoices(
+      const choices = await cmpClient.task.getTaskCustomFieldChoices(
         taskId,
         customFieldId,
         { pageSize: 6, offset: 0 },
@@ -165,7 +165,7 @@ router.get("/getTaskSubstep/:taskId/:stepId/:substepId", async (req, res) => {
     const taskId = req.params.taskId;
     const stepId = req.params.stepId;
     const substepId = req.params.substepId;
-    const substep = await welcomeClient.task.getTaskSubstep(
+    const substep = await cmpClient.task.getTaskSubstep(
       taskId,
       stepId,
       substepId,
@@ -193,7 +193,7 @@ router.patch(
       const stepId = req.params.stepId;
       const substepId = req.params.substepId;
       const payload = req.body;
-      const updatedSubstep = await welcomeClient.task.updateTaskSubstep(
+      const updatedSubstep = await cmpClient.task.updateTaskSubstep(
         taskId,
         stepId,
         substepId,
@@ -216,7 +216,7 @@ router.get(
       const taskId = req.params.taskId;
       const stepId = req.params.stepId;
       const substepId = req.params.substepId;
-      const externalWork = await welcomeClient.task.getTaskSubstepExternalWork(
+      const externalWork = await cmpClient.task.getTaskSubstepExternalWork(
         taskId,
         stepId,
         substepId,
@@ -243,7 +243,7 @@ router.patch(
       const substepId = req.params.substepId;
       const payload = req.body;
       const updatedExternalWork =
-        await welcomeClient.task.updateTaskSubStepExternalWork(
+        await cmpClient.task.updateTaskSubStepExternalWork(
           taskId,
           stepId,
           substepId,
@@ -266,7 +266,7 @@ router.get(
       const taskId = req.params.taskId;
       const stepId = req.params.stepId;
       const substepId = req.params.substepId;
-      const comments = await welcomeClient.task.getTaskSubstepComments(
+      const comments = await cmpClient.task.getTaskSubstepComments(
         taskId,
         stepId,
         substepId,
@@ -294,7 +294,7 @@ router.post(
       const uploadedFilesPromise = [];
       req.files.forEach((file) => {
         uploadedFilesPromise.push(
-          welcomeClient.uploader.upload(file.buffer, file.originalname, {
+          cmpClient.uploader.upload(file.buffer, file.originalname, {
             userId,
           })
         );
@@ -305,7 +305,7 @@ router.post(
         attachments: uploadedFiles,
       };
 
-      const newComment = await welcomeClient.task.addTaskSubstepComment(
+      const newComment = await cmpClient.task.addTaskSubstepComment(
         taskId,
         stepId,
         substepId,
@@ -329,7 +329,7 @@ router.get(
       const stepId = req.params.stepId;
       const substepId = req.params.substepId;
       const commentId = req.params.commentId;
-      const comment = await welcomeClient.task.getTaskSubstepComment(
+      const comment = await cmpClient.task.getTaskSubstepComment(
         taskId,
         stepId,
         substepId,
@@ -354,7 +354,7 @@ router.patch(
       const substepId = req.params.substepId;
       const commentId = req.params.commentId;
       const payload = req.body;
-      const updatedComment = await welcomeClient.task.updateTaskSubstepComment(
+      const updatedComment = await cmpClient.task.updateTaskSubstepComment(
         taskId,
         stepId,
         substepId,
@@ -379,7 +379,7 @@ router.delete(
       const stepId = req.params.stepId;
       const substepId = req.params.substepId;
       const commentId = req.params.commentId;
-      await welcomeClient.task.deleteTaskSubstepComment(
+      await cmpClient.task.deleteTaskSubstepComment(
         taskId,
         stepId,
         substepId,
@@ -398,7 +398,7 @@ router.get("/getTaskAssets/:taskId", async (req, res) => {
   const userId = req.user.id;
   try {
     const taskId = req.params.taskId;
-    const taskAssetsBatch1 = await welcomeClient.task.getTaskAssets(
+    const taskAssetsBatch1 = await cmpClient.task.getTaskAssets(
       taskId,
       { pageSize: 3 },
       { userId }
@@ -418,12 +418,12 @@ router.post(
     const userId = req.user.id;
     try {
       const taskId = req.params.taskId;
-      const uploadedFile = await welcomeClient.uploader.upload(
+      const uploadedFile = await cmpClient.uploader.upload(
         req.file.buffer,
         req.file.originalname,
         { userId }
       );
-      const taskAsset = await welcomeClient.task.addTaskAsset(
+      const taskAsset = await cmpClient.task.addTaskAsset(
         taskId,
         uploadedFile,
         { userId }
@@ -444,12 +444,12 @@ router.post(
     try {
       const taskId = req.params.taskId;
       const assetId = req.params.assetId;
-      const uploadedFile = await welcomeClient.uploader.upload(
+      const uploadedFile = await cmpClient.uploader.upload(
         req.file.buffer,
         req.file.originalname,
         { userId }
       );
-      const taskAssetDraft = await welcomeClient.task.addTaskAssetDraft(
+      const taskAssetDraft = await cmpClient.task.addTaskAssetDraft(
         taskId,
         assetId,
         uploadedFile,
@@ -468,7 +468,7 @@ router.get("/getTaskAssetComments/:taskId/:assetId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const assetId = req.params.assetId;
-    const taskAssetComments = await welcomeClient.task.getTaskAssetComments(
+    const taskAssetComments = await cmpClient.task.getTaskAssetComments(
       taskId,
       assetId,
       {},
@@ -493,7 +493,7 @@ router.post(
       const uploadedFilesPromise = [];
       req.files.forEach((file) => {
         uploadedFilesPromise.push(
-          welcomeClient.uploader.upload(file.buffer, file.originalname, {
+          cmpClient.uploader.upload(file.buffer, file.originalname, {
             userId,
           })
         );
@@ -504,7 +504,7 @@ router.post(
         attachments: uploadedFiles,
       };
 
-      const newComment = await welcomeClient.task.addTaskAssetComment(
+      const newComment = await cmpClient.task.addTaskAssetComment(
         taskId,
         assetId,
         payload,
@@ -522,7 +522,7 @@ router.get("/getTaskAttachments/:taskId", async (req, res) => {
   const userId = req.user.id;
   try {
     const taskId = req.params.taskId;
-    const taskAttachmentsBatch1 = await welcomeClient.task.getTaskAttachments(
+    const taskAttachmentsBatch1 = await cmpClient.task.getTaskAttachments(
       taskId,
       { pageSize: 3 },
       { userId }
@@ -542,7 +542,7 @@ router.get("/getTaskArticle/:taskId/:articleId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const articleId = req.params.articleId;
-    const taskArticle = await welcomeClient.task.getTaskArticle(
+    const taskArticle = await cmpClient.task.getTaskArticle(
       taskId,
       articleId,
       { userId }
@@ -559,7 +559,7 @@ router.get("/getTaskImage/:taskId/:imageId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const imageId = req.params.imageId;
-    const taskImage = await welcomeClient.task.getTaskImage(taskId, imageId, {
+    const taskImage = await cmpClient.task.getTaskImage(taskId, imageId, {
       userId,
     });
     return res.status(200).json({ taskImage });
@@ -574,7 +574,7 @@ router.get("/getTaskVideo/:taskId/:videoId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const videoId = req.params.videoId;
-    const taskVideo = await welcomeClient.task.getTaskVideo(taskId, videoId, {
+    const taskVideo = await cmpClient.task.getTaskVideo(taskId, videoId, {
       userId,
     });
     return res.status(200).json({ taskVideo });
@@ -589,7 +589,7 @@ router.get("/getTaskRawFile/:taskId/:rawFileId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const rawFileId = req.params.rawFileId;
-    const taskRawFile = await welcomeClient.task.getTaskRawFile(
+    const taskRawFile = await cmpClient.task.getTaskRawFile(
       taskId,
       rawFileId,
       { userId }

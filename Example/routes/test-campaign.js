@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { welcomeClient } = require("../config");
+const { cmpClient } = require("../config");
 
 const router = Router();
 
@@ -7,7 +7,7 @@ router.get('/getCampaignById/:campaignId', async(req, res) => {
   const userId = req.user.id;
   try {
     const campaignId = req.params.campaignId;
-    const campaign = await welcomeClient.campaign.getCampaignById(campaignId, {
+    const campaign = await cmpClient.campaign.getCampaignById(campaignId, {
       userId,
     });
     const brief = await campaign.getBrief();
@@ -26,7 +26,7 @@ router.get('/getCampaignBrief/:campaignId', async (req, res) => {
   const userId = req.user.id;
   try {
     const campaignId = req.params.campaignId;
-    const brief = await welcomeClient.campaign.getCampaignBrief(campaignId, {
+    const brief = await cmpClient.campaign.getCampaignBrief(campaignId, {
       userId,
     });
     return res.json({ brief });

@@ -1,6 +1,6 @@
 # Sample App
 
-This folder contains an example app that demonstrate how to use the Welcome NodeJS SDK with an expressjs app.
+This folder contains an example app that demonstrate how to use the CMP SDK package with an expressjs app.
 
 ## How to run
 1. Install [ngrok](https://ngrok.com/) and set it up. Then run
@@ -12,8 +12,8 @@ ngrok http 30000
 
 3. create a `.env` file, and save the following variables
 ```
-WELCOME_CLIENT_ID=<your app client id>
-WELCOME_CLIENT_SECRET=<your app client secret>
+CMP_CLIENT_ID=<your app client id>
+CMP_CLIENT_SECRET=<your app client secret>
 ```
 
 4. Go to the `config.js` file and update the `redirectUri` value to `<your ngrok url>/tests/oauth/callback`.
@@ -21,7 +21,7 @@ WELCOME_CLIENT_SECRET=<your app client secret>
 5. In another terminal, run the following
 ```
 cd Example
-npm run build
+npm install
 npm start
 ```
 
