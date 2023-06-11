@@ -1,1 +1,1 @@
-export { WelcomeClient } from "./welcome";
+export { CmpClient } from "./welcome";
