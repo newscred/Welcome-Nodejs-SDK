@@ -2,9 +2,9 @@ name: Default tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, main ]
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix:
+      matrix:g
         node-version: [16.14.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
