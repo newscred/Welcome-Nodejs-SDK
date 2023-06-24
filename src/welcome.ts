@@ -8,7 +8,7 @@ import { Uploader } from "./modules/uploader";
 import { Task } from "./modules/task";
 import { Publishing } from "./modules/publishing";
 
-interface CmpClientConstructorParam {
+export interface CmpClientConstructorParam {
   accessToken: string | ((tokenGetParam?: any) => string | Promise<string>);
   refreshToken: string | ((tokenGetParam?: any) => string | Promise<string>);
   clientId?: string;

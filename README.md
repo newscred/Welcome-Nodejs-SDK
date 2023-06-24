@@ -150,6 +150,66 @@ Learn more about using the SDK in the full [API Reference](./docs)
 In the detailed documents, you may see some of the methods have an <img src="docs/experimental-badge.svg" alt="experimental-badge" /> badge. These methods are based on experimental APIs. Experimental APIs provide early access to APIs that are currently under development. The documentation may highlight new features, new data properties and data models, new filters, and other features specific to the new API. Our intention in providing you with early access to the documentation for these APIs in the experimental stage is that you may plan for implementing them in the near future and provide us with necessary feedback to meet your needs. These APIs are most often NOT operational and the documentation is subject to change frequently from the time the documentation is available to the time the APIs are fully released. Experimental APIs will generally require testing and development on your own applications before relying on them in your stable production environments
 
 
+## Extendability
+
+You may want to test out released <img src="docs/experimental-badge.svg" alt="experimental-badge" /> APIs that are not yet availbale in the SDK or want to add more functionality to the `CmpClient` class based on your usecase. You can write your own custom class extending from the `CmpClient` class provided by the SDK. Here is an example of how you can write your own custom class extending from the `CmpClient` class.
+
+
+```TypeScript
+import { CmpClient } from "@welcomesoftware/cmp-sdk";
+import { APICaller } from '@welcomesoftware/cmp-sdk/lib/modules/api-caller';
+import type { CmpClientConstructorParam } from "@welcomesoftware/cmp-sdk";
+
+// define your own module
+class StructuredContent {
+  #apiCaller: APICaller;
+
+  constructor(apiCaller: APICaller) {
+    this.#apiCaller = apiCaller;
+  }
+
+  async acknowledgeContentReviewRequest(
+    url: string,
+    contentHash: string,
+    userId: string,
+  ) {
+    const payload: ContentPreviewRequestedAcknowledgePayload = {
+      acknowledgedBy: userId,
+      contentHash: contentHash,
+    };
+    await this.#apiCaller.post(url, payload);
+  }
+
+  async completeContentReviewRequest(
+    url: string,
+    sitename: string,
+    previewUrl: string,
+  ) {
+    const payload = {
+      keyed_previews: {
+        [sitename]: previewUrl,
+      },
+    };
+
+    await this.#apiCaller.post(url, payload);
+  }
+}
+
+// extend CmpClient
+class ExtendedCmpClient extends CmpClient {
+  structuredContent: StructuredContent;
+
+  constructor(params: CmpClientConstructorParam) {
+    super(params);
+    const apiCaller = new APICaller(this.auth, params.enableAutoRetry, false);
+    this.structuredContent = new StructuredContent(apiCaller);
+  }
+}
+
+// initiate an instance of the `ExtendedCmpClient` class instead of the `CmpClient` class
+export const cmpClient = new ExtendedCmpClient(...)
+```
+
 ## Example App
 
 See the [Example](./Example/) folder for a full demo.
