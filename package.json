@@ -1,6 +1,6 @@
 {
   "name": "@welcomesoftware/cmp-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Welcome NodeJS sdk",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
