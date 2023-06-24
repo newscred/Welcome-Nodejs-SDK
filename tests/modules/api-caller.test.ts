@@ -69,6 +69,53 @@ describe("APICaller module", () => {
     nock.cleanAll();
   });
 
+  describe("Object Key Case Conversion", () => {
+    it("should convert payload object keys from camel case to snake case and reverse for response object keys", async () => {
+      const scope = nock("https://api.optimizely-cmp.com/v3", {
+        reqheaders: {
+          authorization: "Bearer some-access-token-1",
+        },
+      })
+        .post("/some/endpoint", snake_case_object)
+        .reply(201, snake_case_object);
+
+      const response = await apiCaller.post(
+        "https://api.optimizely-cmp.com/v3/some/endpoint",
+        camelCaseObject,
+        tokenGetParam
+      );
+
+      expect(response).toStrictEqual(camelCaseObject);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(scope.isDone()).toBe(true);
+    });
+
+    it("should not convert payload object keys and response object keys", async () => {
+      const payload = {
+        camelCaseKey: "valueOne",
+        snake_case_key: "value_two",
+        "Random String": "Value Three",
+      };
+      const scope = nock("https://api.optimizely-cmp.com/v3", {
+        reqheaders: {
+          authorization: "Bearer some-access-token-1",
+        },
+      })
+        .post("/some/endpoint", payload)
+        .reply(201, payload);
+      const apiCaller = new APICaller(auth, true, false);
+      const response = await apiCaller.post(
+        "https://api.optimizely-cmp.com/v3/some/endpoint",
+        payload,
+        tokenGetParam
+      );
+
+      expect(response).toStrictEqual(payload);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(scope.isDone()).toBe(true);
+    });
+  });
+
   describe("GET", () => {
     it("should properly send GET request to the URL and return the json data", async () => {
       const scope = nock("https://api.optimizely-cmp.com/v3", {
