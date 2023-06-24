@@ -16,13 +16,15 @@ import {
 export class APICaller {
   #shouldRetry: boolean;
   #auth: Auth;
+  #shouldConvertObjectKeyCase: boolean;
 
   #host = "https://api.welcomesoftware.com";
   #apiVersion = "v3";
 
-  constructor(auth: Auth, enableAutoRetry: boolean) {
+  constructor(auth: Auth, enableAutoRetry: boolean, shouldConvertObjectKeyCase: boolean = true) {
     this.#auth = auth;
     this.#shouldRetry = enableAutoRetry;
+    this.#shouldConvertObjectKeyCase = shouldConvertObjectKeyCase;
   }
 
   #formError(body: ErrorResponseBody, code?: number) {
@@ -58,7 +60,9 @@ export class APICaller {
       url = new URL(this.#host + "/" + this.#apiVersion + endpoint);
     }
     const payloadStringified = JSON.stringify(
-      convertObjectKeysToSnakeCase(payload)
+      this.#shouldConvertObjectKeyCase
+        ? convertObjectKeysToSnakeCase(payload)
+        : payload
     );
     const options: RequestOptions = {
       host: url.host,
@@ -94,7 +98,9 @@ export class APICaller {
             responseBody = JSON.parse(data);
           }
 
-          responseBody = convertObjectKeysToCamelCase(responseBody);
+          responseBody = this.#shouldConvertObjectKeyCase
+            ? convertObjectKeysToCamelCase(responseBody)
+            : responseBody;
           if (statusCode && statusCode < 299) {
             resolve(responseBody);
             return;
