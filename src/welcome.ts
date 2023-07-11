@@ -1,6 +1,6 @@
 import { Auth } from "./modules/auth";
 import { APICaller } from "./modules/api-caller";
-import { Asset } from "./modules/asset/asset";
+import { Asset } from "./modules/asset";
 import { Campaign } from "./modules/campaign";
 import { Label } from "./modules/label";
 import { Library } from "./modules/library";
