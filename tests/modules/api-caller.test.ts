@@ -136,6 +136,25 @@ describe("APICaller module", () => {
       expect(scope.isDone()).toBe(true);
     });
 
+    it("should use custom port if present in the url", async () => {
+      const scope = nock("https://api.optimizely-cmp.com:3000/v3", {
+        reqheaders: {
+          authorization: "Bearer some-access-token-1",
+        },
+      })
+        .get("/some/endpoint")
+        .reply(200, snake_case_object);
+
+      const response = await apiCaller.get(
+        "https://api.optimizely-cmp.com:3000/v3/some/endpoint",
+        tokenGetParam
+      );
+
+      expect(response).toStrictEqual(camelCaseObject);
+      expect(accessTokenMock).toBeCalledWith(tokenGetParam);
+      expect(scope.isDone()).toBe(true);
+    });
+
     it("should properly send GET request to the relative URL and return the json data", async () => {
       const scope = nock(WELCOME_API_BASE_URL, {
         reqheaders: {
