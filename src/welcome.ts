@@ -1,5 +1,6 @@
 import { Auth } from "./modules/auth";
 import { APICaller } from "./modules/api-caller";
+import { Asset } from "./modules/asset";
 import { Campaign } from "./modules/campaign";
 import { Label } from "./modules/label";
 import { Library } from "./modules/library";
@@ -30,6 +31,7 @@ export interface CmpClientConstructorParam {
 
 export class CmpClient {
   auth: Auth;
+  asset: Asset;
   label: Label;
   campaign: Campaign;
   user: User;
@@ -51,6 +53,7 @@ export class CmpClient {
     });
 
     const apiCaller = new APICaller(this.auth, param.enableAutoRetry || false);
+    this.asset = new Asset(apiCaller);
     this.label = new Label(apiCaller);
     this.campaign = new Campaign(apiCaller);
     this.user = new User(apiCaller);
