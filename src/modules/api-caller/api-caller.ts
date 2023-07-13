@@ -21,7 +21,11 @@ export class APICaller {
   #host = "https://api.welcomesoftware.com";
   #apiVersion = "v3";
 
-  constructor(auth: Auth, enableAutoRetry: boolean, shouldConvertObjectKeyCase: boolean = true) {
+  constructor(
+    auth: Auth,
+    enableAutoRetry: boolean,
+    shouldConvertObjectKeyCase: boolean = true
+  ) {
     this.#auth = auth;
     this.#shouldRetry = enableAutoRetry;
     this.#shouldConvertObjectKeyCase = shouldConvertObjectKeyCase;
@@ -67,6 +71,7 @@ export class APICaller {
     const options: RequestOptions = {
       host: url.host,
       path: url.pathname + url.search,
+      port: url.port,
       method: method,
       headers: {
         Authorization: `Bearer ${await this.#auth.getAccessToken(
