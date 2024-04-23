@@ -2,6 +2,7 @@ import { request, RequestOptions } from "https";
 
 enum GrantType {
   AUTHORIZATION_CODE = "authorization_code",
+  CLIENT_CREDENTIALS = "client_credentials",
   REFRESH_TOKEN = "refresh_token",
 }
 interface AuthConstructorParam {
@@ -23,12 +24,18 @@ interface AuthConstructorParam {
   ) => any;
 }
 
-interface TokenRequestPayload {
+interface CodeTokenRequestPayload {
   grant_type: GrantType.AUTHORIZATION_CODE;
   client_id: string;
   client_secret: string;
   code: string;
   redirect_uri: string;
+}
+
+interface ClientTokenRequestPayload {
+  grant_type: GrantType.CLIENT_CREDENTIALS;
+  client_id: string;
+  client_secret: string;
 }
 
 interface TokenRotatePayload {
@@ -85,7 +92,7 @@ export class Auth {
 
   #post(
     endpoint: "/token",
-    payload: TokenRequestPayload | TokenRotatePayload
+    payload: CodeTokenRequestPayload | ClientTokenRequestPayload | TokenRotatePayload
   ): Promise<{ access_token: string; refresh_token: string }>;
   #post(
     endpoint: "/revoke",
@@ -150,7 +157,7 @@ export class Auth {
           "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
         );
       }
-      const payload: TokenRequestPayload = {
+      const payload: CodeTokenRequestPayload = {
         client_id: this.#clientId!,
         client_secret: this.#clientSecret!,
         code: code,
@@ -161,6 +168,22 @@ export class Auth {
       const { access_token: accessToken, refresh_token: refreshToken } = result;
       return this.#onAuthSuccess(accessToken, refreshToken, tokenGetParam);
     }
+  }
+
+  async initiateClientFlow() {
+      if (!this.#onAuthSuccess) {
+        throw new Error(
+          "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
+        );
+      }
+      const payload: ClientTokenRequestPayload = {
+        client_id: this.#clientId!,
+        client_secret: this.#clientSecret!,
+        grant_type: GrantType.CLIENT_CREDENTIALS
+      };
+      const result = await this.#post("/token", payload);
+      const { access_token: accessToken, refresh_token: refreshToken } = result;
+      return this.#onAuthSuccess(accessToken, refreshToken);
   }
 
   async rotateTokens(tokenGetParam?: any) {
