@@ -177,6 +177,59 @@ describe("Auth module", () => {
     });
   });
 
+  describe("initiateClientFlow", () => {
+    let auth: Auth;
+    const onAuthSuccess = jest.fn();
+    const accessToken = "test-access-token";
+    const refreshToken = "test-refresh-token";
+
+    beforeAll(() => {
+      nock('https://accounts.welcomesoftware.com')
+        .persist()
+        .post("/o/oauth2/v1/token", {
+          client_id: "test-client-id",
+          client_secret: "test-client-secret",
+          grant_type: "client_credentials"
+        })
+        .reply(200, {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        });
+    });
+
+    beforeEach(() => {
+      auth = new Auth({
+        clientId: "test-client-id",
+        clientSecret: "test-client-secret",
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        onAuthSuccess: onAuthSuccess,
+      });
+    });
+
+    afterAll(() => {
+      nock.cleanAll();
+    });
+
+    it("should throw an error if 'onAuthSuccess' is not provided", async () => {
+      const authWithoutSuccess = new Auth({
+        clientId: "test-client-id",
+        clientSecret: "test-client-secret",
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
+
+      await expect(authWithoutSuccess.initiateClientFlow())
+        .rejects.toThrow("'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function");
+    });
+
+    it("should call 'onAuthSuccess' with access and refresh tokens", async () => {
+      const tokenGetParam = { foo: "bar" };
+      await auth.initiateClientFlow(tokenGetParam);
+      expect(onAuthSuccess).toBeCalledWith(accessToken, refreshToken, tokenGetParam);
+    });
+  });
+
   describe("rotateTokens", () => {
     it("should throw error if clientId or clientSecret is missing", async () => {
       const authWithMissingClientId = new Auth({
