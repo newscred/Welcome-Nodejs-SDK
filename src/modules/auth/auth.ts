@@ -170,7 +170,7 @@ export class Auth {
     }
   }
 
-  async initiateClientFlow() {
+  async initiateClientFlow(tokenGetParam?: any) {
       if (!this.#onAuthSuccess) {
         throw new Error(
           "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
