@@ -183,7 +183,7 @@ export class Auth {
       };
       const result = await this.#post("/token", payload);
       const { access_token: accessToken, refresh_token: refreshToken } = result;
-      return this.#onAuthSuccess(accessToken, refreshToken);
+      return this.#onAuthSuccess(accessToken, refreshToken, tokenGetParam);
   }
 
   async rotateTokens(tokenGetParam?: any) {
