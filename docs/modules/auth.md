@@ -49,7 +49,7 @@ app.get("/oauth/callback", async (req, res) => {
 
 - tokenGetParam: any (optional)
 
-**_returns:_** `undefined`
+**_returns:_** Promise<ReturnType< `onAuthSuccess` | `onAuthFailure` >> (___onAuthSuccess___ and ___onAuthFailure___ are passed during the initialization of the ___CmpClient___ instance)
 
 Initializes Welcome client credentials flow. Use this flow for server-to-server interactions.
 
