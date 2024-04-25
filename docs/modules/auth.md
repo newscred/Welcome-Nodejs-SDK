@@ -55,7 +55,7 @@ Initializes Welcome client credentials flow. Use this flow for server-to-server 
 
 ```js
 app.get("/access-token", async (req, res) => {
-  await cmpClient.auth.initiateOAuth();
+  await cmpClient.auth.initiateClientFlow();
   const accessToken = await cmpClient.auth.getAccessToken();
   return res.send({ access_token: accessToken });
 });
