@@ -182,7 +182,7 @@ export class Auth {
         grant_type: GrantType.CLIENT_CREDENTIALS
       };
       const result = await this.#post("/token", payload);
-      const { access_token: accessToken, refresh_token: refreshToken } = result;
+      const { access_token: accessToken } = result;
       return this.#onAuthSuccess(accessToken, refreshToken, tokenGetParam);
   }
 
