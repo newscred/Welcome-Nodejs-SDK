@@ -16,7 +16,7 @@ export interface CmpClientConstructorParam {
   redirectUri?: string;
   onAuthSuccess?: (
     accessToken: string,
-    refreshToken: string,
+    refreshToken?: string,
     tokenGetParam?: any
   ) => any;
   onAuthFailure?: (error: string) => any;
