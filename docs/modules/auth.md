@@ -49,13 +49,13 @@ app.get("/oauth/callback", async (req, res) => {
 
 - tokenGetParam: any (optional)
 
-**_returns:_** `undefined`
+**_returns:_** Promise<ReturnType< `onAuthSuccess` | `onAuthFailure` >> (___onAuthSuccess___ and ___onAuthFailure___ are passed during the initialization of the ___CmpClient___ instance)
 
 Initializes Welcome client credentials flow. Use this flow for server-to-server interactions.
 
 ```js
 app.get("/access-token", async (req, res) => {
-  await cmpClient.auth.initiateOAuth();
+  await cmpClient.auth.initiateClientFlow();
   const accessToken = await cmpClient.auth.getAccessToken();
   return res.send({ access_token: accessToken });
 });

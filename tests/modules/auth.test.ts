@@ -192,8 +192,7 @@ describe("Auth module", () => {
           grant_type: "client_credentials"
         })
         .reply(200, {
-          access_token: accessToken,
-          refresh_token: refreshToken,
+          access_token: accessToken
         });
     });
 
@@ -217,16 +216,42 @@ describe("Auth module", () => {
         clientSecret: "test-client-secret",
         accessToken: accessToken,
         refreshToken: refreshToken,
-      });
+    });
 
       await expect(authWithoutSuccess.initiateClientFlow())
         .rejects.toThrow("'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function");
     });
 
-    it("should call 'onAuthSuccess' with access and refresh tokens", async () => {
+    it("should throw an error if 'clientId' or 'clientSecret' is missing", async () => {
+      const missingIdandSecret = new Auth({
+        accessToken: "1",
+        refreshToken: "2",
+        onAuthSuccess: onAuthSuccess,
+      });
+      const missingSecret = new Auth({
+        accessToken: "1",
+        refreshToken: "2",
+        clientId: "test-client-secret",
+        onAuthSuccess: onAuthSuccess,
+      });
+      const missingId = new Auth({
+        accessToken: "1",
+        refreshToken: "2",
+        clientSecret: "test-client-secret",
+        onAuthSuccess: onAuthSuccess,
+      });
+      await expect(missingIdandSecret.initiateClientFlow())
+        .rejects.toThrow("Cannot get access token because 'clientId' or 'clientSecret' is missing");
+      await expect(missingSecret.initiateClientFlow())
+        .rejects.toThrow("Cannot get access token because 'clientId' or 'clientSecret' is missing");
+      await expect(missingId.initiateClientFlow())
+        .rejects.toThrow("Cannot get access token because 'clientId' or 'clientSecret' is missing");
+    });
+
+    it("should call 'onAuthSuccess' with access token", async () => {
       const tokenGetParam = { foo: "bar" };
       await auth.initiateClientFlow(tokenGetParam);
-      expect(onAuthSuccess).toBeCalledWith(accessToken, refreshToken, tokenGetParam);
+      expect(onAuthSuccess).toBeCalledWith(accessToken, tokenGetParam);
     });
   });
 

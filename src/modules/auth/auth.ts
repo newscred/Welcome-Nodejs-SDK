@@ -13,7 +13,7 @@ interface AuthConstructorParam {
   redirectUri?: string;
   onAuthSuccess?: (
     accessToken: string,
-    refreshToken: string,
+    refreshToken?: string,
     tokenGetParam?: any
   ) => any;
   onAuthFailure?: (error: string, ...args: any) => any;
@@ -58,7 +58,7 @@ export class Auth {
   #clientId: string | undefined;
   #clientSecret: string | undefined;
   #redirectUri: string | undefined;
-  #onAuthSuccess?: (accessToken: string, refreshToken: string, tokenGetParam?: any) => any;
+  #onAuthSuccess?: (accessToken: string, refreshToken?: string, tokenGetParam?: any) => any;
   #onAuthFailure?: (error: string) => any;
   #tokenChangeCallback?: (accessToken: string, refreshToken: string, tokenGetParam?: any) => any;
 
@@ -93,7 +93,7 @@ export class Auth {
   #post(
     endpoint: "/token",
     payload: CodeTokenRequestPayload | ClientTokenRequestPayload | TokenRotatePayload
-  ): Promise<{ access_token: string; refresh_token: string }>;
+  ): Promise<{ access_token: string; refresh_token?: string }>;
   #post(
     endpoint: "/revoke",
     payload: TokenRevokPayload
@@ -171,19 +171,33 @@ export class Auth {
   }
 
   async initiateClientFlow(tokenGetParam?: any) {
-      if (!this.#onAuthSuccess) {
-        throw new Error(
-          "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
-        );
-      }
-      const payload: ClientTokenRequestPayload = {
-        client_id: this.#clientId!,
-        client_secret: this.#clientSecret!,
-        grant_type: GrantType.CLIENT_CREDENTIALS
-      };
+    if (!this.#onAuthSuccess) {
+      throw new Error(
+        "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
+      );
+    }
+    if (!this.#clientId || !this.#clientSecret) {
+      throw new Error(
+        "Cannot get access token because 'clientId' or 'clientSecret' is missing"
+      );
+    }
+    const payload: ClientTokenRequestPayload = {
+      client_id: this.#clientId!,
+      client_secret: this.#clientSecret!,
+      grant_type: GrantType.CLIENT_CREDENTIALS
+    };
+    try {
       const result = await this.#post("/token", payload);
       const { access_token: accessToken } = result;
-      return this.#onAuthSuccess(accessToken, refreshToken, tokenGetParam);
+      return this.#onAuthSuccess(accessToken, tokenGetParam);
+    } catch (err: any) {
+      const error = err instanceof Error ? err : new Error('Failed to get access token');
+      const errorMessage = `Failed to get access token: ${error.message}`;
+      if (!this.#onAuthFailure) {
+        throw new Error(errorMessage);
+      }
+      return this.#onAuthFailure(errorMessage);
+    }
   }
 
   async rotateTokens(tokenGetParam?: any) {
@@ -200,6 +214,11 @@ export class Auth {
     };
     const result = await this.#post("/token", payload);
     const { access_token: accessToken, refresh_token: refreshToken } = result;
+    if (!refreshToken) {
+      throw new Error(
+        "Error generating new access token."
+      );
+    }
     if (typeof this.#accessToken === "string") {
       this.#accessToken = accessToken;
     }
