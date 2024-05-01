@@ -191,8 +191,7 @@ export class Auth {
       const { access_token: accessToken } = result;
       return this.#onAuthSuccess(accessToken, tokenGetParam);
     } catch (err: any) {
-      const error = err instanceof Error ? err : new Error('Failed to get access token');
-      const errorMessage = `Failed to get access token: ${error.message}`;
+      const errorMessage = err instanceof Error ? `Failed to get access token: ${err.message}` : "Failed to get access token";
       if (!this.#onAuthFailure) {
         throw new Error(errorMessage);
       }
