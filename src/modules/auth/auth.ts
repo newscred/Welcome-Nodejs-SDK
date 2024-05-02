@@ -205,10 +205,16 @@ export class Auth {
         "Cannot refresh access token because 'clientId' or 'clientSecret' is missing"
       );
     }
+    const oldRefreshToken = await this.getRefreshToken(tokenGetParam);
+    if (!oldRefreshToken) {
+      throw new Error(
+        "Cannot refresh access token because the refresh token is missing"
+      );
+    }
     const payload: TokenRotatePayload = {
       client_id: this.#clientId,
       client_secret: this.#clientSecret,
-      refresh_token: await this.getRefreshToken(tokenGetParam),
+      refresh_token: oldRefreshToken,
       grant_type: GrantType.REFRESH_TOKEN,
     };
     const result = await this.#post("/token", payload);
