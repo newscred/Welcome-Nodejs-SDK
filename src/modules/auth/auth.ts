@@ -2,6 +2,7 @@ import { request, RequestOptions } from "https";
 
 enum GrantType {
   AUTHORIZATION_CODE = "authorization_code",
+  CLIENT_CREDENTIALS = "client_credentials",
   REFRESH_TOKEN = "refresh_token",
 }
 interface AuthConstructorParam {
@@ -12,7 +13,7 @@ interface AuthConstructorParam {
   redirectUri?: string;
   onAuthSuccess?: (
     accessToken: string,
-    refreshToken: string,
+    refreshToken?: string,
     tokenGetParam?: any
   ) => any;
   onAuthFailure?: (error: string, ...args: any) => any;
@@ -23,12 +24,18 @@ interface AuthConstructorParam {
   ) => any;
 }
 
-interface TokenRequestPayload {
+interface CodeTokenRequestPayload {
   grant_type: GrantType.AUTHORIZATION_CODE;
   client_id: string;
   client_secret: string;
   code: string;
   redirect_uri: string;
+}
+
+interface ClientTokenRequestPayload {
+  grant_type: GrantType.CLIENT_CREDENTIALS;
+  client_id: string;
+  client_secret: string;
 }
 
 interface TokenRotatePayload {
@@ -51,7 +58,7 @@ export class Auth {
   #clientId: string | undefined;
   #clientSecret: string | undefined;
   #redirectUri: string | undefined;
-  #onAuthSuccess?: (accessToken: string, refreshToken: string, tokenGetParam?: any) => any;
+  #onAuthSuccess?: (accessToken: string, refreshToken?: string, tokenGetParam?: any) => any;
   #onAuthFailure?: (error: string) => any;
   #tokenChangeCallback?: (accessToken: string, refreshToken: string, tokenGetParam?: any) => any;
 
@@ -85,8 +92,8 @@ export class Auth {
 
   #post(
     endpoint: "/token",
-    payload: TokenRequestPayload | TokenRotatePayload
-  ): Promise<{ access_token: string; refresh_token: string }>;
+    payload: CodeTokenRequestPayload | ClientTokenRequestPayload | TokenRotatePayload
+  ): Promise<{ access_token: string; refresh_token?: string }>;
   #post(
     endpoint: "/revoke",
     payload: TokenRevokPayload
@@ -150,7 +157,7 @@ export class Auth {
           "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
         );
       }
-      const payload: TokenRequestPayload = {
+      const payload: CodeTokenRequestPayload = {
         client_id: this.#clientId!,
         client_secret: this.#clientSecret!,
         code: code,
@@ -163,20 +170,60 @@ export class Auth {
     }
   }
 
+  async initiateClientFlow(tokenGetParam?: any) {
+    if (!this.#onAuthSuccess) {
+      throw new Error(
+        "'onAuthSuccess' was not provided. Please provide the 'onAuthSuccess' function"
+      );
+    }
+    if (!this.#clientId || !this.#clientSecret) {
+      throw new Error(
+        "Cannot get access token because 'clientId' or 'clientSecret' is missing"
+      );
+    }
+    const payload: ClientTokenRequestPayload = {
+      client_id: this.#clientId!,
+      client_secret: this.#clientSecret!,
+      grant_type: GrantType.CLIENT_CREDENTIALS
+    };
+    try {
+      const result = await this.#post("/token", payload);
+      const { access_token: accessToken } = result;
+      return this.#onAuthSuccess(accessToken, tokenGetParam);
+    } catch (err: any) {
+      const errorMessage = err instanceof Error ? `Failed to get access token: ${err.message}` : "Failed to get access token";
+      if (!this.#onAuthFailure) {
+        throw new Error(errorMessage);
+      }
+      return this.#onAuthFailure(errorMessage);
+    }
+  }
+
   async rotateTokens(tokenGetParam?: any) {
     if (!this.#clientId || !this.#clientSecret) {
       throw new Error(
         "Cannot refresh access token because 'clientId' or 'clientSecret' is missing"
       );
     }
+    const oldRefreshToken = await this.getRefreshToken(tokenGetParam);
+    if (!oldRefreshToken) {
+      throw new Error(
+        "Cannot refresh access token because the refresh token is missing"
+      );
+    }
     const payload: TokenRotatePayload = {
       client_id: this.#clientId,
       client_secret: this.#clientSecret,
-      refresh_token: await this.getRefreshToken(tokenGetParam),
+      refresh_token: oldRefreshToken,
       grant_type: GrantType.REFRESH_TOKEN,
     };
     const result = await this.#post("/token", payload);
     const { access_token: accessToken, refresh_token: refreshToken } = result;
+    if (!refreshToken) {
+      throw new Error(
+        "Error generating new access token."
+      );
+    }
     if (typeof this.#accessToken === "string") {
       this.#accessToken = accessToken;
     }
