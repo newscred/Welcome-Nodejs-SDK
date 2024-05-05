@@ -1,3 +1,4 @@
+import { Unauthorized } from "../../src/errors";
 import { Auth } from "../../src/modules/auth";
 import * as nock from "nock";
 
@@ -275,6 +276,33 @@ describe("Auth module", () => {
       );
       await expect(authWithMissingClientSecret.rotateTokens()).rejects.toEqual(
         expectedError
+      );
+    });
+
+    it("should throw error if receives error response from server", async () => {
+      nock("https://accounts.cmp.optimizely.com")
+        .post("/o/oauth2/v1/token", {
+          client_id: "12345678-1234-1234-1234-123456789012",
+          client_secret: "my-encrypted-secret-1234",
+          refresh_token: "456",
+          grant_type: "refresh_token",
+        })
+        .reply(401, {
+          message: "invalid token",
+        });
+
+      const tokenChangeCallback = jest.fn();
+      const auth = new Auth({
+        accessToken: "123",
+        refreshToken: "456",
+        clientId: "12345678-1234-1234-1234-123456789012",
+        clientSecret: "my-encrypted-secret-1234",
+        redirectUri: "https://www.myapp.com/oauth/callback",
+        tokenChangeCallback: tokenChangeCallback,
+      });
+
+      await expect(auth.rotateTokens({ foo: "bar" })).rejects.toEqual(
+        new Unauthorized({ message: "invalid token" })
       );
     });
 
