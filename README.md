@@ -1,6 +1,6 @@
 # CMP SDK
 
-CMP-SDK is a nodejs client package to work with [Optimizely CMP](https://www.optimizely.com/products/orchestrate/content-marketing/) (formerly known as _Welcome_) provided Public [REST API Endpoints](https://developers.welcomesoftware.com).
+CMP-SDK is a nodejs client package to work with [Optimizely CMP](https://www.optimizely.com/products/orchestrate/content-marketing/) (formerly known as _Welcome_) provided Public [REST API Endpoints](https://docs.developers.optimizely.com/content-marketing-platform/reference/api-reference).
 
 ## Getting started
 

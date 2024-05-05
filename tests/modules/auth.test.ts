@@ -75,7 +75,7 @@ describe("Auth module", () => {
     it("should call the provided redirect function with the right url", () => {
       const redirectFn = jest.fn();
       const expectedUrl =
-        "https://accounts.welcomesoftware.com/o/oauth2/v1/auth?client_id=123-456-ghi-jkl&redirect_uri=https://www.myapp.com/oauth/callback&response_type=code&scope=openid%20profile%20offline_access";
+        "https://accounts.cmp.optimizely.com/o/oauth2/v1/auth?client_id=123-456-ghi-jkl&redirect_uri=https://www.myapp.com/oauth/callback&response_type=code&scope=openid%20profile%20offline_access";
       const auth = new Auth({
         accessToken: "1",
         refreshToken: "2",
@@ -143,7 +143,7 @@ describe("Auth module", () => {
     });
 
     it("should call onAuthSuccess with proper data", async () => {
-      const scope = nock("https://accounts.welcomesoftware.com")
+      const scope = nock("https://accounts.cmp.optimizely.com")
         .post("/o/oauth2/v1/token", {
           client_id: process.env.WELCOME_CLIENT_ID,
           client_secret: process.env.WELCOME_CLIENT_SECRET,
@@ -184,7 +184,7 @@ describe("Auth module", () => {
     const refreshToken = "test-refresh-token";
 
     beforeAll(() => {
-      nock('https://accounts.welcomesoftware.com')
+      nock('https://accounts.cmp.optimizely.com')
         .persist()
         .post("/o/oauth2/v1/token", {
           client_id: "test-client-id",
@@ -279,7 +279,7 @@ describe("Auth module", () => {
     });
 
     it("should rotate the tokens", async () => {
-      nock("https://accounts.welcomesoftware.com")
+      nock("https://accounts.cmp.optimizely.com")
         .post("/o/oauth2/v1/token", {
           client_id: "12345678-1234-1234-1234-123456789012",
           client_secret: "my-encrypted-secret-1234",
@@ -343,7 +343,7 @@ describe("Auth module", () => {
     });
 
     it("should revoke the access token", async () => {
-      const scope = nock("https://accounts.welcomesoftware.com")
+      const scope = nock("https://accounts.cmp.optimizely.com")
         .post("/o/oauth2/v1/revoke", {
           token: "my-access-token",
           token_type_hint: "access_token",
@@ -392,7 +392,7 @@ describe("Auth module", () => {
     });
 
     it("should revoke the access token", async () => {
-      const scope = nock("https://accounts.welcomesoftware.com")
+      const scope = nock("https://accounts.cmp.optimizely.com")
         .post("/o/oauth2/v1/revoke", {
           token: "my-refresh-token",
           token_type_hint: "refresh_token",

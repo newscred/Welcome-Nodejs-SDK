@@ -63,7 +63,7 @@ export class Auth {
   #tokenChangeCallback?: (accessToken: string, refreshToken: string, tokenGetParam?: any) => any;
 
   static authorizationServerAddr =
-    "https://accounts.welcomesoftware.com/o/oauth2/v1";
+    "https://accounts.cmp.optimizely.com/o/oauth2/v1";
 
   constructor(param: AuthConstructorParam) {
     this.#accessToken = param.accessToken;

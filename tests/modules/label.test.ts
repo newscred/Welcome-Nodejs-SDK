@@ -13,7 +13,7 @@ describe("Label module", () => {
   const apiCaller = new APICaller(auth, true);
   const labelModule = new Label(apiCaller);
 
-  const WELCOME_API_BASE_URL = "https://api.welcomesoftware.com/v3";
+  const WELCOME_API_BASE_URL = "https://api.cmp.optimizely.com/v3";
   const tokenGetParam = { user: "123" };
 
   const labelGroups = [
@@ -185,7 +185,7 @@ describe("Label module", () => {
         .reply(200, {
           data: labelGroups,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
+            next: "https://api.cmp.optimizely.com/v3/label-groups?offset=10&page_size=10",
             previous: null,
           },
         });
@@ -217,7 +217,7 @@ describe("Label module", () => {
         .reply(200, {
           data: labelGroups,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/label-groups?offset=10&page_size=10",
+            next: "https://api.cmp.optimizely.com/v3/label-groups?offset=10&page_size=10",
             previous: null,
           },
         });
@@ -249,9 +249,9 @@ describe("Label module", () => {
         .reply(200, {
           data: labelGroups.slice(3, 6),
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/label-groups?offset=6&page_size=3",
+            next: "https://api.cmp.optimizely.com/v3/label-groups?offset=6&page_size=3",
             previous:
-              "https://api.welcomesoftware.com/v3/label-groups?offset=0&page_size=3",
+              "https://api.cmp.optimizely.com/v3/label-groups?offset=0&page_size=3",
           },
         });
 

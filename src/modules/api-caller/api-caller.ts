@@ -18,7 +18,7 @@ export class APICaller {
   #auth: Auth;
   #shouldConvertObjectKeyCase: boolean;
 
-  #host = "https://api.welcomesoftware.com";
+  #host = "https://api.cmp.optimizely.com";
   #apiVersion = "v3";
 
   constructor(
