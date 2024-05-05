@@ -15,7 +15,7 @@ describe("APICaller module", () => {
   let accessTokenMock: jest.Func;
   let refreshTokenMock: jest.Func;
 
-  const WELCOME_API_BASE_URL = "https://api.welcomesoftware.com/v3";
+  const WELCOME_API_BASE_URL = "https://api.cmp.optimizely.com/v3";
 
   const camelCaseObject = {
     someKey: "some_value",
@@ -180,7 +180,7 @@ describe("APICaller module", () => {
         .get("/some/endpoint")
         .reply(302, undefined, {
           Location:
-            "https://api.welcomesoftware.com/v3/some/redirected/endpoint",
+            "https://api.cmp.optimizely.com/v3/some/redirected/endpoint",
         });
 
       const scope2 = nock(WELCOME_API_BASE_URL, {

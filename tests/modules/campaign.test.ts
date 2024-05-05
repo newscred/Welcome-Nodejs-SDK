@@ -14,7 +14,7 @@ describe("Campaign module", () => {
   const apiCaller = new APICaller(auth, true);
   const campaignModule = new Campaign(apiCaller);
 
-  const WELCOME_API_BASE_URL = "https://api.welcomesoftware.com/v3";
+  const WELCOME_API_BASE_URL = "https://api.cmp.optimizely.com/v3";
   const tokenGetParam = { user: "123" };
 
   afterEach(() => {
@@ -51,12 +51,12 @@ describe("Campaign module", () => {
         },
       ],
       links: {
-        self: "https://api.welcomesoftware.com/v3/campaigns/8q7f910551b00a722e0418830cee6612",
+        self: "https://api.cmp.optimizely.com/v3/campaigns/8q7f910551b00a722e0418830cee6612",
         brief:
-          "https://api.welcomesoftware.com/v3/campaigns/8q7f910551b00a722e0418830cee6612/brief",
+          "https://api.cmp.optimizely.com/v3/campaigns/8q7f910551b00a722e0418830cee6612/brief",
         owner: "https://api.newscred.com/v3/users/6ea1bf781398c3147393arr1",
         parent_campaign:
-          "https://api.welcomesoftware.com/v3/campaigns/7u7f910551b00a722e0418830cee6643",
+          "https://api.cmp.optimizely.com/v3/campaigns/7u7f910551b00a722e0418830cee6643",
         child_campaigns: [
           "https://api.newscred.com/v3/campaigns/6fb21acf987094513ecb4b58",
         ],
@@ -123,9 +123,9 @@ describe("Campaign module", () => {
         },
       ],
       links: {
-        self: "https://api.welcomesoftware.com/v3/campaigns/5f857f30e1c4a2038d6179e9/brief",
+        self: "https://api.cmp.optimizely.com/v3/campaigns/5f857f30e1c4a2038d6179e9/brief",
         campaign:
-          "https://api.welcomesoftware.com/v3/campaigns/5f857f30e1c4a2038d6179e9",
+          "https://api.cmp.optimizely.com/v3/campaigns/5f857f30e1c4a2038d6179e9",
       },
     };
 

@@ -8,7 +8,7 @@ This folder contains an example app that demonstrate how to use the CMP SDK pack
 ngrok http 30000
 ```
 
-2. Go to [Welcome](https://app.welcomesoftware.com/cloud/settings/apps-and-webhooks/apps) and create an app if you don't have one already. Use `<your ngrok url>/tests/oauth/callback` as the redirect url.
+2. Go to [Welcome](https://cmp.optimizely.com/cloud/settings/apps-and-webhooks/apps) and create an app if you don't have one already. Use `<your ngrok url>/tests/oauth/callback` as the redirect url.
 
 3. create a `.env` file, and save the following variables
 ```

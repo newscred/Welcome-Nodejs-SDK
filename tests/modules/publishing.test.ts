@@ -14,7 +14,7 @@ describe("Publishing module", () => {
   const apiCaller = new APICaller(auth, true);
   const publishingModule = new Publishing(apiCaller);
 
-  const WELCOME_API_BASE_URL = "https://api.welcomesoftware.com/v3";
+  const WELCOME_API_BASE_URL = "https://api.cmp.optimizely.com/v3";
   const tokenGetParam = { user: "123" };
   console.warn = jest.fn;
 
@@ -35,19 +35,19 @@ describe("Publishing module", () => {
               {
                 id: "5e46745616s564s4564964",
                 links: {
-                  self: "https://api.welcomesoftware.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/assets/5d7f910551b00a722e0418830cee2212/publishing-metadata/5e46745616s564s4564964",
+                  self: "https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/assets/5d7f910551b00a722e0418830cee2212/publishing-metadata/5e46745616s564s4564964",
                 },
               },
             ],
             links: {
-              self: "https://api.welcomesoftware.com/v3/articles/5d7f910551b00a722e0418830cee2212",
+              self: "https://api.cmp.optimizely.com/v3/articles/5d7f910551b00a722e0418830cee2212",
             },
           },
         ],
         links: {
-          self: "https://api.welcomesoftware.com/v3/publishing-events/5d7f910551b00a722e0418830cee2212",
+          self: "https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee2212",
           publishing_metadata:
-            "https://api.welcomesoftware.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/publishing-metadata",
+            "https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/publishing-metadata",
         },
       };
 
@@ -98,11 +98,11 @@ describe("Publishing module", () => {
             public_url: "https://example.com/test",
             publishing_destination_updated_at: "2019-10-06T13:15:30Z",
             links: {
-              self: "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
+              self: "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
               publishing_event:
-                "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
+                "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
               asset:
-                "https://api.welcomesoftware.com/v3/articles/4567m474974987479856456456",
+                "https://api.cmp.optimizely.com/v3/articles/4567m474974987479856456456",
             },
           },
         ],
@@ -161,11 +161,11 @@ describe("Publishing module", () => {
             public_url: "https://example.com/test",
             publishing_destination_updated_at: "2019-10-06T13:15:30Z",
             links: {
-              self: "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
+              self: "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
               publishing_event:
-                "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
+                "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
               asset:
-                "https://api.welcomesoftware.com/v3/articles/4567m474974987479856456456",
+                "https://api.cmp.optimizely.com/v3/articles/4567m474974987479856456456",
             },
           },
         ],
@@ -265,11 +265,11 @@ describe("Publishing module", () => {
         public_url: "https://example.com/test",
         publishing_destination_updated_at: "2019-10-06T13:15:30Z",
         links: {
-          self: "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
+          self: "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/assets/1d9d8aeca10811ebbc640242ac12003c/publishing-metadata/5ebcd5644967474414564",
           publishing_event:
-            "https://api.welcomesoftware.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
+            "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b",
           asset:
-            "https://api.welcomesoftware.com/v3/articles/4567m474974987479856456456",
+            "https://api.cmp.optimizely.com/v3/articles/4567m474974987479856456456",
         },
       };
 

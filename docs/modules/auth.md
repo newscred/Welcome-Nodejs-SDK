@@ -1,6 +1,6 @@
 # Auth
 
-The `auth` module handles the OAuth2 authorization of the _Welcome_ app. You first need an Welcome app to use the SDK. If you don't have one already, create one from [here](https://app.welcomesoftware.com/cloud/settings/apps-and-webhooks/apps/create).
+The `auth` module handles the OAuth2 authorization of the _Welcome_ app. You first need an Welcome app to use the SDK. If you don't have one already, create one from [here](https://cmp.optimizely.com/cloud/settings/apps-and-webhooks/apps/create).
 
 The module provides the following methods.
 

@@ -24,7 +24,7 @@ describe("Library module", () => {
   const apiCaller = new APICaller(auth, true);
   const libraryModule = new Library(apiCaller);
 
-  const WELCOME_API_BASE_URL = "https://api.welcomesoftware.com/v3";
+  const WELCOME_API_BASE_URL = "https://api.cmp.optimizely.com/v3";
   const tokenGetParam = { user: "123" };
 
   afterEach(() => {
@@ -42,13 +42,13 @@ describe("Library module", () => {
         created_at: "2019-10-06T13:15:30Z",
         modified_at: "2019-10-07T13:15:30Z",
         links: {
-          self: "https://api.welcomesoftware.com/v3/folders/5d7f910551b00a722e0418830cee6632",
+          self: "https://api.cmp.optimizely.com/v3/folders/5d7f910551b00a722e0418830cee6632",
           parent_folder:
-            "https://api.welcomesoftware.com/v3/folders/1d9d8aeca10811ebbc640242ac12001b",
+            "https://api.cmp.optimizely.com/v3/folders/1d9d8aeca10811ebbc640242ac12001b",
           child_folders:
-            "https://api.welcomesoftware.com/v3/folders?parent_folder_id=5d7f910551b00a722e0418830cee6632",
+            "https://api.cmp.optimizely.com/v3/folders?parent_folder_id=5d7f910551b00a722e0418830cee6632",
           assets:
-            "https://api.welcomesoftware.com/v3/assets?folder_id=5d7f910551b00a722e0418830cee6632&include_subfolder_assets=false",
+            "https://api.cmp.optimizely.com/v3/assets?folder_id=5d7f910551b00a722e0418830cee6632&include_subfolder_assets=false",
         },
       },
     ];
@@ -74,7 +74,7 @@ describe("Library module", () => {
         .reply(200, {
           data: folders,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/folders?offset=10&page_size=10",
+            next: "https://api.cmp.optimizely.com/v3/folders?offset=10&page_size=10",
             previous: null,
           },
         });
@@ -101,7 +101,7 @@ describe("Library module", () => {
         .reply(200, {
           data: folders,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/folders?offset=10&page_size=10&parent_folder_id=1d9d8aeca10811ebbc640242ac12001b",
+            next: "https://api.cmp.optimizely.com/v3/folders?offset=10&page_size=10&parent_folder_id=1d9d8aeca10811ebbc640242ac12001b",
             previous: null,
           },
         });
@@ -128,9 +128,9 @@ describe("Library module", () => {
         .reply(200, {
           data: folders,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/folders?offset=6&page_size=3",
+            next: "https://api.cmp.optimizely.com/v3/folders?offset=6&page_size=3",
             previous:
-              "https://api.welcomesoftware.com/v3/folders?offset=0&page_size=3",
+              "https://api.cmp.optimizely.com/v3/folders?offset=0&page_size=3",
           },
         });
 
@@ -155,13 +155,13 @@ describe("Library module", () => {
       created_at: "2019-10-06T13:15:30Z",
       modified_at: "2019-10-07T13:15:30Z",
       links: {
-        self: "https://api.welcomesoftware.com/v3/folders/5d7f910551b00a722e0418830cee6632",
+        self: "https://api.cmp.optimizely.com/v3/folders/5d7f910551b00a722e0418830cee6632",
         parent_folder:
-          "https://api.welcomesoftware.com/v3/folders/1d9d8aeca10811ebbc640242ac12001b",
+          "https://api.cmp.optimizely.com/v3/folders/1d9d8aeca10811ebbc640242ac12001b",
         child_folders:
-          "https://api.welcomesoftware.com/v3/folders?parent_folder_id=5d7f910551b00a722e0418830cee6632",
+          "https://api.cmp.optimizely.com/v3/folders?parent_folder_id=5d7f910551b00a722e0418830cee6632",
         assets:
-          "https://api.welcomesoftware.com/v3/assets?folder_id=5d7f910551b00a722e0418830cee6632&include_subfolder_assets=false",
+          "https://api.cmp.optimizely.com/v3/assets?folder_id=5d7f910551b00a722e0418830cee6632&include_subfolder_assets=false",
       },
     };
 
@@ -210,7 +210,7 @@ describe("Library module", () => {
         content: {
           type: "url",
           value:
-            "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+            "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
         },
         labels: [
           {
@@ -227,11 +227,11 @@ describe("Library module", () => {
           },
         ],
         links: {
-          self: "https://api.welcomesoftware.com/v3/images/5d7f910551bw0a722e0418830cee6631",
+          self: "https://api.cmp.optimizely.com/v3/images/5d7f910551bw0a722e0418830cee6631",
         },
         owner_organization_id: "5108c3a9becac35915111191",
         thumbnail_url:
-          "https://images1.welcomesoftware.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
+          "https://images1.cmp.optimizely.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
       },
     ];
     const expectedAssetData = [
@@ -248,7 +248,7 @@ describe("Library module", () => {
         content: {
           type: "url",
           value:
-            "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+            "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
         },
         labels: [
           {
@@ -266,7 +266,7 @@ describe("Library module", () => {
         ],
         ownerOrganizationId: "5108c3a9becac35915111191",
         thumbnailUrl:
-          "https://images1.welcomesoftware.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
+          "https://images1.cmp.optimizely.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
       },
     ];
 
@@ -280,7 +280,7 @@ describe("Library module", () => {
         .reply(200, {
           data: assets,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/assets?offset=10&page_size=10",
+            next: "https://api.cmp.optimizely.com/v3/assets?offset=10&page_size=10",
             previous: null,
           },
         });
@@ -312,7 +312,7 @@ describe("Library module", () => {
         .reply(200, {
           data: assets,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/assets?type=image&type=video&created_at__from=2018-11-30T13:32:44Z&created_at__to=2018-11-30T13:32:44Z&modified_at__from=2018-11-30T13:32:44Z&modified_at__to=2018-11-30T13:32:44Z&folder_id=6bb8db20a5b611ebae319b7c541b1a7f&include_subfolder_assets=false&search_text=Cute%20Cat&offset=10&page_size=10",
+            next: "https://api.cmp.optimizely.com/v3/assets?type=image&type=video&created_at__from=2018-11-30T13:32:44Z&created_at__to=2018-11-30T13:32:44Z&modified_at__from=2018-11-30T13:32:44Z&modified_at__to=2018-11-30T13:32:44Z&folder_id=6bb8db20a5b611ebae319b7c541b1a7f&include_subfolder_assets=false&search_text=Cute%20Cat&offset=10&page_size=10",
             previous: null,
           },
         });
@@ -350,9 +350,9 @@ describe("Library module", () => {
         .reply(200, {
           data: assets,
           pagination: {
-            next: "https://api.welcomesoftware.com/v3/assets?offset=6&page_size=3",
+            next: "https://api.cmp.optimizely.com/v3/assets?offset=6&page_size=3",
             previous:
-              "https://api.welcomesoftware.com/v3/assets?offset=0&page_size=3",
+              "https://api.cmp.optimizely.com/v3/assets?offset=0&page_size=3",
           },
         });
 
@@ -384,7 +384,7 @@ describe("Library module", () => {
       content: {
         type: "url",
         value:
-          "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+          "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
       },
       labels: [
         {
@@ -401,11 +401,11 @@ describe("Library module", () => {
         },
       ],
       links: {
-        self: "https://api.welcomesoftware.com/v3/images/5d7f910551bw0a722e0418830cee6631",
+        self: "https://api.cmp.optimizely.com/v3/images/5d7f910551bw0a722e0418830cee6631",
       },
       owner_organization_id: "5108c3a9becac35915111191",
       thumbnail_url:
-        "https://images1.welcomesoftware.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
+        "https://images1.cmp.optimizely.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
     };
 
     const expectedAssetData = {
@@ -421,7 +421,7 @@ describe("Library module", () => {
       content: {
         type: "url",
         value:
-          "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+          "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
       },
       labels: [
         {
@@ -439,7 +439,7 @@ describe("Library module", () => {
       ],
       ownerOrganizationId: "5108c3a9becac35915111191",
       thumbnailUrl:
-        "https://images1.welcomesoftware.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
+        "https://images1.cmp.optimizely.com/Pz1kYmI9Z2FkYTJtZWI5VGI1WZq4MTZkNTdmGHjM5OGRmYq==",
     };
     it("should add a new asset in the library", async () => {
       const scope = nock(WELCOME_API_BASE_URL, {
@@ -482,11 +482,11 @@ describe("Library module", () => {
       content: {
         type: "url",
         value:
-          "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+          "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
       },
       links: {
         asset:
-          "https://api.welcomesoftware.com/v3/images/5d7f910551b00a722e0418830cee6631",
+          "https://api.cmp.optimizely.com/v3/images/5d7f910551b00a722e0418830cee6631",
       },
     };
 
@@ -500,7 +500,7 @@ describe("Library module", () => {
       content: {
         type: "url",
         value:
-          "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
+          "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S",
       },
     };
 
@@ -565,7 +565,7 @@ describe("Library module", () => {
       meta_keywords: ["key", "word", "keyword"],
       source_article: "https://source-vendor.com/sample-article",
       source_name: "Optimizely CMP",
-      url: "https://welcomesoftware.com/sample-article",
+      url: "https://cmp.optimizely.com/sample-article",
       authors: [
         {
           name: "John Doe",
@@ -573,7 +573,7 @@ describe("Library module", () => {
       ],
       lang_code: "eng",
       pixel_key:
-        "https://pixel.welcomesoftware.com/px.gif?key=YXJ0aWNsZT0zZmJjN2Y5NmUzYzcxMWViOGVmNTAyNDJhYzEyMDAxOA==",
+        "https://pixel.cmp.optimizely.com/px.gif?key=YXJ0aWNsZT0zZmJjN2Y5NmUzYzcxMWViOGVmNTAyNDJhYzEyMDAxOA==",
       images: [
         {
           attribution_text: "This is a sample attribution text",
@@ -583,17 +583,17 @@ describe("Library module", () => {
           source: {
             name: "Reuters",
           },
-          url: "https://images-cdn.welcomesoftware.com/sample.jpeg",
+          url: "https://images-cdn.cmp.optimizely.com/sample.jpeg",
           height: 400,
           width: 700,
           thumbnail:
-            "https://images-cdn.welcomesoftware.com/Zz01Y2FkOWFjZWQ5OTMxMWViYjY3OTEzNDMzOWM3ZDNhNA==?width=75&height=75",
+            "https://images-cdn.cmp.optimizely.com/Zz01Y2FkOWFjZWQ5OTMxMWViYjY3OTEzNDMzOWM3ZDNhNA==?width=75&height=75",
         },
       ],
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
     };
 
@@ -626,7 +626,7 @@ describe("Library module", () => {
       metaKeywords: ["key", "word", "keyword"],
       sourceArticle: "https://source-vendor.com/sample-article",
       sourceName: "Optimizely CMP",
-      url: "https://welcomesoftware.com/sample-article",
+      url: "https://cmp.optimizely.com/sample-article",
       authors: [
         {
           name: "John Doe",
@@ -634,7 +634,7 @@ describe("Library module", () => {
       ],
       langCode: "eng",
       pixelKey:
-        "https://pixel.welcomesoftware.com/px.gif?key=YXJ0aWNsZT0zZmJjN2Y5NmUzYzcxMWViOGVmNTAyNDJhYzEyMDAxOA==",
+        "https://pixel.cmp.optimizely.com/px.gif?key=YXJ0aWNsZT0zZmJjN2Y5NmUzYzcxMWViOGVmNTAyNDJhYzEyMDAxOA==",
       images: [
         {
           attributionText: "This is a sample attribution text",
@@ -644,17 +644,17 @@ describe("Library module", () => {
           source: {
             name: "Reuters",
           },
-          url: "https://images-cdn.welcomesoftware.com/sample.jpeg",
+          url: "https://images-cdn.cmp.optimizely.com/sample.jpeg",
           height: 400,
           width: 700,
           thumbnail:
-            "https://images-cdn.welcomesoftware.com/Zz01Y2FkOWFjZWQ5OTMxMWViYjY3OTEzNDMzOWM3ZDNhNA==?width=75&height=75",
+            "https://images-cdn.cmp.optimizely.com/Zz01Y2FkOWFjZWQ5OTMxMWViYjY3OTEzNDMzOWM3ZDNhNA==?width=75&height=75",
         },
       ],
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
     };
     it("should get an article by id", async () => {
@@ -695,7 +695,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/images/",
       is_public: true,
-      url: "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+      url: "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       labels: [
         {
           group: {
@@ -713,7 +713,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
       alt_text: "image title",
     };
@@ -734,7 +734,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/images/",
       isPublic: true,
-      url: "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+      url: "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       labels: [
         {
           group: {
@@ -752,7 +752,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
       altText: "image title",
     };
@@ -794,7 +794,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/images/",
       is_public: true,
-      url: "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+      url: "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       labels: [
         {
           group: {
@@ -812,7 +812,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
       alt_text: "image title",
     };
@@ -833,7 +833,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/images/",
       isPublic: true,
-      url: "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+      url: "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       labels: [
         {
           group: {
@@ -851,7 +851,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
       altText: "image title",
     };
@@ -934,7 +934,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/example/",
       is_public: true,
-      url: "https://s3.amazonaws.com/videos.welcomesoftware.com/03a747babe81ceb55763fa085bqa20dc",
+      url: "https://s3.amazonaws.com/videos.cmp.optimizely.com/03a747babe81ceb55763fa085bqa20dc",
       labels: [
         {
           group: {
@@ -952,7 +952,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
       alt_text: "video title",
     };
@@ -969,7 +969,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/example/",
       isPublic: true,
-      url: "https://s3.amazonaws.com/videos.welcomesoftware.com/03a747babe81ceb55763fa085bqa20dc",
+      url: "https://s3.amazonaws.com/videos.cmp.optimizely.com/03a747babe81ceb55763fa085bqa20dc",
       labels: [
         {
           group: {
@@ -987,7 +987,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
       altText: "video title",
     };
@@ -1025,7 +1025,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/example/",
       is_public: true,
-      url: "https://s3.amazonaws.com/videos.welcomesoftware.com/03a747babe81ceb55763fa085bqa20dc",
+      url: "https://s3.amazonaws.com/videos.cmp.optimizely.com/03a747babe81ceb55763fa085bqa20dc",
       labels: [
         {
           group: {
@@ -1043,7 +1043,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
       alt_text: "video title",
     };
@@ -1060,7 +1060,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/example/",
       isPublic: true,
-      url: "https://s3.amazonaws.com/videos.welcomesoftware.com/03a747babe81ceb55763fa085bqa20dc",
+      url: "https://s3.amazonaws.com/videos.cmp.optimizely.com/03a747babe81ceb55763fa085bqa20dc",
       labels: [
         {
           group: {
@@ -1078,7 +1078,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
       altText: "video title",
     };
@@ -1160,7 +1160,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/all files/",
       is_public: true,
-      url: "https://s3.amazonaws.com/files.welcomesoftware.com/171451644651701b96f1122009f026bc",
+      url: "https://s3.amazonaws.com/files.cmp.optimizely.com/171451644651701b96f1122009f026bc",
       labels: [
         {
           group: {
@@ -1178,7 +1178,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
     };
 
@@ -1194,7 +1194,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/all files/",
       isPublic: true,
-      url: "https://s3.amazonaws.com/files.welcomesoftware.com/171451644651701b96f1122009f026bc",
+      url: "https://s3.amazonaws.com/files.cmp.optimizely.com/171451644651701b96f1122009f026bc",
       labels: [
         {
           group: {
@@ -1212,7 +1212,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
     };
     it("should get a raw file by id", async () => {
@@ -1249,7 +1249,7 @@ describe("Library module", () => {
       folder_id: "6bb8db20a5b611ebae319b7c541b1a5a",
       file_location: "/all files/",
       is_public: true,
-      url: "https://s3.amazonaws.com/files.welcomesoftware.com/171451644651701b96f1122009f026bc",
+      url: "https://s3.amazonaws.com/files.cmp.optimizely.com/171451644651701b96f1122009f026bc",
       labels: [
         {
           group: {
@@ -1267,7 +1267,7 @@ describe("Library module", () => {
       owner_organization_id: "5108c3a9becac35915111191",
       expires_at: "2019-10-07T13:15:30Z",
       thumbnail_url:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       version_number: 2,
     };
 
@@ -1283,7 +1283,7 @@ describe("Library module", () => {
       folderId: "6bb8db20a5b611ebae319b7c541b1a5a",
       fileLocation: "/all files/",
       isPublic: true,
-      url: "https://s3.amazonaws.com/files.welcomesoftware.com/171451644651701b96f1122009f026bc",
+      url: "https://s3.amazonaws.com/files.cmp.optimizely.com/171451644651701b96f1122009f026bc",
       labels: [
         {
           group: {
@@ -1301,7 +1301,7 @@ describe("Library module", () => {
       ownerOrganizationId: "5108c3a9becac35915111191",
       expiresAt: new Date("2019-10-07T13:15:30Z"),
       thumbnailUrl:
-        "http://images.welcomesoftware.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
+        "http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==",
       versionNumber: 2,
     };
 
