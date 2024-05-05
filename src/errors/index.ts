@@ -6,7 +6,7 @@ class ClientError extends Error {
   responseBody: ErrorResponseBody;
   code: number;
   constructor(responseBody: ErrorResponseBody) {
-    super(responseBody.message);
+    super(responseBody.message ?? "something went wrong");
     this.code = 400;
     this.responseBody = responseBody;
   }
