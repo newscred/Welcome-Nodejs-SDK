@@ -7,7 +7,6 @@ import {
   IPublishingMetadataForAssetData,
   PublishingMetadataForAsset,
 } from "../../objects/publishing-metadata-for-asset";
-import { warnAboutUsingExperimentalAPI } from "../../util";
 import {
   IAddPostMetadataResponse,
   IAddPublishingMetadataPayload,
@@ -20,7 +19,6 @@ export class Publishing {
   }
 
   async getPublishingEventById(eventId: string, tokenGetParam?: any) {
-    warnAboutUsingExperimentalAPI();
     const eventData = await this.#apiCaller.get(
       `/publishing-events/${eventId}`,
       tokenGetParam
@@ -29,7 +27,6 @@ export class Publishing {
   }
 
   async getPublishingMetadata(eventId: string, tokenGetParam?: any) {
-    warnAboutUsingExperimentalAPI();
     const data = await this.#apiCaller.get(
       `/publishing-events/${eventId}/publishing-metadata`,
       tokenGetParam
@@ -46,7 +43,6 @@ export class Publishing {
     payload: IAddPublishingMetadataPayload,
     tokenGetParam?: any
   ) {
-    warnAboutUsingExperimentalAPI();
     const data = (await this.#apiCaller.post(
       `/publishing-events/${eventId}/publishing-metadata`,
       payload,
@@ -65,7 +61,6 @@ export class Publishing {
     metadataId: string,
     tokenGetParam?: any
   ) {
-    warnAboutUsingExperimentalAPI();
     const data = await this.#apiCaller.get(
       `/publishing-events/${eventId}/assets/${assetId}/publishing-metadata/${metadataId}`,
       tokenGetParam
