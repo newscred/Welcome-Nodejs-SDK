@@ -1,4 +1,12 @@
 import { request, RequestOptions } from "https";
+import {
+  BadRequest,
+  ErrorResponseBody,
+  Forbidden,
+  NotFound,
+  Unauthorized,
+  UnprocessableEntity,
+} from "../../errors";
 
 enum GrantType {
   AUTHORIZATION_CODE = "authorization_code",
@@ -90,6 +98,25 @@ export class Auth {
     return this.#refreshToken;
   }
 
+  #formError(body: ErrorResponseBody, code?: number) {
+    if (code === 400) {
+      return new BadRequest(body);
+    }
+    if (code === 401) {
+      return new Unauthorized(body);
+    }
+    if (code === 403) {
+      return new Forbidden(body);
+    }
+    if (code === 404) {
+      return new NotFound(body);
+    }
+    if (code === 422) {
+      return new UnprocessableEntity(body);
+    }
+    return new Error(body.message);
+  }
+
   #post(
     endpoint: "/token",
     payload: CodeTokenRequestPayload | ClientTokenRequestPayload | TokenRotatePayload
@@ -115,14 +142,26 @@ export class Auth {
     return new Promise((resolve, reject) => {
       const req = request(options, (res) => {
         let data = "";
+        const statusCode = res.statusCode;
 
         res.on("data", (chunk) => {
           data += chunk;
         });
 
         res.on("end", () => {
-          data = JSON.parse(data);
-          resolve(data);
+          let responseBody = {};
+          if (data) {
+            try {
+              responseBody = JSON.parse(data);
+            } catch {}
+          }
+          if (statusCode && statusCode < 299) {
+            resolve(responseBody);
+          } else {
+            reject(
+              this.#formError(responseBody as ErrorResponseBody, statusCode)
+            );
+          }
         });
       }).on("error", (err) => {
         reject(err.message);
